@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="49dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/back_button"
+                android:layout_width="72dp"
+                android:layout_height="36dp"
+                android:text="戻る"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="144dp"
+                android:layout_height="36dp"
+                android:text="レビューする"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal">
+            <!-- 1. padding を上下左右それぞれに設定 -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="#AA1BFF"
+                android:gravity="center"
+                android:text="落60%"
+                android:textColor="#000000"
+                android:textSize="30sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="#23FFB5"
+                android:gravity="center"
+                android:text="楽40%"
+                android:textSize="30sp"
+                android:textColor="#444444" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/subject_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="知能情報メディア実験B"
+            android:textSize="28dp" />
+
+        <TextView
+            android:id="@+id/subject_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n 評価方法　レポートn割 出席m割\n 単位数 3"
+            android:textSize="16dp" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/pre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/review1"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@android:color/primary_text_dark_nodisable"
+            app:layout_constraintBottom_toTopOf="@id/loginButton" />
+
+        <TextView
+            android:id="@+id/review2"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@android:color/primary_text_dark_nodisable"
+            app:layout_constraintBottom_toTopOf="@id/loginButton" />
+
+        <TextView
+            android:id="@+id/review3"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@android:color/primary_text_dark_nodisable"
+            app:layout_constraintBottom_toTopOf="@id/loginButton" />
+
+
+        <TextView
+            android:id="@+id/review4"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@android:color/primary_text_dark_nodisable"
+            app:layout_constraintBottom_toTopOf="@id/loginButton" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:text="next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pre" />
+
+    <Button
+        android:id="@+id/pre"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:text="previous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
