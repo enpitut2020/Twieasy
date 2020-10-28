@@ -1,10 +1,15 @@
 package com.example.twieasy
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.twieasy.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +21,74 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.loginButton.setOnClickListener { jumpToLogin() }
+        center.setOnTouchListener(FlickListener(flickListener))
+    }
+
+    private val flickListener = object : FlickListener.Listener {
+
+        override fun onButtonPressed() {
+            center.setBackgroundButtonColor(R.color.pressedButtonColor)
+            toggleVisible()
+        }
+
+        override fun onSwipingOnCenter() = center.settingSwipe()
+        override fun onSwipingOutside() {
+            TODO("Not yet implemented")
+        }
+
+        override fun onSwipingOnLeft() = left.settingSwipe()
+        override fun onSwipingOnRight() = right.settingSwipe()
+        override fun onSwipingOnUp() = top.settingSwipe()
+        override fun onSwipingOnDown() = bottom.settingSwipe()
+
+        override fun onButtonReleased() = settingFlick("中")
+        override fun onFlickToLeft() = settingFlick("左")
+        override fun onFlickToRight() = settingFlick("右")
+        override fun onFlickToUp() = settingFlick("上")
+        override fun onFlickToDown() = settingFlick("下")
+        override fun onFlickOutside() {
+            TODO("Not yet implemented")
+        }
+
+
+        private fun settingFlick(label: String) {
+            showToast(label)
+            Thread.sleep(100)
+            toggleInvisible()
+            clearAll()
+        }
+
+        private fun toggleVisible() {
+            top.visibility = View.VISIBLE
+            left.visibility = View.VISIBLE
+            right.visibility = View.VISIBLE
+            bottom.visibility = View.VISIBLE
+        }
+
+        private fun toggleInvisible() {
+            top.visibility = View.INVISIBLE
+            left.visibility = View.INVISIBLE
+            right.visibility = View.INVISIBLE
+            bottom.visibility = View.INVISIBLE
+        }
+
+        private fun clearAll() {
+            center.setBackgroundButtonColor(R.color.baseButtonColor)
+            left.setBackgroundButtonColor(R.color.baseButtonColor)
+            right.setBackgroundButtonColor(R.color.baseButtonColor)
+            top.setBackgroundButtonColor(R.color.baseButtonColor)
+            bottom.setBackgroundButtonColor(R.color.baseButtonColor)
+        }
+
+        private fun View.settingSwipe() {
+            clearAll()
+            setBackgroundButtonColor(R.color.pressedButtonColor)
+        }
+
+        private fun View.setBackgroundButtonColor(@ColorRes resId: Int) =
+            setBackgroundColor(ContextCompat.getColor(applicationContext, resId))
+
+        private fun showToast(msg: String) = Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
     }
 
     private val reviews : List<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!","a","b","c","d","e")
