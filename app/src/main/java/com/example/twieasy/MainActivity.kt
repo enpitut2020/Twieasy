@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener { jumpToLogin() }
     }
 
-    private val reviews : List<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!","a","b","c","d","e")
+    private val reviews : MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
     private var page : Int = 1
     private fun jumpToLogin(){
         setContentView(R.layout.review)
@@ -30,6 +30,11 @@ class MainActivity : AppCompatActivity() {
         showReview(page,revColumn)
         val pre : Button = findViewById(R.id.pre)
         val next : Button = findViewById(R.id.next)
+        val writeReview : Button = findViewById(R.id.writeReview)
+        writeReview.setOnClickListener {
+            jumpToWritePage()
+        }
+
         next.setOnClickListener {
             if(page <= reviews.size / 4)
                 showReview(++page, revColumn)
@@ -45,9 +50,23 @@ class MainActivity : AppCompatActivity() {
             if(num >= reviews.size)
                 revColumn[num % 4].text = ""
             else
-                revColumn[num % 4].text = reviews[num]
+                revColumn[num % 4].text = reviews.elementAt(num)
         }
 
     }
 
+    private  fun jumpToWritePage(){
+        setContentView(R.layout.editform)
+        val post : Button = findViewById(R.id.post)
+        post.setOnClickListener { post() }
+    }
+
+    private fun post(){
+        val postContent : TextView = findViewById(R.id.reviewContent)
+        val postStr : String = postContent.text.toString()
+        reviews.add(postStr)
+        jumpToLogin()
+    }
+
 }
+
