@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="49dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/mailAddress"
+                android:layout_width="232dp"
+                android:layout_height="wrap_content"
+                android:hint="メールアドレス"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="164dp"
+                android:layout_height="36dp"
+                android:text="認証コードを取得"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/passWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="パスワード"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/mailAddress" />
+
+        <EditText
+            android:id="@+id/passWord2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="パスワード確認"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/mailAddress" />
+
+
+        <EditText
+            android:id="@+id/verify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="認証コード"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/mailAddress" />
+
+        <Button
+            android:id="@+id/makeAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="アカウントを作成"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/center"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="84dp"
+        android:text="center"
+        app:layout_constraintBottom_toBottomOf="@id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/left"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="84dp"
+        android:text="left"
+        app:layout_constraintBottom_toBottomOf="@id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/right"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="84dp"
+        android:text="right"
+        app:layout_constraintBottom_toBottomOf="@id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/top"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="84dp"
+        android:text="top"
+        app:layout_constraintBottom_toBottomOf="@id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/bottom"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginBottom="92dp"
+        android:text="bottom"
+        app:layout_constraintBottom_toBottomOf="@id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="アカウントをお持ちですか?"
+        app:layout_constraintBottom_toTopOf="@id/loginButton"/>
+
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ログイン"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.loginButton.setOnClickListener { jumpToLogin() }
+        //binding.loginButton.setOnClickListener { jumpToLogin() }
         center.setOnTouchListener(FlickListener(flickListener))
     }
 
@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity() {
         override fun onSwipingOnDown() = bottom.settingSwipe()
 
         override fun onButtonReleased() = settingFlick("中")
-        override fun onFlickToLeft() = settingFlick("左")
-        override fun onFlickToRight() = settingFlick("右")
-        override fun onFlickToUp() = settingFlick("上")
+        override fun onFlickToLeft() = settingFlick("落単")
+        override fun onFlickToRight() = settingFlick("楽単")
+        override fun onFlickToUp() = settingFlick("知らん！！！")
         override fun onFlickToDown() = settingFlick("下")
         override fun onFlickOutside() {
             TODO("Not yet implemented")
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         private fun settingFlick(label: String) {
             showToast(label)
-            Thread.sleep(100)
+            //Thread.sleep(100)
             toggleInvisible()
             clearAll()
         }
