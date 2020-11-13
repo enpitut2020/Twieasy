@@ -16,16 +16,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="2dp"
+        app:layout_constraintVertical_bias="0.793" />
+
+    <TextView
+        android:id="@+id/subject_info"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:elevation="1dp"
+        android:gravity="center"
+        android:text="知能情報実験"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/left"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginEnd="8dp"
         android:text="落単"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/center"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="3dp"
+        app:layout_constraintVertical_bias="0.79" />
 
     <View
         android:id="@+id/right"
@@ -34,7 +52,9 @@
         android:text="楽単"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/center"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="4dp"
+        app:layout_constraintVertical_bias="0.778" />
 
     <View
         android:id="@+id/top"
@@ -43,6 +63,7 @@
         android:text="知らん"
         app:layout_constraintBottom_toTopOf="@+id/center"
         app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="5dp"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View

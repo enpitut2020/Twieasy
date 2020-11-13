@@ -74,9 +74,9 @@ class MainActivity : AppCompatActivity() {
 
         private fun clearAll() {
             center.setBackgroundButtonColor(R.color.baseButtonColor)
-            left.setBackgroundButtonColor(R.color.baseButtonColor)
-            right.setBackgroundButtonColor(R.color.baseButtonColor)
-            top.setBackgroundButtonColor(R.color.baseButtonColor)
+            left.setBackgroundButtonColor(R.color.lightgray)
+            right.setBackgroundButtonColor(R.color.lightgray)
+            top.setBackgroundButtonColor(R.color.lightgray)
             bottom.setBackgroundButtonColor(R.color.baseButtonColor)
         }
 
