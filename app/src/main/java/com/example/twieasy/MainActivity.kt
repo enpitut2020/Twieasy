@@ -11,10 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.twieasy.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    val flickAttribute = mutableMapOf<Int, String>()
+    var swipedCount = 0
+    val subjectInfo = mutableListOf<String>("知能情報メディア実験B","数理メディア情報学","パターン認識","オペレーティングシステム")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,13 +64,22 @@ class MainActivity : AppCompatActivity() {
             Log.i("Flicked",label)
             // 画面遷移
             // 1.フリック情報:labelを保持しておく
-            val myMap2 = mutableMapOf(1 to "one", 2 to "two", 3 to "three")
-            myMap2[1] = "いち"
-            print(myMap2)
+            flickAttribute.put(flickAttribute.count(),label)
+            print(flickAttribute)
 
             // 2.科目情報を変更
+            // ---丹羽君---
+            val subjectView : TextView = findViewById(R.id.subject_info)
+            subjectView.text = subjectInfo[swipedCount]
+            if (swipedCount < subjectInfo.size-1){
+                swipedCount += 1
+            }
+            // ------------
 
             // 3.全部終わったら履修科目一覧に遷移
+            else{
+                // 画面遷移
+            }
 
         }
 
