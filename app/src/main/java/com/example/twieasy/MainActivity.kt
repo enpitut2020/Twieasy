@@ -1,6 +1,7 @@
 package com.example.twieasy
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -56,6 +57,17 @@ class MainActivity : AppCompatActivity() {
             //Thread.sleep(100)
             toggleInvisible()
             clearAll()
+            Log.i("Flicked",label)
+            // 画面遷移
+            // 1.フリック情報:labelを保持しておく
+            val myMap2 = mutableMapOf(1 to "one", 2 to "two", 3 to "three")
+            myMap2[1] = "いち"
+            print(myMap2)
+
+            // 2.科目情報を変更
+
+            // 3.全部終わったら履修科目一覧に遷移
+
         }
 
         private fun toggleVisible() {
@@ -83,6 +95,7 @@ class MainActivity : AppCompatActivity() {
         private fun View.settingSwipe() {
             clearAll()
             setBackgroundButtonColor(R.color.pressedButtonColor)
+            Log.i("Swiped","")
         }
 
         private fun View.setBackgroundButtonColor(@ColorRes resId: Int) =
