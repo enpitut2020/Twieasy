@@ -51,7 +51,8 @@
                 android:gravity="center"
                 android:text="落60%"
                 android:textColor="#000000"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:id="@+id/difficulty"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -60,7 +61,8 @@
                 android:gravity="center"
                 android:text="楽40%"
                 android:textSize="30sp"
-                android:textColor="#444444" />
+                android:textColor="#444444"
+                android:id="@+id/easiness"/>
         </LinearLayout>
 
 
