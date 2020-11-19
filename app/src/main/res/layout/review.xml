@@ -46,38 +46,39 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:background="#AA1BFF"
                 android:gravity="center"
-                android:text="落60%"
+                android:text=""
                 android:textColor="#000000"
                 android:textSize="30sp"
                 android:id="@+id/difficulty"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:background="#23FFB5"
                 android:gravity="center"
-                android:text="楽40%"
+                android:text=""
                 android:textSize="30sp"
                 android:textColor="#444444"
                 android:id="@+id/easiness"/>
         </LinearLayout>
 
-
+        <!--講義名-->
         <TextView
             android:id="@+id/subject_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="知能情報メディア実験B"
+            android:text=""
             android:textSize="28dp" />
 
+        <!--基本情報-->
         <TextView
             android:id="@+id/subject_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n 評価方法　レポートn割 出席m割\n 単位数 3"
+            android:text=""
             android:textSize="16dp" />
 
 
