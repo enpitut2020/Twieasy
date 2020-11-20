@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
 
         override fun onSwipingOnCenter() = center.settingSwipe()
         override fun onSwipingOutside() {
-            TODO("Not yet implemented")
         }
 
         override fun onSwipingOnLeft() = left.settingSwipe()
@@ -65,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         override fun onFlickToUp() = settingFlick("知らん！！！")
         override fun onFlickToDown() = settingFlick("下")
         override fun onFlickOutside() {
-            TODO("Not yet implemented")
+            settingFlick("")
         }
 
 
@@ -248,6 +247,8 @@ class MainActivity : AppCompatActivity() {
                 val title = doc.select("#course-title #title").first().text() //科目名
                 val credit = doc.select("#credit-grade-assignments span").first().text() //単位数
                 val eval = doc.select("#assessment-heading-assessment p").first().text() //評価方法
+                Log.i("title:",title.toString())
+                Log.i("credit:",title.toString())
                 Log.i("eval:", eval.toString())
 
 
