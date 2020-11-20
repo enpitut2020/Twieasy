@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.twieasy.databinding.ActivityMainBinding
@@ -41,6 +42,39 @@ class MainActivity : AppCompatActivity() {
             layout.addView(r)
             r.setOnClickListener { jumpToReview(r.id) }
         }
+
+
+        val searchBar = findViewById<SearchView>(R.id.search)
+        var subjectList: List<String> = listOf("JikkenB","OS","ML","CG")
+        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            // ユーザによって文字列が変更されたときに呼ばれる
+            override fun onQueryTextChange(newText: String): Boolean {
+                // text changed
+                Log.d("change",newText)
+                if(!newText.isEmpty()) {
+                    val regex = Regex(newText)
+                    val result = subjectList.filter { regex.containsMatchIn(it) }
+                    if (!result.isEmpty()) {
+                        result.map { Log.d("input", it) }
+                        result.map {
+                            // XML Componentのインスタンス生成
+                        }
+                    }
+                }
+                return false
+            }
+            // ユーザがクエリを送信(検索ボタンをクリック)したときに呼ばれる
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // submit button pressed
+                return false
+            }
+        })
+
+
+
+
+
+
     }
 
     private var reviews1: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!")
@@ -147,6 +181,7 @@ class MainActivity : AppCompatActivity() {
         getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/")
         jumpToReview(id)
     }
+
 
 
 }
