@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="40dp"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
 
@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
+        android:layout_marginTop="160dp"
         tools:layout_editor_absoluteX="88dp"
         tools:layout_editor_absoluteY="49dp">
 
@@ -21,6 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="メールアドレス"
+            android:digits="abcdefghijklmnopqrstuvwxyz1234567890.@"
+            android:inputType="textEmailAddress"
+            android:maxLength="24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,6 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="パスワード"
+            android:digits="abcdefghijklmnopqrstuvwxyz1234567890"
+            android:inputType="textPassword"
+            android:maxLength="8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/mailAddress" />
 
@@ -42,4 +49,3 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

@@ -7,12 +7,14 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <!--改行の入力を禁止すべき-->
     <EditText
         android:id="@+id/reviewContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top|left"
         android:inputType="textMultiLine"
+        android:maxLength="185"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
