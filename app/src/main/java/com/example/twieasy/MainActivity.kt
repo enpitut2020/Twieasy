@@ -11,10 +11,20 @@ import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.twieasy.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.first_boot.*
 import org.jsoup.Jsoup
 import javax.net.ssl.HttpsURLConnection
+
+class MyClass {
+    companion object {
+        public const val FOO = 1
+
+    }
+}
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,35 +38,44 @@ class MainActivity : AppCompatActivity() {
         "数理メディア情報学\n水曜日\n1,2時限",
         "パターン認識\n木曜日\n3,4時限",
         "オペレーティングシステム\n月曜日\n5,6時限")
+    private lateinit var auth: FirebaseAuth
+    private val TAG = MyClass::class.qualifiedName
     // Create a new user with a first and last name
-    val user = hashMapOf(
-        "first" to "Ada",
-        "last" to "Lovelace",
-        "born" to 1815
+    val subj = hashMapOf(
+        "date" to "開講日時　秋AB 火3,4",
+        "name" to "人工知能",
+        "place" to "オンライン オンデマンド 同時双方向 対面",
+        "subjectID" to 2,
+        "credit" to 2,
+        "evalMeth" to hashMapOf("attend" to 5, "report" to 5)
     )
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Initialize Firebase Auth
+        auth = Firebase.auth
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.makeAccount.setOnClickListener { jmpToFlick() }
         binding.loginButton.setOnClickListener { jumpToLoginPage() }
-    }
 
-    private fun jmpToFlick(){
-        setContentView(R.layout.first_boot)
-        center.setOnTouchListener(FlickListener(flickListener))
-        // Add a new document with a generated ID
-//        db.collection("users")
-//            .add(user)
+//        db.collection("subjects")
+//            .add(subj)
 //            .addOnSuccessListener { documentReference ->
 //                Log.d("TAG", "DocumentSnapshot added with ID: ${documentReference.id}")
 //            }
 //            .addOnFailureListener { e ->
 //                Log.w("TAG", "Error adding document", e)
 //            }
+    }
+
+    // ログイン--------------------------------------------------------------------------------------
+
+
+    private fun jmpToFlick(){
+        setContentView(R.layout.first_boot)
+        center.setOnTouchListener(FlickListener(flickListener))
     }
 
     private val flickListener = object : FlickListener.Listener {
@@ -160,15 +179,44 @@ class MainActivity : AppCompatActivity() {
     private val subject: MutableCollection<Button> = mutableListOf()//講義ボタンのリスト
     private fun jumpToSubjects(size: Int) {//講義一覧ページへ移動、講義ボタン生成
         setContentView(R.layout.subject)
-        for (i in 1..size) {//i = sizeも処理される
-            val r: Button = Button(this)
-            r.id = i
-            r.text = subjectsInfo[i - 1].name
-            subject.add(r)
-            val layout = findViewById<LinearLayout>(R.id.layout)
-            layout.addView(r)
-            r.setOnClickListener { jumpToReview(r.id) }
-        }
+//        for (i in 1..size) {//i = sizeも処理される
+//            val r: Button = Button(this)
+//            r.id = i
+//            r.text = subjectsInfo[i - 1].name
+//            subject.add(r)
+//            val layout = findViewById<LinearLayout>(R.id.layout)
+//            layout.addView(r)
+//            r.setOnClickListener { jumpToReview(r.id) }
+//        }
+//        val docRef = db.collection("subject").document("tqCBpaI3coOFKaAtg2jl")
+//        docRef.get()
+//            .addOnSuccessListener { document ->
+//                if (document != null) {
+//                    Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+//                } else {
+//                    Log.d(TAG, "No such document")
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.d(TAG, "get failed with ", exception)
+//            }
+        db.collection("subjects")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    val r: Button = Button(this)
+                    r.id = Integer.parseInt(document.get("subjectID").toString())
+                    r.text = document.get("name") as CharSequence?
+                    subject.add(r)
+                    val layout = findViewById<LinearLayout>(R.id.layout)
+                    layout.addView(r)
+                    r.setOnClickListener { jumpToReview(r.id) }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: ", exception)
+            }
     }
 
     private var reviews1: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!")
