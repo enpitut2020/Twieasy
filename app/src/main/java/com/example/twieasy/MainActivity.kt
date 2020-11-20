@@ -11,21 +11,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.twieasy.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
     val flickAttribute = mutableMapOf<Int, String>()
     var swipedCount = 0
-    val subjectInfo = mutableListOf<String>("知能情報メディア実験B","数理メディア情報学","パターン認識","オペレーティングシステム")
+    val subjectInfo = mutableListOf<String>(
+        "知能情報メディア実験B\n金曜日\n5,6時限",
+        "数理メディア情報学\n水曜日\n1,2時限",
+        "パターン認識\n木曜日\n3,4時限",
+        "オペレーティングシステム\n月曜日\n5,6時限")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        //binding.loginButton.setOnClickListener { jumpToLogin() }
+        setContentView(R.layout.first_boot)
         center.setOnTouchListener(FlickListener(flickListener))
     }
 
@@ -71,14 +70,15 @@ class MainActivity : AppCompatActivity() {
             // ---丹羽君---
             val subjectView : TextView = findViewById(R.id.subject_info)
             subjectView.text = subjectInfo[swipedCount]
-            if (swipedCount < subjectInfo.size-1){
+            //if (swipedCount < subjectInfo.size-1){
                 swipedCount += 1
-            }
+            //}
             // ------------
 
             // 3.全部終わったら履修科目一覧に遷移
-            else{
+            if(swipedCount == subjectInfo.size) {
                 // 画面遷移
+                setContentView(R.layout.activity_main_copy)
             }
 
         }
