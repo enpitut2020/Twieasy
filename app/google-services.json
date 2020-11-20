@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "111728313908",
+    "firebase_url": "https://twieasy-6a5e7.firebaseio.com",
+    "project_id": "twieasy-6a5e7",
+    "storage_bucket": "twieasy-6a5e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111728313908:android:a89af564d3366fe4562c61",
+        "android_client_info": {
+          "package_name": "com.example.twieasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111728313908-0hii9cng6mufo54curtfn9l3nunrhl4o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-hedFJUk5y6wve9n25EuDGmv42B5Hd1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111728313908-0hii9cng6mufo54curtfn9l3nunrhl4o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
