@@ -11,6 +11,7 @@ import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.twieasy.databinding.ActivityMainBinding
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.first_boot.*
 import org.jsoup.Jsoup
 import javax.net.ssl.HttpsURLConnection
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    val db = FirebaseFirestore.getInstance()
     val flickAttribute = mutableMapOf<Int, String>()
     var swipedCount = 0
     val subjectInfo = mutableListOf<String>(
@@ -26,6 +28,12 @@ class MainActivity : AppCompatActivity() {
         "数理メディア情報学\n水曜日\n1,2時限",
         "パターン認識\n木曜日\n3,4時限",
         "オペレーティングシステム\n月曜日\n5,6時限")
+    // Create a new user with a first and last name
+    val user = hashMapOf(
+        "first" to "Ada",
+        "last" to "Lovelace",
+        "born" to 1815
+    )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +48,15 @@ class MainActivity : AppCompatActivity() {
     private fun jmpToFlick(){
         setContentView(R.layout.first_boot)
         center.setOnTouchListener(FlickListener(flickListener))
+        // Add a new document with a generated ID
+//        db.collection("users")
+//            .add(user)
+//            .addOnSuccessListener { documentReference ->
+//                Log.d("TAG", "DocumentSnapshot added with ID: ${documentReference.id}")
+//            }
+//            .addOnFailureListener { e ->
+//                Log.w("TAG", "Error adding document", e)
+//            }
     }
 
     private val flickListener = object : FlickListener.Listener {

@@ -13,6 +13,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,6 +42,13 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+    // Declare the dependency for the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics-ktx'
-
+    // Declare the dependencies for any other desired Firebase products
+    // For example, declare the dependencies for Firebase Authentication and Cloud Firestore
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-firestore:22.0.0'
 }
