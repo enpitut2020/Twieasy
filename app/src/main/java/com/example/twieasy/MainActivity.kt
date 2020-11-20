@@ -2,11 +2,16 @@ package com.example.twieasy
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.twieasy.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.first_boot.*
 import org.jsoup.Jsoup
 import javax.net.ssl.HttpsURLConnection
 
@@ -14,14 +19,121 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    val flickAttribute = mutableMapOf<Int, String>()
+    var swipedCount = 0
+    val subjectInfo = mutableListOf<String>(
+        "知能情報メディア実験B\n金曜日\n5,6時限",
+        "数理メディア情報学\n水曜日\n1,2時限",
+        "パターン認識\n木曜日\n3,4時限",
+        "オペレーティングシステム\n月曜日\n5,6時限")
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.makeAccount.setOnClickListener { jmpToFlick() }
         binding.loginButton.setOnClickListener { jumpToLoginPage() }
     }
+
+    private fun jmpToFlick(){
+        setContentView(R.layout.first_boot)
+        center.setOnTouchListener(FlickListener(flickListener))
+    }
+
+    private val flickListener = object : FlickListener.Listener {
+
+        override fun onButtonPressed() {
+            center.setBackgroundButtonColor(R.color.pressedButtonColor)
+            toggleVisible()
+        }
+
+        override fun onSwipingOnCenter() = center.settingSwipe()
+        override fun onSwipingOutside() {
+            TODO("Not yet implemented")
+        }
+
+        override fun onSwipingOnLeft() = left.settingSwipe()
+        override fun onSwipingOnRight() = right.settingSwipe()
+        override fun onSwipingOnUp() = top.settingSwipe()
+        override fun onSwipingOnDown() = bottom.settingSwipe()
+
+        override fun onButtonReleased() = settingFlick("中")
+        override fun onFlickToLeft() = settingFlick("落単")
+        override fun onFlickToRight() = settingFlick("楽単")
+        override fun onFlickToUp() = settingFlick("知らん！！！")
+        override fun onFlickToDown() = settingFlick("下")
+        override fun onFlickOutside() {
+            TODO("Not yet implemented")
+        }
+
+
+        private fun settingFlick(label: String) {
+            showToast(label)
+            //Thread.sleep(100)
+            toggleInvisible()
+            clearAll()
+            Log.i("Flicked",label)
+            // 画面遷移
+            // 1.フリック情報:labelを保持しておく
+            flickAttribute.put(flickAttribute.count(),label)
+            print(flickAttribute)
+
+            // 2.科目情報を変更
+            // ---丹羽君---
+            val subjectView : TextView = findViewById(R.id.subject_info)
+            subjectView.text = subjectInfo[swipedCount]
+            //if (swipedCount < subjectInfo.size-1){
+            swipedCount += 1
+            //}
+            // ------------
+
+            // 3.全部終わったら履修科目一覧に遷移
+            if(swipedCount == subjectInfo.size) {
+                // 画面遷移
+                //setContentView(R.layout.activity_main_copy)
+                jumpToLoginPage()
+            }
+
+        }
+
+        private fun toggleVisible() {
+            top.visibility = View.VISIBLE
+            left.visibility = View.VISIBLE
+            right.visibility = View.VISIBLE
+            bottom.visibility = View.VISIBLE
+        }
+
+        private fun toggleInvisible() {
+            top.visibility = View.INVISIBLE
+            left.visibility = View.INVISIBLE
+            right.visibility = View.INVISIBLE
+            bottom.visibility = View.INVISIBLE
+        }
+
+        private fun clearAll() {
+            center.setBackgroundButtonColor(R.color.baseButtonColor)
+            left.setBackgroundButtonColor(R.color.lightgray)
+            right.setBackgroundButtonColor(R.color.lightgray)
+            top.setBackgroundButtonColor(R.color.lightgray)
+            bottom.setBackgroundButtonColor(R.color.baseButtonColor)
+        }
+
+        private fun View.settingSwipe() {
+            clearAll()
+            setBackgroundButtonColor(R.color.pressedButtonColor)
+            Log.i("Swiped","")
+        }
+
+        private fun View.setBackgroundButtonColor(@ColorRes resId: Int) =
+            setBackgroundColor(ContextCompat.getColor(applicationContext, resId))
+
+        private fun showToast(msg: String) = Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
+    }
+
+
+
 
     private fun jumpToLoginPage() {
         setContentView(R.layout.login_page)
@@ -51,6 +163,9 @@ class MainActivity : AppCompatActivity() {
         Subject("知能情報メディア実験B", "開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n評価方法　レポートn割 出席m割\n単位数 3", 40, reviewList[0]),
         Subject("人工知能", "開講日時　秋AB 火3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 20, reviewList[1])
     )
+
+
+
     private var page = 1
     private fun jumpToReview(id: Int) {
         getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/") //??????

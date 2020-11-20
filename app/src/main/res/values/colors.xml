@@ -3,4 +3,9 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="pressedButtonColor">#E7F8F8</color>
+    <color name="baseButtonColor">#FFFFFF</color>
+    <color name="lightgray">#d3d3d3</color>
+    <color name="deeppink">#ff1493</color>
+    <color name="deepskyblue">#00bfff</color>
 </resources>
