@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id = "@+id/reviewTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -80,66 +81,25 @@
             android:text="開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n 評価方法　レポートn割 出席m割\n 単位数 3"
             android:textSize="16dp" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="30dp">
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
+                <!--android:background="@android:color/primary_text_dark_nodisable" を実装できていない-->
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/pre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/review1"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/primary_text_dark_nodisable"
-            app:layout_constraintBottom_toTopOf="@id/loginButton" />
-
-        <TextView
-            android:id="@+id/review2"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/primary_text_dark_nodisable"
-            app:layout_constraintBottom_toTopOf="@id/loginButton" />
-
-        <TextView
-            android:id="@+id/review3"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/primary_text_dark_nodisable"
-            app:layout_constraintBottom_toTopOf="@id/loginButton" />
-
-
-        <TextView
-            android:id="@+id/review4"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/primary_text_dark_nodisable"
-            app:layout_constraintBottom_toTopOf="@id/loginButton" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/next"
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:text="next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pre" />
-
-    <Button
-        android:id="@+id/pre"
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:text="previous"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

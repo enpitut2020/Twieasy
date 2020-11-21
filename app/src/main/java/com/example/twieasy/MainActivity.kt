@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private var reviews1: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!")
+    private var reviews1: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!")
     private var reviews2: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
     private var reviews3: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
     private var reviews4: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
@@ -177,33 +177,23 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    private var page = 1
     private fun jumpToReview(id: Int) {
         getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/") //??????
         setContentView(R.layout.review)
         createReview(subjectsInfo[id - 1].name, subjectsInfo[id - 1].info, subjectsInfo[id - 1].easiness)
-        val r1: TextView = findViewById(R.id.review1)
-        val r2: TextView = findViewById(R.id.review2)
-        val r3: TextView = findViewById(R.id.review3)
-        val r4: TextView = findViewById(R.id.review4)
-        val revColumn: List<TextView> = listOf(r1, r2, r3, r4)
-        showReview(1, revColumn, id)
+        for (i in subjectsInfo[id - 1].reviews) {//i = sizeも処理される
+            val r: TextView = TextView(this)
+            r.text = i
+            r.height = 200
+            val layout = findViewById<LinearLayout>(R.id.linearLayout)
+            layout.addView(r)
+        }
 
         val goBackToSubjects: Button = findViewById(R.id.back_button)
         val writeReview: Button = findViewById(R.id.writeReview)
-        val pre: Button = findViewById(R.id.pre)
-        val next: Button = findViewById(R.id.next)
 
         goBackToSubjects.setOnClickListener { jumpToSubjects(subjectsInfo.size) }
         writeReview.setOnClickListener { jumpToWritePage(id) }
-        next.setOnClickListener {
-            if (page <= (reviewList[id - 1].size - 1) / 4)
-                showReview(++page, revColumn, id)
-        }
-        pre.setOnClickListener {
-            if (page != 1)
-                showReview(--page, revColumn, id)
-        }
     }
 
     private fun createReview(subname: String, subinfo: String, easiness: Int) {//easiness[%] : 楽単度合い
@@ -229,7 +219,7 @@ class MainActivity : AppCompatActivity() {
         textview4.text = subinfo
     }
 
-    private fun showReview(page: Int, revColumn: List<TextView>, id: Int) {
+/*    private fun showReview(page: Int, revColumn: List<TextView>, id: Int) {
         for (num in (page - 1) * 4 until page * 4) {
             if (num >= reviewList[id - 1].size)
                 revColumn[num % 4].text = ""
@@ -237,7 +227,7 @@ class MainActivity : AppCompatActivity() {
                 revColumn[num % 4].text = reviewList[id - 1].elementAt(num)
         }
 
-    }
+    }*/
 
     private fun jumpToWritePage(id: Int) {
         setContentView(R.layout.editform)
