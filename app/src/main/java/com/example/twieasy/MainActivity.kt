@@ -219,16 +219,6 @@ class MainActivity : AppCompatActivity() {
         textview4.text = subinfo
     }
 
-/*    private fun showReview(page: Int, revColumn: List<TextView>, id: Int) {
-        for (num in (page - 1) * 4 until page * 4) {
-            if (num >= reviewList[id - 1].size)
-                revColumn[num % 4].text = ""
-            else
-                revColumn[num % 4].text = reviewList[id - 1].elementAt(num)
-        }
-
-    }*/
-
     private fun jumpToWritePage(id: Int) {
         setContentView(R.layout.editform)
         val post: Button = findViewById(R.id.post)
