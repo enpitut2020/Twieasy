@@ -14,10 +14,8 @@ import com.example.twieasy.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.first_boot.*
 import org.jsoup.Jsoup
 import javax.net.ssl.HttpsURLConnection
-import java.io.*
-import java.util.Random
 
-class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -33,14 +31,10 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        button.setOnClickListener{
-            val mail = getMail()
-            MailSender.getInstance().sendMail(mail, this)
-        }
-        // binding = ActivityMainBinding.inflate(layoutInflater)
-        // setContentView(binding.root)
-        // binding.makeAccount.setOnClickListener { jmpToFlick() }
-        // binding.loginButton.setOnClickListener { jumpToLoginPage() }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.makeAccount.setOnClickListener { jmpToFlick() }
+        binding.loginButton.setOnClickListener { jumpToLoginPage() }
     }
 
     private fun jmpToFlick(){
@@ -280,36 +274,6 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
 
         getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/")
         jumpToReview(id)
-    }
-
-     private fun Very(min:Int,max:Int):Int{
-        val rand = Random()
-        val randomNum = rand.nextInt((max-min)+1) + min
-        return randomNum
-    }
-
-    private fun getMail(): Mail{
-        return Mail().apply {
-            mailServerHost = "smtp.qq.com"
-            mailServerPort = "587"
-            fromAddress = "549908110@qq.com"
-            password = "pvzqswiunugvbdih"
-            toAddress = arrayListOf(mailAddress.text.toString())
-            subject = "Twieasy messageSender Test"
-
-            val message :String = Very(1000,9999).toString()
-            content = SpanUtils(this@MainActivity)
-                .appendLine(message).setFontSize(28, true)
-                .create()
-        }
-    }
-
-    override fun onSuccess() {
-        Toast.makeText(this@MainActivity, "成功", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onError(e: Throwable) {
-        Toast.makeText(this@MainActivity, "失敗: $e.message", Toast.LENGTH_SHORT).show()
     }
 
 
