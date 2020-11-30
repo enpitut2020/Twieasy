@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import android.synthetic.main.activity_main.*
 import com.example.twieasy.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.first_boot.*
 import org.jsoup.Jsoup
@@ -292,8 +293,8 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         return Mail().apply {
             mailServerHost = "smtp.qq.com"
             mailServerPort = "587"
-            fromAddress = "549908110@qq.com"
-            password = "pvzqswiunugvbdih"
+            fromAddress = "*****"
+            password = "*****"
             toAddress = arrayListOf(mailAddress.text.toString())
             subject = "Twieasy messageSender Test"
 
