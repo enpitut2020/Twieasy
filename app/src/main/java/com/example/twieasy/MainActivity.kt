@@ -69,14 +69,14 @@ class MainActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener { jumpToLoginPage() }
 
         //　データを追加する
-        db.collection("subjects")
-            .add(subj)
-            .addOnSuccessListener { documentReference ->
-                Log.d("TAG", "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("TAG", "Error adding document", e)
-            }
+//        db.collection("subjects")
+//            .add(subj)
+//            .addOnSuccessListener { documentReference ->
+//                Log.d("TAG", "DocumentSnapshot added with ID: ${documentReference.id}")
+//            }
+//            .addOnFailureListener { e ->
+//                Log.w("TAG", "Error adding document", e)
+//            }
     }
 
     // ログイン--------------------------------------------------------------------------------------
@@ -255,7 +255,27 @@ class MainActivity : AppCompatActivity() {
     private fun jumpToReview(id: Int) {
         getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/") //??????
         setContentView(R.layout.review)
-        createReview(subjectsInfo[id - 1].name, subjectsInfo[id - 1].info, subjectsInfo[id - 1].easiness)
+        db.collection("subjects")
+            .whereEqualTo("subjectID", id)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    if (id == Integer.parseInt(document.get("subjectID").toString())) {
+                        createReview(document.get("name").toString(),
+                            document.get("date").toString() + "\n" +
+                                    "授業形態　" + document.get("place").toString() + "\n" +
+                            "評価方法　" + "出席"  + document.get("evalMeth.attend").toString() + "," +
+                                    "レポート" + document.get("evalMeth.report").toString() + "," +
+                                    "試験" + document.get("evalMeth.test").toString() + "," + "\n" +
+                            "単位数" + document.get("credit").toString(),  subjectsInfo[id - 1].easiness)
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "Error getting documents: ", exception)
+            }
+
         val r1: TextView = findViewById(R.id.review1)
         val r2: TextView = findViewById(R.id.review2)
         val r3: TextView = findViewById(R.id.review3)
