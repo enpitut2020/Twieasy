@@ -40,23 +40,6 @@ class MainActivity : AppCompatActivity() {
         "オペレーティングシステム\n月曜日\n5,6時限")
     private lateinit var auth: FirebaseAuth
     private val TAG = MyClass::class.qualifiedName
-    // Create a new user with a first and last name
-    val subj = hashMapOf(
-        "name" to "データベース概論Ⅱ",
-        "date" to "開講日時　秋AB 金3,4",
-        "place" to "オンデマンド",
-        "subjectID" to 8,
-        "credit" to 2,
-        "evalMeth" to hashMapOf("attend" to 0, "report" to 10, "test" to 0)
-    )
-//    Subject("知能情報メディア実験B", "開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n評価方法　レポートn割 出席m割\n単位数 3", 40, reviewList[0]),
-//    Subject("人工知能", "開講日時　秋AB 火3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 20, reviewList[1]),
-//    Subject("分散システム", "開講日時　秋AB 月3\n授業形態 対面 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 1", 20, reviewList[2]),
-//    Subject("画像メディア工学", "開講日時　秋AB 火5,6\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 20, reviewList[3]),
-//    Subject("視覚情報科学", "開講日時　秋AB 木1,2\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 60, reviewList[4]),
-//    Subject("パターン認識", "開講日時　秋AB 木3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 40, reviewList[5]),
-//    Subject("数理アルゴリズムとシミュレーション", "開講日時　秋AB 金1,2\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 30, reviewList[6]),
-//    Subject("データベース概論Ⅱ", "開講日時　秋AB 金3,4\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 40, reviewList[7])
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Initialize Firebase Auth
@@ -68,15 +51,28 @@ class MainActivity : AppCompatActivity() {
         binding.makeAccount.setOnClickListener { jmpToFlick() }
         binding.loginButton.setOnClickListener { jumpToLoginPage() }
 
+        // addSubject();
+    }
+
+    private fun addSubject() {
+        // Create a new user with a first and last name
+        val subj = hashMapOf(
+            "name" to "知能情報メディア実験B",
+            "date" to "開講日時　秋AB 水3,4 金5,6",
+            "place" to "対面　オンライン",
+            "subjectID" to 9,
+            "credit" to 3,
+            "evalMeth" to hashMapOf("attend" to 0, "report" to 10, "test" to 0)
+        )
         //　データを追加する
-//        db.collection("subjects")
-//            .add(subj)
-//            .addOnSuccessListener { documentReference ->
-//                Log.d("TAG", "DocumentSnapshot added with ID: ${documentReference.id}")
-//            }
-//            .addOnFailureListener { e ->
-//                Log.w("TAG", "Error adding document", e)
-//            }
+        db.collection("subjects")
+            .add(subj)
+            .addOnSuccessListener { documentReference ->
+                Log.d("TAG", "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("TAG", "Error adding document", e)
+            }
     }
 
     // ログイン--------------------------------------------------------------------------------------
@@ -236,7 +232,8 @@ class MainActivity : AppCompatActivity() {
     private var reviews6: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
     private var reviews7: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
     private var reviews8: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
-    private var reviewList = mutableListOf(reviews1, reviews2, reviews3, reviews4, reviews5, reviews6, reviews7, reviews8)
+    private var reviews9: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
+    private var reviewList = mutableListOf(reviews1, reviews2, reviews3, reviews4, reviews5, reviews6, reviews7, reviews8, reviews9)
     data class Subject(var name: String, var info: String, var easiness: Int, var reviews: MutableCollection<String>)//構造体みたいなクラス
     private var subjectsInfo  = mutableListOf(
         Subject("知能情報メディア実験B", "開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n評価方法　レポートn割 出席m割\n単位数 3", 40, reviewList[0]),
@@ -246,7 +243,8 @@ class MainActivity : AppCompatActivity() {
         Subject("視覚情報科学", "開講日時　秋AB 木1,2\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 60, reviewList[4]),
         Subject("パターン認識", "開講日時　秋AB 木3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 40, reviewList[5]),
         Subject("数理アルゴリズムとシミュレーション", "開講日時　秋AB 金1,2\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 30, reviewList[6]),
-        Subject("データベース概論Ⅱ", "開講日時　秋AB 金3,4\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 40, reviewList[7])
+        Subject("データベース概論Ⅱ", "開講日時　秋AB 金3,4\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 40, reviewList[7]),
+                Subject("データベース概論Ⅱ", "開講日時　秋AB 金3,4\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 40, reviewList[8])
     )
 
 
