@@ -35,5 +35,7 @@ object MailSender {
     interface OnMailSendListener {
         fun onSuccess()
         fun onError(e: Throwable)
+        abstract fun getMail(): Mail
+        fun jumpToLoginPage()
     }
 }

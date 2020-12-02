@@ -21,6 +21,7 @@ import java.util.Random
 class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
 
     private lateinit var binding: ActivityMainBinding
+    data class Subject(var name: String, var info: String, var easiness: Int, var reviews: MutableCollection<String>)//構造体みたいなクラス
 
     val flickAttribute = mutableMapOf<Int, String>()
     var swipedCount = 0
@@ -30,6 +31,25 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         "パターン認識\n木曜日\n3,4時限",
         "オペレーティングシステム\n月曜日\n5,6時限")
 
+    val subjectNumber = mutableListOf<String>(
+        // 科目番号
+        "GB22101", // 数理メディア
+        "GB40201", // パターン認識
+        "GB30411", // OS
+        "BC12893", // enPiT
+    )
+
+    // KDBからとってきた生データ
+    private val kdbRawData = subjectNumber.map{
+        "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
+    }
+
+    // KDBの情報を整形したもの
+    val subjects: List<MainActivity.Subject?> = kdbRawData.map {
+        Log.i("info", it)
+        getTextFromWeb(it)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +58,10 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
             val mail = getMail()
             MailSender.getInstance().sendMail(mail, this)
         }
-        // binding = ActivityMainBinding.inflate(layoutInflater)
-        // setContentView(binding.root)
-        // binding.makeAccount.setOnClickListener { jmpToFlick() }
-        // binding.loginButton.setOnClickListener { jumpToLoginPage() }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.makeAccount.setOnClickListener { jmpToFlick() }
+        binding.loginButton.setOnClickListener { jumpToLoginPage() }
     }
 
     private fun jmpToFlick(){
@@ -81,11 +101,13 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
             toggleInvisible()
             clearAll()
             Log.i("Flicked",label)
+
             // 画面遷移
             // 1.フリック情報:labelを保持しておく
             flickAttribute.put(flickAttribute.count(),label)
             print(flickAttribute)
 
+/*
             // 2.科目情報を変更
             // ---丹羽君---
             val subjectView : TextView = findViewById(R.id.subject_info)
@@ -101,6 +123,21 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
                 //setContentView(R.layout.activity_main_copy)
                 jumpToLoginPage()
             }
+ */
+            val subjectView : TextView = findViewById(R.id.subject_info)
+            subjectView.text = subjects[swipedCount]?.name
+            //if (swipedCount < subjectInfo.size-1){
+            swipedCount += 1
+
+            // ------------
+
+            // 3.全部終わったら履修科目一覧に遷移
+            if(swipedCount == subjectInfo.size) {
+                // 画面遷移
+                //setContentView(R.layout.activity_main_copy)
+                jumpToLoginPage()
+            }
+
 
         }
 
@@ -139,9 +176,7 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
     }
 
 
-
-
-    private fun jumpToLoginPage() {
+    override fun jumpToLoginPage() {
         setContentView(R.layout.login_page)
         val login: Button = findViewById(R.id.login_login)
         login.setOnClickListener{ jumpToSubjects(subjectsInfo.size) }
@@ -170,7 +205,6 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
     private var reviews7: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
     private var reviews8: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
     private var reviewList = mutableListOf(reviews1, reviews2, reviews3, reviews4, reviews5, reviews6, reviews7, reviews8)
-    data class Subject(var name: String, var info: String, var easiness: Int, var reviews: MutableCollection<String>)//構造体みたいなクラス
     private var subjectsInfo  = mutableListOf(
         Subject("知能情報メディア実験B", "開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n評価方法　レポートn割 出席m割\n単位数 3", 40, reviewList[0]),
         Subject("人工知能", "開講日時　秋AB 火3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 20, reviewList[1]),
@@ -259,22 +293,33 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         jumpToReview(id)
     }
 
-    private fun getTextFromWeb(urlString: String) {
+    private fun getTextFromWeb(urlString: String): Subject? {
+        var subject: Subject? = null
         Thread(Runnable {
             try {
                 val doc = Jsoup.connect(urlString).get();
                 val title = doc.select("#course-title #title").first().text() //科目名
-                val credit = doc.select("#credit-grade-assignments span").first().text() //単位数
+                val credit = doc.select("#credit-grade-assignments #credit").first().text() //単位数
+                val timetable =
+                    doc.select("#credit-grade-assignments #timetable").first().text() //開講日時
+                val styleHeading = doc.select("#style-heading-style p").first().text() //授業形態
                 val eval = doc.select("#assessment-heading-assessment p").first().text() //評価方法
-                Log.i("title:",title.toString())
-                Log.i("credit:",title.toString())
+                Log.i("title:", title.toString())
+                Log.i("credit:", title.toString())
                 Log.i("eval:", eval.toString())
-
-
-            } catch (ex: Exception) {
+                subject = Subject(
+                    title,
+                    "開講日時　" + timetable + "\n授業形態 " + styleHeading + "\n" + eval + "\n単位数 " + credit,
+                    40,
+                    reviewList[7]
+                );
+            }
+            catch (ex: Exception) {
                 Log.d("Exception", ex.toString())
             }
         }).start()
+
+        return subject
     }
 
     private fun subjectJmp(id: Int){
@@ -289,7 +334,7 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         return randomNum
     }
 
-    private fun getMail(): Mail{
+    override fun getMail(): Mail{
         return Mail().apply {
             mailServerHost = "smtp.qq.com"
             mailServerPort = "587"
