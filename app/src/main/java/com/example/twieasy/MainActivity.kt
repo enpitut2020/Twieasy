@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
 
     private lateinit var binding: ActivityMainBinding
 
+    var res :String = ""
     val flickAttribute = mutableMapOf<Int, String>()
     var swipedCount = 0
     val subjectInfo = mutableListOf<String>(
@@ -29,7 +30,6 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         "数理メディア情報学\n水曜日\n1,2時限",
         "パターン認識\n木曜日\n3,4時限",
         "オペレーティングシステム\n月曜日\n5,6時限")
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
