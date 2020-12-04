@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.twieasy.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -17,6 +18,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.loginButton.setOnClickListener { jumpToLogin() }
     }
+
+
+
 
     private val reviews : MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
     private var page : Int = 1
