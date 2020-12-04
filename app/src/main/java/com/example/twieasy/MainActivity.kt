@@ -38,6 +38,10 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
             val mail = getMail()
             MailSender.getInstance().sendMail(mail, this)
         }
+        makeAccount.setOnClickListener{
+            if(res == verify.text.toString()) jmpToFlick()
+            else  Toast.makeText(this@MainActivity, "認証コードが間違っている", Toast.LENGTH_SHORT).show()
+        }
         // binding = ActivityMainBinding.inflate(layoutInflater)
         // setContentView(binding.root)
         // binding.makeAccount.setOnClickListener { jmpToFlick() }
@@ -283,30 +287,39 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         jumpToReview(id)
     }
 
-     private fun Very(min:Int,max:Int):Int{
+     private fun Ver(min:Int,max:Int):Int{
         val rand = Random()
         val randomNum = rand.nextInt((max-min)+1) + min
         return randomNum
     }
 
     private fun getMail(): Mail{
+        val regex = "[s]{1}[0-9]{7}@[s,u].tsukuba.ac.jp".toRegex();
+        val message :String = Ver(1000,9999).toString()
+        res = message
+        val flag:Boolean = mailAddress.text.toString().matches(regex)
         return Mail().apply {
             mailServerHost = "smtp.qq.com"
             mailServerPort = "587"
-            fromAddress = "*****"
-            password = "*****"
+            fromAddress = "***"
+            password = "***"
             toAddress = arrayListOf(mailAddress.text.toString())
             subject = "Twieasy messageSender Test"
-
-            val message :String = Very(1000,9999).toString()
-            content = SpanUtils(this@MainActivity)
-                .appendLine(message).setFontSize(28, true)
-                .create()
+            if(flag) {
+                content = SpanUtils(this@MainActivity)
+                    .appendLine(message).setFontSize(28, true)
+                    .create()
+            }else{
+                Toast.makeText(this@MainActivity, "筑波大学のメールアドレスを使いなさい", Toast.LENGTH_SHORT).show()
+                content = SpanUtils(this@MainActivity)
+                    .appendLine("筑波大学のメールアドレスを使いなさい 例:s*******@u/s.tsukuba.ac.jp").setFontSize(28, true)
+                    .create()
+            }
         }
     }
 
     override fun onSuccess() {
-        Toast.makeText(this@MainActivity, "成功", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this@MainActivity, "成功", Toast.LENGTH_SHORT).show()
     }
 
     override fun onError(e: Throwable) {
