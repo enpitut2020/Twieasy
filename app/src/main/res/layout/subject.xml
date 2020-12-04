@@ -9,6 +9,7 @@
         android:layout_height="match_parent">
         ​
         <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -17,131 +18,8 @@
                 android:id="@+id/passWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="パスワード"
+                android:hint="検索"
                 />
-
-
-            <Button
-                android:id="@+id/class1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="知能情報メディア実験B"/>
-            ​
-            <Button
-                android:id="@+id/class2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目2"/>
-            ​
-            <Button
-                android:id="@+id/class3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目3"/>
-            ​
-            <Button
-                android:id="@+id/class4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目4"/>
-            ​
-            <Button
-                android:id="@+id/class5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目5"/>
-            ​
-            <Button
-                android:id="@+id/class6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目6"/>
-            ​
-            <Button
-                android:id="@+id/class7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目7"/>
-            ​
-            <Button
-                android:id="@+id/class8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目8"/>
-            ​
-            <Button
-                android:id="@+id/class9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目9"/>
-            ​
-            <Button
-                android:id="@+id/class10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目10"/>
-            ​
-
-            <Button
-                android:id="@+id/class11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="知能情報メディア実験B"/>
-            ​
-            <Button
-                android:id="@+id/class12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目2"/>
-            ​
-            <Button
-                android:id="@+id/class13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目3"/>
-            ​
-            <Button
-                android:id="@+id/class14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目4"/>
-            ​
-            <Button
-                android:id="@+id/class15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目5"/>
-            ​
-            <Button
-                android:id="@+id/class16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目6"/>
-            ​
-            <Button
-                android:id="@+id/class17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目7"/>
-            ​
-            <Button
-                android:id="@+id/class18"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目8"/>
-            ​
-            <Button
-                android:id="@+id/class19"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目9"/>
-            ​
-            <Button
-                android:id="@+id/class20"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="科目10"/>
-
 
         </LinearLayout>
         ​

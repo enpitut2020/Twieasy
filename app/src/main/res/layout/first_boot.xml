@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    >
+
+    <View
+        android:id="@+id/center"
+        android:layout_width="205dp"
+        android:layout_height="103dp"
+        android:text="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.681" />
+
+    <TextView
+        android:id="@+id/subject_info"
+        android:layout_width="251dp"
+        android:layout_height="117dp"
+        android:background="@drawable/text_border"
+        android:elevation="1dp"
+        android:gravity="center"
+        android:text="知能情報メディア実験B\n金曜日\n5,6時限"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.685" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:elevation="2dp"
+        android:gravity="center"
+        android:text="楽単"
+        app:autoSizeTextType="uniform"
+        android:textColor="@color/deepskyblue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:elevation="3dp"
+        android:gravity="center"
+        android:text="落単"
+        android:textColor="@color/deeppink"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="175dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="276dp"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:text="知らん"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/left"
+        android:layout_width="152dp"
+        android:layout_height="262dp"
+        android:layout_marginBottom="16dp"
+        android:text="落単"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/right"
+        android:layout_width="155dp"
+        android:layout_height="276dp"
+        android:layout_marginBottom="4dp"
+        android:text="楽単"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/top"
+        android:layout_width="372dp"
+        android:layout_height="395dp"
+        android:layout_marginBottom="28dp"
+
+        android:text="知らん"
+        app:layout_constraintBottom_toTopOf="@+id/center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/bottom"
+        android:layout_width="58dp"
+        android:layout_height="53dp"
+        android:text="bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/center" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

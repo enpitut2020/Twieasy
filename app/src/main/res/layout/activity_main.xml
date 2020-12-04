@@ -27,6 +27,9 @@
                 android:layout_width="232dp"
                 android:layout_height="wrap_content"
                 android:hint="メールアドレス"
+                android:digits="abcdefghijklmnopqrstuvwxyz1234567890.@"
+                android:inputType="textEmailAddress"
+                android:maxLength="24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,6 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="パスワード"
+            android:digits="abcdefghijklmnopqrstuvwxyz1234567890"
+            android:inputType="textPassword"
+            android:maxLength="8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/mailAddress" />
 
@@ -53,6 +59,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="パスワード確認"
+            android:digits="abcdefghijklmnopqrstuvwxyz1234567890"
+            android:inputType="textPassword"
+            android:maxLength="8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/mailAddress" />
 
@@ -62,6 +71,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="認証コード"
+            android:inputType="number"
+            android:maxLength="4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/mailAddress" />
 
