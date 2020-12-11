@@ -36,110 +36,73 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-            <!-- 1. padding を上下左右それぞれに設定 -->
-            <TextView
-                android:id="@+id/difficulty"
-                android:layout_width="0dp"
+            android:paddingTop="30dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="#AA1BFF"
-                android:gravity="center"
-                android:text="落60%"
-                android:textColor="#000000"
-                android:textSize="30sp" />
-            <TextView
-                android:id="@+id/easiness"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:background="#23FFB5"
-                android:gravity="center"
-                android:text="楽40%"
-                android:textSize="30sp"
-                android:textColor="#444444" />
-        </LinearLayout>
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+                    <!-- 1. padding を上下左右それぞれに設定 -->
+                    <TextView
+                        android:id="@+id/difficulty"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="#AA1BFF"
+                        android:gravity="center"
+                        android:text="落60%"
+                        android:textColor="#000000"
+                        android:textSize="30sp" />
+                    <TextView
+                        android:id="@+id/easiness"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="#23FFB5"
+                        android:gravity="center"
+                        android:text="楽40%"
+                        android:textSize="30sp"
+                        android:textColor="#444444" />
+                </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/subject_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="知能情報メディア実験B"
-            android:textSize="28dp" />
+                <TextView
+                    android:id="@+id/subject_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/primary_text_dark_nodisable"
+                    android:text="知能情報メディア実験B"
+                    android:textSize="28dp" />
 
-        <TextView
-            android:id="@+id/subject_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n 評価方法　レポートn割 出席m割\n 単位数 3"
-            android:textSize="16dp" />
+                <TextView
+                    android:id="@+id/subject_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:color/primary_text_dark_nodisable"
+                    android:text="開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n 評価方法　レポートn割 出席m割\n 単位数 3"
+                    android:textSize="16dp" />
 
+                <!--レビューに適応してあった 'android:background="@android:color/primary_text_dark_nodisable"' は授業情報に適応した-->
 
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/pre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/review1"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/primary_text_dark_nodisable"
-            app:layout_constraintBottom_toTopOf="@id/loginButton" />
-
-        <TextView
-            android:id="@+id/review2"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/primary_text_dark_nodisable"
-            app:layout_constraintBottom_toTopOf="@id/loginButton" />
-
-        <TextView
-            android:id="@+id/review3"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/primary_text_dark_nodisable"
-            app:layout_constraintBottom_toTopOf="@id/loginButton" />
-
-
-        <TextView
-            android:id="@+id/review4"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@android:color/primary_text_dark_nodisable"
-            app:layout_constraintBottom_toTopOf="@id/loginButton" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/next"
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:text="next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pre" />
-
-    <Button
-        android:id="@+id/pre"
-        android:layout_width="184dp"
-        android:layout_height="wrap_content"
-        android:text="previous"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
