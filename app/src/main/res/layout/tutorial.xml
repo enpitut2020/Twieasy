@@ -7,13 +7,13 @@ android:layout_height="match_parent"
 android:padding="16dp"
 tools:context=".MainActivity">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toTopOf="parent"
-    android:orientation="vertical"
-    tools:layout_editor_absoluteX="88dp"
-    tools:layout_editor_absoluteY="49dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="49dp">
 
     <ImageView
         android:layout_width="match_parent"

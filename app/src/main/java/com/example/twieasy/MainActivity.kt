@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import com.example.twieasy.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.first_boot.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.tutorial.*
 import org.jsoup.Jsoup
 import javax.net.ssl.HttpsURLConnection
 import java.io.*
@@ -51,7 +52,6 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         getTextFromWeb(it)
     }
 
-    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -63,10 +63,16 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
             if(res == verify.text.toString()) jmpToFlick()
             else  Toast.makeText(this@MainActivity, "認証コードが間違っている", Toast.LENGTH_SHORT).show()
         }
-        // binding = ActivityMainBinding.inflate(layoutInflater)
-        // setContentView(binding.root)
-        // binding.makeAccount.setOnClickListener { jmpToFlick() }
-        // binding.loginButton.setOnClickListener { jumpToLoginPage() }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //binding.makeAccount.setOnClickListener { jmpToFlick() }
+        binding.makeAccount.setOnClickListener { jmpToTutorial() }
+        binding.loginButton.setOnClickListener { jumpToLoginPage() }
+    }
+
+    private fun jmpToTutorial() {
+        setContentView(R.layout.tutorial)
+        okButton.setOnClickListener{ jmpToFlick() }
     }
 
     private fun jmpToFlick(){
@@ -300,7 +306,9 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
 
     private fun getTextFromWeb(urlString: String): Subject? {
         var subject: Subject? = null
-        Thread(Runnable {
+        var mWorker: Thread? = null
+
+        mWorker = Thread{
             try {
                 val doc = Jsoup.connect(urlString).get();
                 val title = doc.select("#course-title #title").first().text() //科目名
@@ -322,7 +330,9 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
             catch (ex: Exception) {
                 Log.d("Exception", ex.toString())
             }
-        }).start()
+        }
+        mWorker?.start()
+        mWorker?.join()
 
         return subject
     }
