@@ -107,6 +107,10 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
             clearAll()
             Log.i("Flicked",label)
 
+            // 落単，楽単，知らん以外は画面遷移しない．
+            if (label=="中" || label == "下")
+                return
+
             // 画面遷移
             // 1.フリック情報:labelを保持しておく
             flickAttribute.put(flickAttribute.count(),label)
