@@ -43,22 +43,23 @@
             android:layout_marginBottom="20dp"
             android:orientation="horizontal">
             <!-- 1. padding を上下左右それぞれに設定 -->
+
             <TextView
                 android:id="@+id/difficulty"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:background="#AA1BFF"
+                android:background="#e86965"
                 android:gravity="center"
                 android:text="落60%"
-                android:textColor="#000000"
+                android:textColor="#444444"
                 android:textSize="30sp" />
             <TextView
                 android:id="@+id/easiness"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:background="#23FFB5"
+                android:background="#98cf50"
                 android:gravity="center"
                 android:text="楽40%"
                 android:textSize="30sp"

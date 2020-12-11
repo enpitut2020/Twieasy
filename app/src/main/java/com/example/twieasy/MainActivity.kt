@@ -1,5 +1,6 @@
 package com.example.twieasy
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,26 +12,31 @@ import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.twieasy.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.first_boot.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.first_boot.*
+import kotlinx.android.synthetic.main.tutorial.*
 import org.jsoup.Jsoup
-import javax.net.ssl.HttpsURLConnection
-import java.io.*
-import java.util.Random
+import java.util.*
+
 
 class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
 
     private lateinit var binding: ActivityMainBinding
-    data class Subject(var name: String, var info: String, var easiness: Int, var reviews: MutableCollection<String>)//構造体みたいなクラス
+    data class Subject(
+        var name: String,
+        var info: String,
+        var easiness: Int,
+        var reviews: MutableCollection<String>
+    )//構造体みたいなクラス
 
     val flickAttribute = mutableMapOf<Int, String>()
     var swipedCount = 0
-    var res :String = ""
     val subjectInfo = mutableListOf<String>(
         "知能情報メディア実験B\n金曜日\n5,6時限",
         "数理メディア情報学\n水曜日\n1,2時限",
         "パターン認識\n木曜日\n3,4時限",
-        "オペレーティングシステム\n月曜日\n5,6時限")
+        "オペレーティングシステム\n月曜日\n5,6時限"
+    )
 
     val subjectNumber = mutableListOf<String>(
         // 科目番号
@@ -51,7 +57,6 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         getTextFromWeb(it)
     }
 
-    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -59,14 +64,16 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
             val mail = getMail()
             MailSender.getInstance().sendMail(mail, this)
         }
-        makeAccount.setOnClickListener{
-            if(res == verify.text.toString()) jmpToFlick()
-            else  Toast.makeText(this@MainActivity, "認証コードが間違っている", Toast.LENGTH_SHORT).show()
-        }
-        // binding = ActivityMainBinding.inflate(layoutInflater)
-        // setContentView(binding.root)
-        // binding.makeAccount.setOnClickListener { jmpToFlick() }
-        // binding.loginButton.setOnClickListener { jumpToLoginPage() }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //binding.makeAccount.setOnClickListener { jmpToFlick() }
+        binding.makeAccount.setOnClickListener { jumpToTutorial() }
+        binding.loginButton.setOnClickListener { jumpToLoginPage() }
+    }
+
+    private fun jumpToTutorial() {
+        setContentView(R.layout.tutorial)
+        okButton.setOnClickListener {jmpToFlick() }
     }
 
     private fun jmpToFlick(){
@@ -105,14 +112,13 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
             //Thread.sleep(100)
             toggleInvisible()
             clearAll()
-            Log.i("Flicked",label)
+            Log.i("Flicked", label)
 
             // 画面遷移
             // 1.フリック情報:labelを保持しておく
-            flickAttribute.put(flickAttribute.count(),label)
+            flickAttribute.put(flickAttribute.count(), label)
             print(flickAttribute)
 
-/*
             // 2.科目情報を変更
             // ---丹羽君---
             val subjectView : TextView = findViewById(R.id.subject_info)
@@ -128,9 +134,12 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
                 //setContentView(R.layout.activity_main_copy)
                 jumpToLoginPage()
             }
- */
+
+            /*
             val subjectView : TextView = findViewById(R.id.subject_info)
             subjectView.text = subjects[swipedCount]?.name
+            //val sbj: Subject = getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/") //??????
+
             //if (swipedCount < subjectInfo.size-1){
             swipedCount += 1
 
@@ -141,7 +150,7 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
                 // 画面遷移
                 //setContentView(R.layout.activity_main_copy)
                 jumpToLoginPage()
-            }
+            }*/
 
 
         }
@@ -171,13 +180,17 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         private fun View.settingSwipe() {
             clearAll()
             setBackgroundButtonColor(R.color.pressedButtonColor)
-            Log.i("Swiped","")
+            Log.i("Swiped", "")
         }
 
         private fun View.setBackgroundButtonColor(@ColorRes resId: Int) =
             setBackgroundColor(ContextCompat.getColor(applicationContext, resId))
 
-        private fun showToast(msg: String) = Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
+        private fun showToast(msg: String) = Toast.makeText(
+            this@MainActivity,
+            msg,
+            Toast.LENGTH_LONG
+        ).show()
     }
 
 
@@ -201,24 +214,110 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         }
     }
 
-    private var reviews1: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!")
-    private var reviews2: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
-    private var reviews3: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
-    private var reviews4: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
-    private var reviews5: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
-    private var reviews6: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
-    private var reviews7: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
-    private var reviews8: MutableCollection<String> = mutableListOf("楽単!(人工知能)", "落単!(人工知能)", "普通!(人工知能)", "Easy!(人工知能)")
-    private var reviewList = mutableListOf(reviews1, reviews2, reviews3, reviews4, reviews5, reviews6, reviews7, reviews8)
+    private var reviews1: MutableCollection<String> = mutableListOf(
+        "楽単!",
+        "落単!",
+        "普通!",
+        "Easy!",
+        "楽単!",
+        "落単!"
+    )
+    private var reviews2: MutableCollection<String> = mutableListOf(
+        "楽単!(人工知能)",
+        "落単!(人工知能)",
+        "普通!(人工知能)",
+        "Easy!(人工知能)"
+    )
+    private var reviews3: MutableCollection<String> = mutableListOf(
+        "楽単!(人工知能)",
+        "落単!(人工知能)",
+        "普通!(人工知能)",
+        "Easy!(人工知能)"
+    )
+    private var reviews4: MutableCollection<String> = mutableListOf(
+        "楽単!(人工知能)",
+        "落単!(人工知能)",
+        "普通!(人工知能)",
+        "Easy!(人工知能)"
+    )
+    private var reviews5: MutableCollection<String> = mutableListOf(
+        "楽単!(人工知能)",
+        "落単!(人工知能)",
+        "普通!(人工知能)",
+        "Easy!(人工知能)"
+    )
+    private var reviews6: MutableCollection<String> = mutableListOf(
+        "楽単!(人工知能)",
+        "落単!(人工知能)",
+        "普通!(人工知能)",
+        "Easy!(人工知能)"
+    )
+    private var reviews7: MutableCollection<String> = mutableListOf(
+        "楽単!(人工知能)",
+        "落単!(人工知能)",
+        "普通!(人工知能)",
+        "Easy!(人工知能)"
+    )
+    private var reviews8: MutableCollection<String> = mutableListOf(
+        "楽単!(人工知能)",
+        "落単!(人工知能)",
+        "普通!(人工知能)",
+        "Easy!(人工知能)"
+    )
+    private var reviewList = mutableListOf(
+        reviews1,
+        reviews2,
+        reviews3,
+        reviews4,
+        reviews5,
+        reviews6,
+        reviews7,
+        reviews8
+    )
     private var subjectsInfo  = mutableListOf(
-        Subject("知能情報メディア実験B", "開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n評価方法　レポートn割 出席m割\n単位数 3", 40, reviewList[0]),
-        Subject("人工知能", "開講日時　秋AB 火3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 20, reviewList[1]),
-        Subject("分散システム", "開講日時　秋AB 月3\n授業形態 対面 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 1", 20, reviewList[2]),
-        Subject("画像メディア工学", "開講日時　秋AB 火5,6\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 20, reviewList[3]),
+        Subject(
+            "知能情報メディア実験B",
+            "開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n評価方法　レポートn割 出席m割\n単位数 3",
+            40,
+            reviewList[0]
+        ),
+        Subject(
+            "人工知能",
+            "開講日時　秋AB 火3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
+            20,
+            reviewList[1]
+        ),
+        Subject(
+            "分散システム",
+            "開講日時　秋AB 月3\n授業形態 対面 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 1",
+            20,
+            reviewList[2]
+        ),
+        Subject(
+            "画像メディア工学",
+            "開講日時　秋AB 火5,6\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
+            20,
+            reviewList[3]
+        ),
         Subject("視覚情報科学", "開講日時　秋AB 木1,2\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 60, reviewList[4]),
-        Subject("パターン認識", "開講日時　秋AB 木3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 40, reviewList[5]),
-        Subject("数理アルゴリズムとシミュレーション", "開講日時　秋AB 金1,2\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 30, reviewList[6]),
-        Subject("データベース概論", "開講日時　秋AB 金3,4\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2", 40, reviewList[7])
+        Subject(
+            "パターン認識",
+            "開講日時　秋AB 木3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
+            40,
+            reviewList[5]
+        ),
+        Subject(
+            "数理アルゴリズムとシミュレーション",
+            "開講日時　秋AB 金1,2\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
+            30,
+            reviewList[6]
+        ),
+        Subject(
+            "データベース概論",
+            "開講日時　秋AB 金3,4\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
+            40,
+            reviewList[7]
+        )
     )
 
 
@@ -227,7 +326,11 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
     private fun jumpToReview(id: Int) {
         getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/") //??????
         setContentView(R.layout.review)
-        createReview(subjectsInfo[id - 1].name, subjectsInfo[id - 1].info, subjectsInfo[id - 1].easiness)
+        createReview(
+            subjectsInfo[id - 1].name,
+            subjectsInfo[id - 1].info,
+            subjectsInfo[id - 1].easiness
+        )
         val r1: TextView = findViewById(R.id.review1)
         val r2: TextView = findViewById(R.id.review2)
         val r3: TextView = findViewById(R.id.review3)
@@ -318,12 +421,12 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
                     40,
                     reviewList[7]
                 );
-            }
-            catch (ex: Exception) {
+            } catch (ex: Exception) {
                 Log.d("Exception", ex.toString())
             }
         }).start()
 
+        //Log.d("title",subject?.name)
         return subject
     }
 
@@ -333,43 +436,31 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         jumpToReview(id)
     }
 
-      private fun Ver(min:Int,max:Int):Int{
+     private fun Very(min: Int, max: Int):Int{
         val rand = Random()
-        val randomNum = rand.nextInt((max-min)+1) + min
+        val randomNum = rand.nextInt((max - min) + 1) + min
         return randomNum
     }
 
-
-
     override fun getMail(): Mail{
-        val regex = "[s]{1}[0-9]{7}@[s,u].tsukuba.ac.jp".toRegex();
-        val message :String = Ver(1000,9999).toString()
-        res = message
-        val flag:Boolean = mailAddress.text.toString().matches(regex)
         return Mail().apply {
             mailServerHost = "smtp.qq.com"
             mailServerPort = "587"
-            fromAddress = "***"
-            password = "***"
+            fromAddress = "*****"
+            password = "*****"
             toAddress = arrayListOf(mailAddress.text.toString())
             subject = "Twieasy messageSender Test"
-            if(flag) {
-                content = SpanUtils(this@MainActivity)
-                    .appendLine(message).setFontSize(28, true)
-                    .create()
-            }else{
-                Toast.makeText(this@MainActivity, "筑波大学のメールアドレスを使いなさい", Toast.LENGTH_SHORT).show()
-                content = SpanUtils(this@MainActivity)
-                    .appendLine("筑波大学のメールアドレスを使いなさい 例:s*******@u/s.tsukuba.ac.jp").setFontSize(28, true)
-                    .create()
-            }
+
+            val message :String = Very(1000, 9999).toString()
+            content = SpanUtils(this@MainActivity)
+                .appendLine(message).setFontSize(28, true)
+                .create()
         }
     }
 
     override fun onSuccess() {
-        //Toast.makeText(this@MainActivity, "成功", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@MainActivity, "成功", Toast.LENGTH_SHORT).show()
     }
-
 
     override fun onError(e: Throwable) {
         Toast.makeText(this@MainActivity, ": $e.message", Toast.LENGTH_SHORT).show()
