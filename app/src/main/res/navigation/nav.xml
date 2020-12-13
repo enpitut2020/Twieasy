@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.twieasy.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_flickFragment2"
+            app:destination="@id/flickFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/flickFragment2"
+        android:name="com.example.twieasy.FlickFragment"
+        android:label="fragment_flick"
+        tools:layout="@layout/fragment_flick" />
+
+
+</navigation>
