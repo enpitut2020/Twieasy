@@ -31,7 +31,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         val view =  inflater.inflate(R.layout.fragment_main, container, false)
 
         view.makeAccount.setOnClickListener{
-            findNavController().navigate(R.id.action_mainFragment_to_flickFragment2)
+            findNavController().navigate(R.id.action_mainFragment_to_tutorialFragment)
         }
 
         view.button.setOnClickListener{
