@@ -5,6 +5,7 @@ import android.view.View
 
 class FlickListener(
     private val listener: Listener
+
 ) : View.OnTouchListener {
 
     // フリックイベントのリスナー
