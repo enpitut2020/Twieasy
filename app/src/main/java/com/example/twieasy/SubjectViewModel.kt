@@ -156,9 +156,20 @@ class SubjectViewModel: ViewModel() {
         )
     )
 
+
+    var subjectNumber = mutableListOf<String>()
+
+    // KDBからとってきた生データ
+    var kdbRawData = mutableListOf<String>()
+
+
+    var subjects = mutableListOf<Subject>()
+
     fun clear(){
         subjectsInfo.clear()
     }
+
+
 
     fun size(): Int{
         return subjectsInfo.size

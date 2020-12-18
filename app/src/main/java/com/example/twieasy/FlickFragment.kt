@@ -37,8 +37,26 @@ class FlickFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         vii = inflater.inflate(R.layout.fragment_flick, container, false)
+
         subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
         jmpToFlick()
+
+        subjectView.subjectNumber = mutableListOf<String>(
+            // 科目番号
+            "GB22101", // 数理メディア
+            "GB40201", // パターン認識
+            "GB30411", // OS
+            "BC12893", // enPiT
+        )
+
+        subjectView.kdbRawData = subjectView.subjectNumber.map{
+            "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
+        } as MutableList<String>
+
+        // KDBの情報を整形したもの
+        subjectView.subjects = subjectView.kdbRawData.map{
+            getTextFromWeb(it)
+        } as MutableList<Subject>
 
         return vii
     }
@@ -54,24 +72,8 @@ class FlickFragment : Fragment() {
         "オペレーティングシステム\n月曜日\n5,6時限"
     )
 
-    val subjectNumber = mutableListOf<String>(
-        // 科目番号
-        "GB22101", // 数理メディア
-        "GB40201", // パターン認識
-        "GB30411", // OS
-        "BC12893", // enPiT
-    )
 
-    // KDBからとってきた生データ
-    private val kdbRawData = subjectNumber.map{
-        "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
-    }
 
-    // KDBの情報を整形したもの
-    val subjects: List<Subject?> = kdbRawData.map {
-        Log.i("info", it)
-        getTextFromWeb(it)
-    }
 
 
     private fun jmpToFlick(){
@@ -133,8 +135,8 @@ class FlickFragment : Fragment() {
                 jumpToLoginPage()
             }
  */
-            val subjectView : TextView = subject_info
-            subjectView.text = subjects[swipedCount]?.name
+            val subject_View : TextView = subject_info
+            subject_View.text =  subjectView.subjects[swipedCount]?.name
             //if (swipedCount < subjectInfo.size-1){
             swipedCount += 1
 
@@ -197,7 +199,7 @@ class FlickFragment : Fragment() {
 
     private fun getTextFromWeb(urlString: String): Subject? {
         var subject: Subject? = null
-        Thread(Runnable {
+        val tr = Thread(Runnable {
             try {
                 val doc = Jsoup.connect(urlString).get();
                 val title = doc.select("#course-title #title").first().text() //科目名
@@ -218,7 +220,12 @@ class FlickFragment : Fragment() {
             } catch (ex: Exception) {
                 Log.d("Exception", ex.toString())
             }
-        }).start()
+        })
+
+        tr.join()
+
+        tr.start()
+
 
         return subject
     }
