@@ -48,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:background="#AA1BFF"
+                android:background="@color/finalpien"
                 android:gravity="center"
                 android:text="落60%"
                 android:textColor="#000000"
@@ -58,13 +58,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:background="#23FFB5"
+                android:background="@color/finalraku"
                 android:gravity="center"
                 android:text="楽40%"
                 android:textSize="30sp"
                 android:textColor="#444444" />
         </LinearLayout>
-
 
         <TextView
             android:id="@+id/subject_name"

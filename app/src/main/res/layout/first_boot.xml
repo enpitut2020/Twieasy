@@ -44,10 +44,9 @@
         android:gravity="center"
         android:text="楽単"
         app:autoSizeTextType="uniform"
-        android:textColor="@color/deepskyblue"
+        android:textColor="@color/finalraku"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
     <TextView
         android:layout_width="100dp"
@@ -57,7 +56,7 @@
         android:elevation="3dp"
         android:gravity="center"
         android:text="落単"
-        android:textColor="@color/deeppink"
+        android:textColor="@color/finalpien"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

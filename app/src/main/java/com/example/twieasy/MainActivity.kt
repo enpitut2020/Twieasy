@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import com.example.twieasy.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.first_boot.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.review.view.*
 import kotlinx.android.synthetic.main.tutorial.*
 import org.jsoup.Jsoup
 import javax.net.ssl.HttpsURLConnection
@@ -59,6 +60,24 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
         "GB40201", // パターン認識
         "GB30411", // OS
         "BC12893", // enPiT
+        //　機械学習
+        //　情報可視化
+        //　システム数理Ⅲ
+        // 情報線形代数
+        // 分散システム
+        // オペレーティングシステムⅠ
+        // 音声聴覚情報処理
+        // プログラミングチャレンジ
+        //
+        //
+        //
+        //
+        //
+
+
+
+
+
     )
 
     // KDBからとってきた生データ
@@ -214,15 +233,29 @@ class MainActivity : AppCompatActivity(),MailSender.OnMailSendListener {
     }
 
     private val subject: MutableCollection<Button> = mutableListOf()//講義ボタンのリスト
+
     private fun jumpToSubjects(size: Int) {//講義一覧ページへ移動、講義ボタン生成
         setContentView(R.layout.subject)
+
         for (i in 1..size) {//i = sizeも処理される
             val r: Button = Button(this)
+
             r.id = i
             r.text = subjectsInfo[i - 1].name
+
+
+            if (subjectsInfo[i - 1].easiness >= 50)
+                r.setBackgroundResource(R.drawable.frame_style_finalraku)
+            else
+                r.setBackgroundResource(R.drawable.frame_style_finalpien)
             subject.add(r)
+
+            val r2: TextView = TextView(this)
+            r2.text = "楽単率 " + subjectsInfo[i-1].easiness.toString() + "%"
+
             val layout = findViewById<LinearLayout>(R.id.layout)
             layout.addView(r)
+            layout.addView(r2)
             r.setOnClickListener { jumpToReview(r.id) }
         }
     }
