@@ -39,7 +39,6 @@ class FlickFragment : Fragment() {
         vii = inflater.inflate(R.layout.fragment_flick, container, false)
 
         subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
-        jmpToFlick()
 
         subjectView.subjectNumber = mutableListOf<String>(
             // 科目番号
@@ -54,9 +53,14 @@ class FlickFragment : Fragment() {
         } as MutableList<String>
 
         // KDBの情報を整形したもの
-        subjectView.subjects = subjectView.kdbRawData.map{
-            getTextFromWeb(it)
+       subjectView.subjects = subjectView.kdbRawData.map{
+           getTextFromWeb(it)
         } as MutableList<Subject>
+
+        //getTextFromWeb(subjectView.kdbRawData[0])?.let { subjectView.subjects.add(it) }
+
+
+        jmpToFlick()
 
         return vii
     }
@@ -222,9 +226,11 @@ class FlickFragment : Fragment() {
             }
         })
 
+        tr.start()
+
         tr.join()
 
-        tr.start()
+
 
 
         return subject
