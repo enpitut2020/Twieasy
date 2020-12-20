@@ -94,6 +94,8 @@ private var reviews8: MutableCollection<String> = mutableListOf(
 
 class SubjectViewModel: ViewModel() {
 
+    var loaded: Boolean = false
+
     var reviewList = mutableListOf(
         reviews1,
         reviews2,

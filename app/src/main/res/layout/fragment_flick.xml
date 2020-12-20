@@ -25,7 +25,7 @@
         android:background="@drawable/text_border"
         android:elevation="1dp"
         android:gravity="center"
-        android:text="知能情報メディア実験B\n金曜日\n5,6時限"
+        android:text=""
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

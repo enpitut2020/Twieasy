@@ -22,6 +22,9 @@ import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 import kotlinx.android.synthetic.main.first_boot.*
 import kotlinx.android.synthetic.main.first_boot.view.*
+import kotlinx.android.synthetic.main.first_boot.view.center
+import kotlinx.android.synthetic.main.first_boot.view.subject_info
+import kotlinx.android.synthetic.main.fragment_flick.view.*
 import org.jsoup.Jsoup
 import java.util.*
 import kotlin.random.Random
@@ -31,6 +34,7 @@ class FlickFragment : Fragment() {
     //lateinit var binding:FragmentFlickBinding
     lateinit var vii : View
     lateinit var subjectView : SubjectViewModel
+    val regex = Regex(pattern = "開講日時(.*)\n")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,24 +45,11 @@ class FlickFragment : Fragment() {
 
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
 
-//        subjectView.subjectNumber = mutableListOf<String>(
-//            // 科目番号
-//            "GB22101", // 数理メディア
-//            "GB40201", // パターン認識
-//            "GB30411", // OS
-//            "BC12893", // enPiT
-//        )
+        val matchResult = regex.find(subjectView.subjects[0]?.info)
 
-        subjectView.kdbRawData = subjectView.subjectNumber.map{
-            "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
-        } as MutableList<String>
+        val subject_View : TextView = vii.subject_info
 
-        // KDBの情報を整形したもの
-       subjectView.subjects = subjectView.kdbRawData.map{
-           getTextFromWeb(it)
-        } as MutableList<Subject>
-
-        //getTextFromWeb(subjectView.kdbRawData[0])?.let { subjectView.subjects.add(it) }
+        subject_View.text =  subjectView.subjects[0]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty();
 
 
         jmpToFlick()
@@ -68,14 +59,9 @@ class FlickFragment : Fragment() {
 
 
     val flickAttribute = mutableMapOf<Int, String>()
-    var swipedCount = 0
+    var swipedCount = 1
     var res :String = ""
-    val subjectInfo = mutableListOf<String>(
-        "知能情報メディア実験B\n金曜日\n5,6時限",
-        "数理メディア情報学\n水曜日\n1,2時限",
-        "パターン認識\n木曜日\n3,4時限",
-        "オペレーティングシステム\n月曜日\n5,6時限"
-    )
+
 
 
 
@@ -140,8 +126,11 @@ class FlickFragment : Fragment() {
                 jumpToLoginPage()
             }
  */
-            val subject_View : TextView = subject_info
-            subject_View.text =  subjectView.subjects[swipedCount]?.name
+            val subject_View : TextView = vii.subject_info
+
+            val matchResult = regex.find(subjectView.subjects[swipedCount]?.info)
+
+            subject_View.text =  subjectView.subjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty();
             //if (swipedCount < subjectInfo.size-1){
             swipedCount += 1
 
@@ -150,7 +139,7 @@ class FlickFragment : Fragment() {
             // 3.全部終わったら履修科目一覧に遷移
             if(swipedCount >= 10) {
 
-                findNavController().navigate(R.id.action_flickFragment2_to_loginFragment)
+                findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
                 //setContentView(R.layout.activity_main_copy)
                 //jumpToLoginPage()
             }
@@ -196,51 +185,7 @@ class FlickFragment : Fragment() {
         ).show()
     }
 
-
-
-
-
-
-    val r:Random = Random(
-        123
-    )
-    private fun getTextFromWeb(urlString: String): Subject? {
-        var subject: Subject? = null
-
-        val tr = Thread(Runnable {
-            try {
-                val doc = Jsoup.connect(urlString).get();
-                val title = doc.select("#course-title #title").first().text() //科目名
-                val credit = doc.select("#credit-grade-assignments #credit").first().text() //単位数
-                val timetable =
-                    doc.select("#credit-grade-assignments #timetable").first().text() //開講日時
-                val styleHeading = doc.select("#style-heading-style p").first().text() //授業形態
-                val eval = doc.select("#assessment-heading-assessment p").first().text() //評価方法
-                Log.i("title:", title.toString())
-                Log.i("credit:", title.toString())
-                Log.i("eval:", eval.toString())
-
-                subject = Subject(
-                    title,
-                    "開講日時　" + timetable + "\n授業形態 " + styleHeading + "\n" + eval + "\n単位数 " + credit,
-                    (r.nextInt() % 100 + 100) % 100,
-                    subjectView.reviewList[7]
-                );
-            } catch (ex: Exception) {
-                Log.d("Exception", ex.toString())
-            }
-        })
-
-        tr.start()
-
-        tr.join()
-
-
-
-
-        return subject
-    }
-
+    
 
 
 
