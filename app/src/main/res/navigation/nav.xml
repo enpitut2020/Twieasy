@@ -11,8 +11,8 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_tutorialFragment"
-            app:destination="@id/tutorialFragment" />
+            android:id="@+id/action_mainFragment_to_departmentFragment"
+            app:destination="@id/departmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/flickFragment2"
@@ -64,6 +64,17 @@
         android:name="com.example.twieasy.PostFragment"
         android:label="fragment_post"
         tools:layout="@layout/fragment_post" />
+
+    <fragment
+        android:id="@+id/departmentFragment"
+        android:name="com.example.twieasy.DepartmentFragment"
+        android:label="fragment_department"
+        tools:layout="@layout/fragment_department">
+        <action
+            android:id="@+id/action_departmentFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment" />
+    </fragment>
+
 
 
 </navigation>
