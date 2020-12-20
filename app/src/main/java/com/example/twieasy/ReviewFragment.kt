@@ -1,5 +1,6 @@
 package com.example.twieasy
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_review.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,6 +78,7 @@ class ReviewFragment : Fragment() {
 
 
 
+    @SuppressLint("ResourceAsColor")
     private fun createReview(subname: String, subinfo: String, easiness: Int) {//easiness[%] : 楽単度合い
         //"落%"部分生成
         val textView1 = vii.findViewById<TextView>(R.id.difficulty)
