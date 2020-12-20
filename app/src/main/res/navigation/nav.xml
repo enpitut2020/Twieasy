@@ -20,8 +20,8 @@
         android:label="fragment_flick"
         tools:layout="@layout/fragment_flick" >
         <action
-            android:id="@+id/action_flickFragment2_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_flickFragment2_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -71,10 +71,21 @@
         android:label="fragment_department"
         tools:layout="@layout/fragment_department">
         <action
-            android:id="@+id/action_departmentFragment_to_tutorialFragment"
-            app:destination="@id/tutorialFragment" />
+            android:id="@+id/action_departmentFragment_to_loadFragment"
+            app:destination="@id/loadFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/loadFragment"
+        android:name="com.example.twieasy.LoadFragment"
+        android:label="fragment_load"
+        tools:layout="@layout/fragment_department">
+        <action
+            android:id="@+id/action_loadFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment" />
+        <action
+            android:id="@+id/action_loadFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
 
 </navigation>
