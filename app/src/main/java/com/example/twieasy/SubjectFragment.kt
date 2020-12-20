@@ -1,16 +1,15 @@
 package com.example.twieasy
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_subject.view.*
 
 
 class SubjectFragment : Fragment() {
@@ -30,7 +29,41 @@ class SubjectFragment : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_subject, container, false)
         val rl : LinearLayout = view.findViewById(R.id.fragment_subject_linear)
 
-        for (i in 1..subjectView.subjects.size) {//i = sizeも処理される
+
+        //var subjectList: List<String> = listOf("JikkenB","OS","ML","CG")
+
+
+        var subjectList: List<String> = subjectView.subjects.map{
+            it.name
+        }
+
+
+        view.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            // ユーザによって文字列が変更されたときに呼ばれる
+            override fun onQueryTextChange(newText: String): Boolean {
+                // text changed
+                Log.d("change",newText)
+                if(!newText.isEmpty()) {
+                    val regex = Regex(newText)
+                    val result = subjectList.filter { regex.containsMatchIn(it) }
+                    if (!result.isEmpty()) {
+                        result.map { Log.d("input", it) }
+                        result.map {
+                            // XML Componentのインスタンス生成
+                        }
+                    }
+                }
+                return false
+            }
+            // ユーザがクエリを送信(検索ボタンをクリック)したときに呼ばれる
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // submit button pressed
+                return false
+            }
+        })
+
+
+            for (i in 1..subjectView.subjects.size) {//i = sizeも処理される
             val r: Button = Button(requireActivity())
             r.id = i
             r.text = subjectView.subjects[i - 1].name
@@ -52,9 +85,6 @@ class SubjectFragment : Fragment() {
                 findNavController().navigate(R.id.action_subjectFragment_to_reviewFragment,bundle)
             }
         }
-
         return view
     }
-
-
 }

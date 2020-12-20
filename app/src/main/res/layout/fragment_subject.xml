@@ -15,12 +15,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             ​
-            <EditText
-                android:id="@+id/passWord"
+            <SearchView
+                android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="検索"
-                />
+                android:iconifiedByDefault="false"
+                android:queryHint="科目名" />
 
         </LinearLayout>
         ​
