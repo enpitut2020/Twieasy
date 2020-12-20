@@ -38,7 +38,6 @@ class FlickFragment : Fragment() {
         vii = inflater.inflate(R.layout.fragment_flick, container, false)
 
         subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
-        jmpToFlick()
 
         subjectView.subjectNumber = mutableListOf<String>(
             // 科目番号
@@ -56,6 +55,8 @@ class FlickFragment : Fragment() {
         subjectView.subjects = subjectView.kdbRawData.map{
             getTextFromWeb(it)
         } as MutableList<Subject>
+
+        jmpToFlick()
 
         return vii
     }
@@ -190,12 +191,6 @@ class FlickFragment : Fragment() {
         ).show()
     }
 
-
-
-
-
-
-
     private fun getTextFromWeb(urlString: String): Subject? {
         var subject: Subject? = null
         val tr = Thread(Runnable {
@@ -221,17 +216,9 @@ class FlickFragment : Fragment() {
             }
         })
 
-        tr.join()
-
         tr.start()
-
+        tr.join()
 
         return subject
     }
-
-
-
-
-
-
 }
