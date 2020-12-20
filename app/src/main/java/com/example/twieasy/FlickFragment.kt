@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -52,9 +53,12 @@ class FlickFragment : Fragment() {
         } as MutableList<String>
 
         // KDBの情報を整形したもの
-        subjectView.subjects = subjectView.kdbRawData.map{
-            getTextFromWeb(it)
+       subjectView.subjects = subjectView.kdbRawData.map{
+           getTextFromWeb(it)
         } as MutableList<Subject>
+
+        //getTextFromWeb(subjectView.kdbRawData[0])?.let { subjectView.subjects.add(it) }
+
 
         jmpToFlick()
 
@@ -191,6 +195,12 @@ class FlickFragment : Fragment() {
         ).show()
     }
 
+
+
+
+
+
+
     private fun getTextFromWeb(urlString: String): Subject? {
         var subject: Subject? = null
         val tr = Thread(Runnable {
@@ -217,8 +227,18 @@ class FlickFragment : Fragment() {
         })
 
         tr.start()
+
         tr.join()
+
+
+
 
         return subject
     }
+
+
+
+
+
+
 }
