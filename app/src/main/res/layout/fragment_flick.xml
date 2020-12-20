@@ -30,10 +30,10 @@
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685" />
+        app:layout_constraintVertical_bias="0.700" />
 
     <TextView
         android:layout_width="100dp"
@@ -65,15 +65,16 @@
     <TextView
         android:layout_width="175dp"
         android:layout_height="107dp"
-        android:layout_marginTop="276dp"
         android:elevation="4dp"
         android:gravity="center"
-        android:text="知らん"
+        android:text="未履修"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintBottom_toTopOf="@id/subject_info"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.700"/>
 
     <View
         android:id="@+id/left"
@@ -97,9 +98,7 @@
         android:id="@+id/top"
         android:layout_width="372dp"
         android:layout_height="395dp"
-        android:layout_marginBottom="28dp"
-
-        android:text="知らん"
+        android:text="未履修"
         app:layout_constraintBottom_toTopOf="@+id/center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.589"
