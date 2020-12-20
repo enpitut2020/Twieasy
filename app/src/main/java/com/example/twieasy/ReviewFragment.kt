@@ -64,7 +64,6 @@ class ReviewFragment : Fragment() {
             layout.addView(r)
         }
 
-        val goBackToSubjects: Button = vii.findViewById(R.id.back_button)
         val writeReview: Button = vii.findViewById(R.id.writeReview)
 
         writeReview.setOnClickListener {
