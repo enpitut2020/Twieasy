@@ -23,7 +23,8 @@ import kotlinx.android.parcel.RawValue
 import kotlinx.android.synthetic.main.first_boot.*
 import kotlinx.android.synthetic.main.first_boot.view.*
 import org.jsoup.Jsoup
-import java.util.ArrayList
+import java.util.*
+import kotlin.random.Random
 
 class FlickFragment : Fragment() {
 
@@ -38,15 +39,15 @@ class FlickFragment : Fragment() {
         // Inflate the layout for this fragment
         vii = inflater.inflate(R.layout.fragment_flick, container, false)
 
-        subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
+        subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
 
-        subjectView.subjectNumber = mutableListOf<String>(
-            // 科目番号
-            "GB22101", // 数理メディア
-            "GB40201", // パターン認識
-            "GB30411", // OS
-            "BC12893", // enPiT
-        )
+//        subjectView.subjectNumber = mutableListOf<String>(
+//            // 科目番号
+//            "GB22101", // 数理メディア
+//            "GB40201", // パターン認識
+//            "GB30411", // OS
+//            "BC12893", // enPiT
+//        )
 
         subjectView.kdbRawData = subjectView.subjectNumber.map{
             "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
@@ -147,7 +148,7 @@ class FlickFragment : Fragment() {
             // ------------
 
             // 3.全部終わったら履修科目一覧に遷移
-            if(swipedCount == subjectInfo.size) {
+            if(swipedCount >= 10) {
 
                 findNavController().navigate(R.id.action_flickFragment2_to_loginFragment)
                 //setContentView(R.layout.activity_main_copy)
@@ -200,9 +201,12 @@ class FlickFragment : Fragment() {
 
 
 
-
+    val r:Random = Random(
+        123
+    )
     private fun getTextFromWeb(urlString: String): Subject? {
         var subject: Subject? = null
+
         val tr = Thread(Runnable {
             try {
                 val doc = Jsoup.connect(urlString).get();
@@ -215,10 +219,11 @@ class FlickFragment : Fragment() {
                 Log.i("title:", title.toString())
                 Log.i("credit:", title.toString())
                 Log.i("eval:", eval.toString())
+
                 subject = Subject(
                     title,
                     "開講日時　" + timetable + "\n授業形態 " + styleHeading + "\n" + eval + "\n単位数 " + credit,
-                    40,
+                    (r.nextInt() % 100 + 100) % 100,
                     subjectView.reviewList[7]
                 );
             } catch (ex: Exception) {

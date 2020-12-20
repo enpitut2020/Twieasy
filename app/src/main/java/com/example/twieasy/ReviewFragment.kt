@@ -41,7 +41,7 @@ class ReviewFragment : Fragment() {
         // Inflate the layout for this fragment
 
         vii = inflater.inflate(R.layout.fragment_review, container, false)
-        subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
+        subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
         jumpToReview()
         return vii
     }
@@ -49,11 +49,11 @@ class ReviewFragment : Fragment() {
     private fun jumpToReview() {
         //getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/") //??????
         createReview(
-            subjectView.subjectsInfo[ID!! - 1].name,
-            subjectView.subjectsInfo[ID!! - 1].info,
-            subjectView.subjectsInfo[ID!! - 1].easiness
+            subjectView.subjects[ID!! - 1].name,
+            subjectView.subjects[ID!! - 1].info,
+            subjectView.subjects[ID!! - 1].easiness
         )
-        for (i in subjectView.subjectsInfo[ID!! - 1].reviews) {//i = sizeも処理される
+        for (i in subjectView.subjects[ID!! - 1].reviews) {//i = sizeも処理される
             val r: TextView = TextView(context)
             r.text = i
             r.height = 200
