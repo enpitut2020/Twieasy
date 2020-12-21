@@ -55,7 +55,7 @@ class ReviewFragment : Fragment() {
             subjectView.subjects[ID!! - 1].info,
             subjectView.subjects[ID!! - 1].easiness
         )
-        for (i in subjectView.subjects[ID!! - 1].reviews) {//i = sizeも処理される
+        for (i in subjectView.subjects[ID!! - 1].reviews) {
             val r: TextView = TextView(context)
             r.text = i
             r.height = 200

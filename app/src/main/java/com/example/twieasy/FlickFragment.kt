@@ -181,7 +181,7 @@ class FlickFragment : Fragment() {
         private fun showToast(msg: String) = Toast.makeText(
             context,
             msg,
-            Toast.LENGTH_LONG
+            Toast.LENGTH_SHORT
         ).show()
     }
 
