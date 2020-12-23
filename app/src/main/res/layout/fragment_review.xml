@@ -21,13 +21,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/back_button"
-                android:layout_width="72dp"
-                android:layout_height="36dp"
-                android:text="戻る"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <Button
                 android:id="@+id/writeReview"
                 android:layout_width="144dp"
                 android:layout_height="36dp"
