@@ -91,7 +91,7 @@ class FlickFragment : Fragment() {
         override fun onButtonReleased() = settingFlick("中")
         override fun onFlickToLeft() = settingFlick("落単")
         override fun onFlickToRight() = settingFlick("楽単")
-        override fun onFlickToUp() = settingFlick("知らん！！！")
+        override fun onFlickToUp() = settingFlick("未履修")
         override fun onFlickToDown() = settingFlick("下")
         override fun onFlickOutside() {
             settingFlick("")

@@ -15,24 +15,57 @@
         tools:layout_editor_absoluteX="88dp"
         tools:layout_editor_absoluteY="49dp">
 
+        <Button
+            android:id="@+id/writeReview"
+            android:layout_width="144dp"
+            android:layout_height="36dp"
+            android:text="レビューする" />
+
+        <!--グラフ部-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/writeReview"
-                android:layout_width="144dp"
-                android:layout_height="36dp"
-                android:text="レビューする"
-                app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/difficulty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@color/finalpien"
+                android:gravity="center"
+                android:text="落60%"
+                android:textColor="#000000"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/easiness"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@color/finalraku"
+                android:gravity="center"
+                android:text="楽40%"
+                android:textSize="30sp"
+                android:textColor="#444444" />
 
         </LinearLayout>
+
+        <!--授業名-->
+        <TextView
+            android:id="@+id/subject_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="知能情報メディア実験B"
+            android:textSize="28dp" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="30dp">
+            android:paddingTop="10dp">
+
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
@@ -42,44 +75,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <!--グラフ部-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="horizontal">
-                    <!-- 1. padding を上下左右それぞれに設定 -->
-                    <TextView
-                        android:id="@+id/difficulty"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:background="@color/finalpien"
-                        android:gravity="center"
-                        android:text="落60%"
-                        android:textColor="#000000"
-                        android:textSize="30sp" />
-                    <TextView
-                        android:id="@+id/easiness"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:background="@color/finalraku"
-                        android:gravity="center"
-                        android:text="楽40%"
-                        android:textSize="30sp"
-                        android:textColor="#444444" />
-                </LinearLayout>
-
-                <!--授業名-->
-                <TextView
-                    android:id="@+id/subject_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="知能情報メディア実験B"
-                    android:textSize="28dp" />
-
                 <!--授業情報-->
                 <TextView
                     android:id="@+id/subject_info"
@@ -88,8 +83,6 @@
                     android:layout_marginBottom="20dp"
                     android:text="開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n 評価方法　レポートn割 出席m割\n 単位数 3"
                     android:textSize="16dp" />
-
-                <!--android:background="@android:color/primary_text_dark_nodisable" は使用していない-->
 
             </LinearLayout>
 
