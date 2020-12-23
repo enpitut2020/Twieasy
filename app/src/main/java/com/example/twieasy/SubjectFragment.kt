@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_subject.view.*
 class SubjectFragment : Fragment() {
 
     lateinit var subjectView : SubjectViewModel
+    lateinit var listView: ListView
 
 
     private val subject: MutableCollection<Button> = mutableListOf()//講義ボタンのリスト
@@ -22,6 +23,7 @@ class SubjectFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+        // adapterを作成します
     ): View? {
         // Inflate the layout for this fragment
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
@@ -29,15 +31,16 @@ class SubjectFragment : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_subject, container, false)
         val rl : LinearLayout = view.findViewById(R.id.fragment_subject_linear)
 
-
-        //var subjectList: List<String> = listOf("JikkenB","OS","ML","CG")
-
-
-        var subjectList: List<String> = subjectView.subjects.map{
+        listView = ListView(requireContext())
+        // 科目名の配列
+        // リストではなく配列にしているのはListViewのadapterの引数の型がArrayだから
+        var subjectArray: Array<String> = subjectView.subjects.map{
             it.name
-        }
+        }.toTypedArray()
 
+        // 予測結果を格納
 
+        // SearchViewのイベントリスナ
         view.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             // ユーザによって文字列が変更されたときに呼ばれる
             override fun onQueryTextChange(newText: String): Boolean {
@@ -45,12 +48,17 @@ class SubjectFragment : Fragment() {
                 Log.d("change",newText)
                 if(!newText.isEmpty()) {
                     val regex = Regex(newText)
-                    val result = subjectList.filter { regex.containsMatchIn(it) }
+                    val result = subjectArray.filter { regex.containsMatchIn(it) }
+                    // 検索結果にものが格納されているとき
                     if (!result.isEmpty()) {
                         result.map { Log.d("input", it) }
-                        result.map {
-                            // XML Componentのインスタンス生成
-                        }
+
+                        val arrayAdapter = ArrayAdapter(
+                            requireContext(),
+                            R.layout.fragment_subject,
+                            result
+                        )
+                        listView.adapter = arrayAdapter
                     }
                 }
                 return false
