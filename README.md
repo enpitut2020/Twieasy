@@ -7,4 +7,4 @@ Twieasyは
 **TwitterやRakutenみんなのキャンパス**とは違って  
 **筑波大学の講義の詳細な情報**が備わっています.
 
-apkファイルは[こちら](https://drive.google.com/drive/u/0/folders/1AN9cOFzYETNJUQmA9jlktkr5H5XrxxFM)です．
+apkファイルは[こちら](https://drive.google.com/drive/u/0/folders/1AN9cOFzYETNJUQmA9jlktkr5H5XrxxFM)からダウンロードをお願いします．
