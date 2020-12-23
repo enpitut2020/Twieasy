@@ -24,6 +24,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
     //lateinit var binding:FragmentMainBinding
     lateinit var subjectView : SubjectViewModel
 
+    var counter: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -95,7 +96,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                     title,
                     "開講日時　" + timetable + "\n授業形態 " + styleHeading + "\n" + eval + "\n単位数 " + credit,
                     (r.nextInt() % 100 + 100) % 100,
-                    subjectView.reviewList[7]
+                    subjectView.reviewList[counter++]
                 );
             } catch (ex: Exception) {
                 Log.d("Exception", ex.toString())

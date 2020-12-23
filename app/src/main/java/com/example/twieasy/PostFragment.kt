@@ -36,12 +36,12 @@ class PostFragment : Fragment() {
         subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
 
         vii.postButton.setOnClickListener {
-            post(ID!!)
+            post()
         }
         return vii
     }
 
-    private fun post(id: Int) {
+    private fun post() {
         val postContent: TextView = vii.findViewById(R.id.reviewContent)
         val postStr: String = postContent.text.toString()
         subjectView.reviewList[ID!! - 1].add(postStr)
