@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.beardedhen.androidbootstrap.BootstrapButton
 import kotlinx.android.synthetic.main.fragment_review.view.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -66,7 +67,7 @@ class ReviewFragment : Fragment() {
             layout.addView(r)
         }
 
-        val writeReview: Button = vii.findViewById(R.id.writeReview)
+        val writeReview: BootstrapButton = vii.findViewById(R.id.writeReview)
 
         writeReview.setOnClickListener {
             val bundle : Bundle = Bundle()

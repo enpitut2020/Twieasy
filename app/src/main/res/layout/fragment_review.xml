@@ -15,11 +15,16 @@
         tools:layout_editor_absoluteX="88dp"
         tools:layout_editor_absoluteY="49dp">
 
-        <Button
+        <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/writeReview"
-            android:layout_width="144dp"
-            android:layout_height="36dp"
-            android:text="レビューする" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bootstrapBrand="success"
+            app:bootstrapSize="lg"
+            app:buttonMode="regular"
+            app:showOutline="false"
+            app:roundedCorners="true"
+            app:bootstrapText="レビューする {fa_pencil}" />
 
         <!--グラフ部-->
         <LinearLayout
