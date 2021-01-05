@@ -26,7 +26,9 @@ class TutorialFragment : Fragment() {
         subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
         vii = inflater.inflate(R.layout.fragment_tutorial, container, false)
 
-        vii.okButton.setOnClickListener{
+        val okButton: BootstrapButton = vii.findViewById(R.id.okButton)
+
+        okButton.setOnClickListener{
             findNavController().navigate(R.id.action_tutorialFragment_to_flickFragment2)
         }
         return vii
