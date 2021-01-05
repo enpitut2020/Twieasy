@@ -16,8 +16,6 @@ import kotlinx.android.synthetic.main.fragment_subject.view.*
 class SubjectFragment : Fragment() {
 
     lateinit var subjectView : SubjectViewModel
-    lateinit var listView: ListView
-
 
     private val subject: MutableCollection<Button> = mutableListOf()//講義ボタンのリスト
 
@@ -32,14 +30,27 @@ class SubjectFragment : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_subject, container, false)
         //val rl : LinearLayout = view.findViewById(R.id.fragment_subject_linear)
 
-        listView = ListView(requireContext())
-        // 科目名の配列
-        // リストではなく配列にしているのはListViewのadapterの引数の型がArrayだから
-        var subjectArray: Array<String> = subjectView.subjects.map{
-            it.name
-        }.toTypedArray()
 
-        // 予測結果を格納
+        val subjectList = mutableListOf<MutableMap<String, Any>>()
+        for (i in 1..subjectView.subjects.size){
+            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "easiness" to subjectView.subjects[i - 1].easiness.toString())
+            subjectList.add(sub)
+        }
+
+        val from = arrayOf("name", "easiness")
+        val to = intArrayOf(android.R.id.text1, android.R.id.text2)
+        var adapter = SimpleAdapter(view.context, subjectList, android.R.layout.simple_list_item_2, from, to)
+        adapter.viewBinder = CustomViewBinder()
+        val lvSubjects = view.findViewById<ListView>(R.id.lvSubjects)
+        lvSubjects.adapter = adapter
+        lvSubjects.onItemClickListener = ListItemClickListener()
+
+
+        // 検索予測処理
+        // 科目名のList
+        var searchList: MutableList<String> = subjectView.subjects.map{
+            it.name
+        }.toMutableList()
 
         // SearchViewのイベントリスナ
         view.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -49,18 +60,41 @@ class SubjectFragment : Fragment() {
                 Log.d("change",newText)
                 if(!newText.isEmpty()) {
                     val regex = Regex(newText)
-                    val result = subjectArray.filter { regex.containsMatchIn(it) }
+                    val result : MutableList<String> = searchList.filter { regex.containsMatchIn(it) }.toMutableList()
                     // 検索結果にものが格納されているとき
                     if (!result.isEmpty()) {
-                        result.map { Log.d("input", it) }
+                        //result.map { Log.d("input", it) }
 
                         val arrayAdapter = ArrayAdapter(
-                            requireContext(),
-                            R.layout.fragment_subject,
+                            view.context,
+                            android.R.layout.simple_list_item_1,
                             result
                         )
+                        val listView: ListView = view.findViewById<ListView>(R.id.lvSearch)
                         listView.adapter = arrayAdapter
+
+                        // 講義一覧を消す
+                        val subjectListEmpty = mutableListOf<MutableMap<String, Any>>()
+                        adapter = SimpleAdapter(view.context, subjectListEmpty, android.R.layout.simple_list_item_2, from, to)
+                        lvSubjects.adapter = adapter
+
                     }
+                }
+                else {
+                    val result: MutableList<String> = mutableListOf()
+                    val arrayAdapter = ArrayAdapter(
+                        view.context,
+                        android.R.layout.simple_list_item_1,
+                        result
+                    )
+                    val listView: ListView = view.findViewById<ListView>(R.id.lvSearch)
+                    listView.adapter = arrayAdapter
+
+                    // もし消されてたら復活
+                    adapter = SimpleAdapter(view.context, subjectList, android.R.layout.simple_list_item_2, from, to)
+                    adapter.viewBinder = CustomViewBinder()
+                    lvSubjects.adapter = adapter
+                    lvSubjects.onItemClickListener = ListItemClickListener()
                 }
                 return false
             }
@@ -72,43 +106,6 @@ class SubjectFragment : Fragment() {
         })
 
 
-        /*for (i in 1..subjectView.subjects.size) {//i = sizeも処理される
-            val r: Button = Button(requireActivity())
-            r.id = i
-            r.text = subjectView.subjects[i - 1].name
-
-            if (subjectView.subjects[i - 1].easiness >= 50)
-                r.setBackgroundResource(R.drawable.frame_style_finalraku)
-            else
-                r.setBackgroundResource(R.drawable.frame_style_finalpien)
-            val r2: TextView = TextView(context)
-            r2.text = "楽単率 " + subjectView.subjects[i-1].easiness.toString() + "%"
-
-            subject.add(r)
-            rl.addView(r)
-            rl.addView(r2)
-            r.setOnClickListener { //jumpToReview(r.id)
-                val bundle : Bundle = Bundle()
-                bundle.putInt("ID",i)
-
-                findNavController().navigate(R.id.action_subjectFragment_to_reviewFragment,bundle)
-            }
-        }*/
-
-        val subjectList = mutableListOf<MutableMap<String, Any>>()
-        for (i in 1..subjectView.subjects.size){
-            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "easiness" to subjectView.subjects[i - 1].easiness.toString())
-            subjectList.add(sub)
-        }
-
-        val from = arrayOf("name", "easiness")
-        val to = intArrayOf(android.R.id.text1, android.R.id.text2)
-        val adapter = SimpleAdapter(view.context, subjectList, android.R.layout.simple_list_item_2, from, to)
-        adapter.viewBinder = CustomViewBinder()
-        val lvSubjects = view.findViewById<ListView>(R.id.lvSubjects)
-        lvSubjects.adapter = adapter
-        lvSubjects.onItemClickListener = ListItemClickListener()
-
         return view
     }
 
@@ -116,8 +113,11 @@ class SubjectFragment : Fragment() {
     private inner class CustomViewBinder : SimpleAdapter.ViewBinder {
         override fun setViewValue(view: View, data: Any, textRepresentation: String): Boolean {
             when(view.id) {
+
+
                 android.R.id.text1 ->
                     Log.d("dataa", data as String)
+
                 android.R.id.text2 -> {
                     Log.d("data", data as String)
                     val easiness = data.toInt()
@@ -131,6 +131,7 @@ class SubjectFragment : Fragment() {
                     //val r2: TextView = TextView(context)
                     //r2.text = "楽単率 " + subjectView.subjects[i-1].easiness.toString() + "%"
                 }
+
             }
 
             return false
