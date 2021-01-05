@@ -33,12 +33,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/button"
                 android:layout_width="164dp"
                 android:layout_height="36dp"
-                android:text="認証コードを取得"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:bootstrapBrand="success"
+                app:buttonMode="regular"
+                app:showOutline="true"
+                app:roundedCorners="true"
+                app:bootstrapText="認証コードを取得" />
 
         </LinearLayout>
 
@@ -76,12 +80,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/mailAddress" />
 
-        <Button
+        <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/makeAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="アカウントを作成"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:bootstrapBrand="success"
+            app:bootstrapSize="lg"
+            app:buttonMode="regular"
+            app:showOutline="false"
+            app:roundedCorners="true"
+            app:bootstrapText="アカウント作成 {fa_check}"/>
 
     </LinearLayout>
 
@@ -94,12 +103,17 @@
         app:layout_constraintBottom_toTopOf="@id/loginButton"/>
 
 
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ログイン"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:bootstrapBrand="info"
+        app:bootstrapSize="lg"
+        app:buttonMode="regular"
+        app:showOutline="true"
+        app:roundedCorners="true"
+        app:bootstrapText="ログイン {fa_amazon} {fa_instagram} {fa_bitcoin} {fa_youtube_play} {fa_github_square} {fa_facebook-official}"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
