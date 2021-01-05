@@ -18,6 +18,8 @@ class SubjectFragment : Fragment() {
     lateinit var subjectView : SubjectViewModel
 
     private val subject: MutableCollection<Button> = mutableListOf()//講義ボタンのリスト
+    val subjectList = mutableListOf<MutableMap<String, Any>>()
+    lateinit var result : MutableList<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +33,7 @@ class SubjectFragment : Fragment() {
         //val rl : LinearLayout = view.findViewById(R.id.fragment_subject_linear)
 
 
-        val subjectList = mutableListOf<MutableMap<String, Any>>()
+
         for (i in 1..subjectView.subjects.size){
             var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "easiness" to subjectView.subjects[i - 1].easiness.toString())
             subjectList.add(sub)
@@ -60,7 +62,7 @@ class SubjectFragment : Fragment() {
                 Log.d("change",newText)
                 if(!newText.isEmpty()) {
                     val regex = Regex(newText)
-                    val result : MutableList<String> = searchList.filter { regex.containsMatchIn(it) }.toMutableList()
+                    result = searchList.filter { regex.containsMatchIn(it) }.toMutableList()
                     // 検索結果にものが格納されているとき
                     if (!result.isEmpty()) {
                         //result.map { Log.d("input", it) }
@@ -72,6 +74,7 @@ class SubjectFragment : Fragment() {
                         )
                         val listView: ListView = view.findViewById<ListView>(R.id.lvSearch)
                         listView.adapter = arrayAdapter
+                        listView.onItemClickListener = SearchListItemClickListener()
 
                         // 講義一覧を消す
                         val subjectListEmpty = mutableListOf<MutableMap<String, Any>>()
@@ -138,11 +141,27 @@ class SubjectFragment : Fragment() {
         }
     }
 
-
     private inner class ListItemClickListener : AdapterView.OnItemClickListener{
         override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
             val bundle : Bundle = Bundle()
             bundle.putInt("ID",position + 1)
+            findNavController().navigate(R.id.action_subjectFragment_to_reviewFragment,bundle)
+        }
+    }
+
+    private inner class SearchListItemClickListener : AdapterView.OnItemClickListener{
+        override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            val subjectName = result[position]
+            var index = 0
+            for(i in 1..subjectView.subjects.size) {
+                if (subjectView.subjects[i-1].name == subjectName) {
+                    index = i
+                    break
+                }
+            }
+
+            val bundle : Bundle = Bundle()
+            bundle.putInt("ID",index)
             findNavController().navigate(R.id.action_subjectFragment_to_reviewFragment,bundle)
         }
     }
