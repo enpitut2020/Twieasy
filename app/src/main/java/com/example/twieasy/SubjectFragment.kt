@@ -17,7 +17,7 @@ class SubjectFragment : Fragment() {
     lateinit var subjectView : SubjectViewModel
 
     private val subject: MutableCollection<Button> = mutableListOf()//講義ボタンのリスト
-    val subjectList = mutableListOf<MutableMap<String, Any>>()
+    lateinit var subjectList : MutableList<MutableMap<String, Any>>
     lateinit var result : MutableList<String>
 
     override fun onCreateView(
@@ -29,6 +29,7 @@ class SubjectFragment : Fragment() {
 
         val view =  inflater.inflate(R.layout.fragment_subject, container, false)
 
+        subjectList = mutableListOf<MutableMap<String, Any>>()
         for (i in 1..subjectView.subjects.size){
             var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "easiness" to subjectView.subjects[i - 1].easiness.toString())
             subjectList.add(sub)
