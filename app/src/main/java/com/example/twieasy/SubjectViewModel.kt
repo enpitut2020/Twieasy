@@ -9,6 +9,9 @@ data class Subject(
     var reviews: MutableCollection<String>
 )//構造体みたいなクラス
 
+enum class Department {
+    COINS, MAST, KLIS
+}
 
 private var reviews0: MutableCollection<String> = mutableListOf(
     "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!",
@@ -124,7 +127,6 @@ class SubjectViewModel: ViewModel() {
             reviewList[7]
         )
     )
-
 
     var subjectNumber = mutableListOf<String>(
         // 情報科学類
