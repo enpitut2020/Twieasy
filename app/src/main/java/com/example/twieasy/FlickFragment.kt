@@ -35,6 +35,7 @@ class FlickFragment : Fragment() {
     lateinit var vii : View
     lateinit var subjectView : SubjectViewModel
     val regex = Regex(pattern = "開講日時(.*)\n")
+    lateinit var t : Toast
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +43,7 @@ class FlickFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         vii = inflater.inflate(R.layout.fragment_flick, container, false)
+        t = Toast.makeText(vii.context, "", Toast.LENGTH_SHORT)
 
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
 
@@ -50,7 +52,6 @@ class FlickFragment : Fragment() {
         val subject_View : TextView = vii.subject_info
 
         subject_View.text =  subjectView.subjects[0]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty();
-
 
         jmpToFlick()
 
@@ -61,11 +62,6 @@ class FlickFragment : Fragment() {
     val flickAttribute = mutableMapOf<Int, String>()
     var swipedCount = 1
     var res :String = ""
-
-
-
-
-
 
     private fun jmpToFlick(){
         //setContentView(R.layout.first_boot)
@@ -99,52 +95,41 @@ class FlickFragment : Fragment() {
 
 
         private fun settingFlick(label: String) {
-            showToast(label)
+            Log.i("Flicked", label)
+
             //Thread.sleep(100)
             toggleInvisible()
             clearAll()
-            Log.i("Flicked", label)
 
-            // 画面遷移
-            // 1.フリック情報:labelを保持しておく
-            flickAttribute.put(flickAttribute.count(), label)
-            print(flickAttribute)
+            if(label != "中" && label != "下") {
+                showToast(label)
 
-/*
-            // 2.科目情報を変更
-            // ---丹羽君---
-            val subjectView : TextView = findViewById(R.id.subject_info)
-            subjectView.text = subjectInfo[swipedCount]
-            //if (swipedCount < subjectInfo.size-1){
-            swipedCount += 1
-            //}
-            // ------------
-            // 3.全部終わったら履修科目一覧に遷移
-            if(swipedCount == subjectInfo.size) {
+
                 // 画面遷移
-                //setContentView(R.layout.activity_main_copy)
-                jumpToLoginPage()
+                // 1.フリック情報:labelを保持しておく
+                flickAttribute.put(flickAttribute.count(), label)
+                print(flickAttribute)
+
+                // 2.科目情報を変更
+                val subject_View: TextView = vii.subject_info
+
+                val matchResult = regex.find(subjectView.subjects[swipedCount]?.info)
+
+                subject_View.text =
+                    subjectView.subjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty();
+                //if (swipedCount < subjectInfo.size-1){
+                swipedCount += 1
+
+                // ------------
+
+                // 3.全部終わったら履修科目一覧に遷移
+                if (swipedCount >= 10) {
+
+                    findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
+                    //setContentView(R.layout.activity_main_copy)
+                    //jumpToLoginPage()
+                }
             }
- */
-            val subject_View : TextView = vii.subject_info
-
-            val matchResult = regex.find(subjectView.subjects[swipedCount]?.info)
-
-            subject_View.text =  subjectView.subjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty();
-            //if (swipedCount < subjectInfo.size-1){
-            swipedCount += 1
-
-            // ------------
-
-            // 3.全部終わったら履修科目一覧に遷移
-            if(swipedCount >= 10) {
-
-                findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
-                //setContentView(R.layout.activity_main_copy)
-                //jumpToLoginPage()
-            }
-
-
         }
 
         private fun toggleVisible() {
@@ -178,17 +163,12 @@ class FlickFragment : Fragment() {
         private fun View.setBackgroundButtonColor(@ColorRes resId: Int) =
             setBackgroundColor(ContextCompat.getColor(requireActivity().applicationContext, resId))
 
-        private fun showToast(msg: String) = Toast.makeText(
-            context,
-            msg,
-            Toast.LENGTH_SHORT
-        ).show()
+        private fun showToast(msg: String) {
+            if(t != null) {
+                t.cancel()
+            }
+            t = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+            t.show()
+        }
     }
-
-
-
-
-
-
-
 }
