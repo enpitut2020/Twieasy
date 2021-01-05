@@ -38,12 +38,11 @@
                 android:layout_width="164dp"
                 android:layout_height="36dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:bootstrapBrand="success"
+                app:bootstrapBrand="info"
                 app:buttonMode="regular"
                 app:showOutline="true"
                 app:roundedCorners="true"
                 app:bootstrapText="認証コードを取得" />
-
         </LinearLayout>
 
 
@@ -85,12 +84,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:bootstrapBrand="success"
+            app:bootstrapBrand="info"
             app:bootstrapSize="lg"
             app:buttonMode="regular"
             app:showOutline="false"
             app:roundedCorners="true"
-            app:bootstrapText="アカウント作成 {fa_check}"/>
+            app:bootstrapText="アカウント作成"/>
 
     </LinearLayout>
 
@@ -113,7 +112,7 @@
         app:buttonMode="regular"
         app:showOutline="true"
         app:roundedCorners="true"
-        app:bootstrapText="ログイン {fa_amazon} {fa_instagram} {fa_bitcoin} {fa_youtube_play} {fa_github_square} {fa_facebook-official}"/>
+        app:bootstrapText="ログイン"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

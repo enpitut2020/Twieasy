@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.fragment_select_department.view.*
+import com.beardedhen.androidbootstrap.BootstrapButton
 
 
 class DepartmentFragment : Fragment() {
@@ -25,7 +26,9 @@ class DepartmentFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val view =  inflater.inflate(R.layout.fragment_select_department, container, false)
-        view.departmentButton.setOnClickListener{
+
+        val okButton: BootstrapButton = view.findViewById(R.id.departmentButton)
+        okButton.setOnClickListener{
             val bundle:Bundle = Bundle()
             bundle.putInt("buttonNum", button!!)
             findNavController().navigate(R.id.action_departmentFragment_to_loadFragment,bundle)

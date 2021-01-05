@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,20 +17,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="学類を選択してください"/>
+            android:text="学類を選択してください"
+            android:textSize="20sp"/>
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/department" />
+            android:entries="@array/department"/>
 
-        <Button
+        <com.beardedhen.androidbootstrap.BootstrapButton
             android:id ="@+id/departmentButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"
             tools:layout_editor_absoluteX="110dp"
-            tools:layout_editor_absoluteY="276dp"/>
+            tools:layout_editor_absoluteY="276dp"
+            app:bootstrapBrand="info"
+            app:bootstrapSize="lg"
+            app:buttonMode="regular"
+            app:showOutline="false"
+            app:roundedCorners="true"
+            app:bootstrapText="OK {fa_check}"/>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

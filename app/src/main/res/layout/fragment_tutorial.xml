@@ -19,12 +19,16 @@
             android:src="@drawable/tutorial_image"
             android:layout_weight="1"/>
 
-        <Button
+        <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/okButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="OK" />
+            app:bootstrapBrand="info"
+            app:bootstrapSize="lg"
+            app:buttonMode="regular"
+            app:showOutline="false"
+            app:roundedCorners="true"
+            app:bootstrapText="OK {fa_check}"/>
 
     </LinearLayout>
 

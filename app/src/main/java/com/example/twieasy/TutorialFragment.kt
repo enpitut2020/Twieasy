@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.beardedhen.androidbootstrap.BootstrapButton
 import kotlinx.android.synthetic.main.tutorial.view.*
+
 
 
 class TutorialFragment : Fragment() {
