@@ -14,8 +14,8 @@
             android:id="@+id/action_mainFragment_to_departmentFragment"
             app:destination="@id/departmentFragment"/>
         <action
-            android:id="@+id/action_mainFragment_to_loginFragment"
-            app:destination="@id/loginFragment"/>
+            android:id="@+id/action_mainFragment_to_loadFragment"
+            app:destination="@id/loadFragment" />
     </fragment>
     <fragment
         android:id="@+id/flickFragment2"

@@ -64,7 +64,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         view.loginButton.setOnClickListener{
             val bundle:Bundle = Bundle()
             bundle.putInt("buttonNum",1)
-            findNavController().navigate(R.id.action_mainFragment_to_loginFragment,bundle)
+            findNavController().navigate(R.id.action_mainFragment_to_loadFragment,bundle)
         }
 
         return view
