@@ -1,0 +1,26 @@
+Index: app/src/main/java/com/example/twieasy/SubjectFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.twieasy\r\n\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.*\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport androidx.navigation.fragment.findNavController\r\nimport kotlinx.android.synthetic.main.fragment_subject.view.*\r\n\r\n\r\nclass SubjectFragment : Fragment() {\r\n\r\n    lateinit var subjectView : SubjectViewModel\r\n    lateinit var listView: ListView\r\n\r\n\r\n    private val subject: MutableCollection<Button> = mutableListOf()//講義ボタンのリスト\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n        // adapterを作成します\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)\r\n\r\n        val view =  inflater.inflate(R.layout.fragment_subject, container, false)\r\n        val rl : LinearLayout = view.findViewById(R.id.fragment_subject_linear)\r\n\r\n        listView = ListView(requireContext())\r\n        // 科目名の配列\r\n        // リストではなく配列にしているのはListViewのadapterの引数の型がArrayだから\r\n        var subjectArray: Array<String> = subjectView.subjects.map{\r\n            it.name\r\n        }.toTypedArray()\r\n\r\n        // 予測結果を格納\r\n\r\n        // SearchViewのイベントリスナ\r\n        view.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {\r\n            // ユーザによって文字列が変更されたときに呼ばれる\r\n            override fun onQueryTextChange(newText: String): Boolean {\r\n                // text changed\r\n                Log.d(\"change\",newText)\r\n                if(!newText.isEmpty()) {\r\n                    val regex = Regex(newText)\r\n                    val result = subjectArray.filter { regex.containsMatchIn(it) }\r\n                    // 検索結果にものが格納されているとき\r\n                    if (!result.isEmpty()) {\r\n                        result.map { Log.d(\"input\", it) }\r\n\r\n                        val arrayAdapter = ArrayAdapter(\r\n                            requireContext(),\r\n                            R.layout.fragment_subject,\r\n                            result\r\n                        )\r\n                        listView.adapter = arrayAdapter\r\n                    }\r\n                }\r\n                return false\r\n            }\r\n            // ユーザがクエリを送信(検索ボタンをクリック)したときに呼ばれる\r\n            override fun onQueryTextSubmit(query: String): Boolean {\r\n                // submit button pressed\r\n                return false\r\n            }\r\n        })\r\n\r\n\r\n            for (i in 1..subjectView.subjects.size) {//i = sizeも処理される\r\n            val r: Button = Button(requireActivity())\r\n            r.id = i\r\n            r.text = subjectView.subjects[i - 1].name\r\n\r\n            if (subjectView.subjects[i - 1].easiness >= 50)\r\n                r.setBackgroundResource(R.drawable.frame_style_finalraku)\r\n            else\r\n                r.setBackgroundResource(R.drawable.frame_style_finalpien)\r\n            val r2: TextView = TextView(context)\r\n            r2.text = \"楽単率 \" + subjectView.subjects[i-1].easiness.toString() + \"%\"\r\n\r\n            subject.add(r)\r\n            rl.addView(r)\r\n            rl.addView(r2)\r\n            r.setOnClickListener { //jumpToReview(r.id)\r\n                val bundle : Bundle = Bundle()\r\n                bundle.putInt(\"ID\",i)\r\n\r\n                findNavController().navigate(R.id.action_subjectFragment_to_reviewFragment,bundle)\r\n            }\r\n        }\r\n        return view\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/twieasy/SubjectFragment.kt	(revision df96ee4434052a8bc672af791158adabec2bb802)
++++ app/src/main/java/com/example/twieasy/SubjectFragment.kt	(date 1608872095420)
+@@ -59,6 +59,7 @@
+                             result
+                         )
+                         listView.adapter = arrayAdapter
++
+                     }
+                 }
+                 return false
+@@ -71,7 +72,7 @@
+         })
+ 
+ 
+-            for (i in 1..subjectView.subjects.size) {//i = sizeも処理される
++        for (i in 1..subjectView.subjects.size) {//i = sizeも処理される
+             val r: Button = Button(requireActivity())
+             r.id = i
+             r.text = subjectView.subjects[i - 1].name
