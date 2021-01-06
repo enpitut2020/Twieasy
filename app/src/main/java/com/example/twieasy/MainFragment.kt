@@ -129,8 +129,8 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         return Mail().apply {
             mailServerHost = "smtp.qq.com"
             mailServerPort = "587"
-            fromAddress = "549908110@qq.com"
-            password = "kyhrhsjoxhxcbfij"
+            fromAddress = "****"
+            password = "****"
             toAddress = arrayListOf(mailAddress.text.toString())
             subject = "Twieasy messageSender Test"
             if(flag) {
