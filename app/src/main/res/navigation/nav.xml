@@ -12,10 +12,14 @@
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_departmentFragment"
-            app:destination="@id/departmentFragment"/>
+            app:destination="@id/departmentFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_mainFragment_to_loadFragment"
-            app:destination="@id/loadFragment" />
+            app:destination="@id/loadFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/flickFragment2"
@@ -64,7 +68,9 @@
         tools:layout="@layout/fragment_tutorial" >
         <action
             android:id="@+id/action_tutorialFragment_to_flickFragment2"
-            app:destination="@id/flickFragment2" />
+            app:destination="@id/flickFragment2"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/postFragment"
@@ -79,7 +85,9 @@
         tools:layout="@layout/fragment_department">
         <action
             android:id="@+id/action_departmentFragment_to_loadFragment"
-            app:destination="@id/loadFragment" />
+            app:destination="@id/loadFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/loadFragment"
@@ -88,10 +96,14 @@
         tools:layout="@layout/fragment_department">
         <action
             android:id="@+id/action_loadFragment_to_tutorialFragment"
-            app:destination="@id/tutorialFragment" />
+            app:destination="@id/tutorialFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_loadFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 
