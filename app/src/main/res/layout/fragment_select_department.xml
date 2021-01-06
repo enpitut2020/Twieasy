@@ -23,7 +23,8 @@
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/department"/>
+            android:entries="@array/department"
+            android:layout_marginBottom="5dp"/>
 
         <com.beardedhen.androidbootstrap.BootstrapButton
             android:id ="@+id/departmentButton"

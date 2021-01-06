@@ -82,18 +82,20 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             try {
                 val doc = Jsoup.connect(urlString).get();
                 val title = doc.select("#course-title #title").first().text() //科目名
+                val assignments = doc.select("#credit-grade-assignments #assignments").first().text()
                 val credit = doc.select("#credit-grade-assignments #credit").first().text() //単位数
                 val timetable =
                     doc.select("#credit-grade-assignments #timetable").first().text() //開講日時
                 val styleHeading = doc.select("#style-heading-style p").first().text() //授業形態
                 val eval = doc.select("#assessment-heading-assessment p").first().text() //評価方法
                 Log.i("title:", title.toString())
+                Log.i("assignments:", assignments.toString())
                 Log.i("credit:", title.toString())
                 Log.i("eval:", eval.toString())
 
                 subject = Subject(
                     title,
-                    "開講日時　" + timetable + "\n授業形態 " + styleHeading + "\n" + eval + "\n単位数 " + credit,
+                    "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n" + eval + "\n単位数　" + credit,
                     (r.nextInt() % 100 + 100) % 100,
                     subjectView.reviewList[counter++]
                 );
@@ -138,7 +140,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                     .appendLine(message).setFontSize(28, true)
                     .create()
             }else{
-                Toast.makeText(context, "筑波大学のメールアドレスを使いなさい", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "筑波大学のメールアドレスを使用してください", Toast.LENGTH_SHORT).show()
                 content = SpanUtils(context)
                     .appendLine("筑波大学のメールアドレスを使いなさい 例:s*******@u/s.tsukuba.ac.jp").setFontSize(
                         28,
@@ -155,7 +157,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
 
     override fun onError(e: Throwable) {
-        Toast.makeText(context, ": $e.message", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, ": $e.message", Toast.LENGTH_SHORT).show()
     }
 
 

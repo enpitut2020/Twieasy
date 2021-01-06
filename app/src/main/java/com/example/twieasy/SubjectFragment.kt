@@ -111,12 +111,13 @@ class SubjectFragment : Fragment() {
     private inner class CustomViewBinder : SimpleAdapter.ViewBinder {
         override fun setViewValue(view: View, data: Any, textRepresentation: String): Boolean {
             when(view.id) {
-                android.R.id.text1 ->
-                    Log.d("dataa", data as String)
+                android.R.id.text1 -> {
+                    //Log.d("data1", data as String)
+                }
 
                 android.R.id.text2 -> {
-                    Log.d("data", data as String)
-                    val easiness = data.toInt()
+                    //Log.d("data2", data as String)
+                    val easiness = (data as String).toInt()
                     if (easiness >= 50)
                         //view.setBackgroundColor(Color.parseColor("##00acFF"))
                     view.setBackgroundResource(R.drawable.frame_style_finalraku)

@@ -26,14 +26,14 @@ class LoadFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_main, container, false)
+        val view =  inflater.inflate(R.layout.fragment_load, container, false)
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
 
         while(!subjectView.loaded){
             continue;
         }
 
-        if(button == 0 )
+        if(button == 0)
                 findNavController().navigate(R.id.action_loadFragment_to_tutorialFragment)
         else if(button == 1)
                 findNavController().navigate(R.id.action_loadFragment_to_loginFragment)
