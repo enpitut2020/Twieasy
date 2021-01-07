@@ -1,5 +1,6 @@
 package com.example.twieasy
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -31,13 +32,13 @@ class SubjectFragment : Fragment() {
 
         subjectList = mutableListOf<MutableMap<String, Any>>()
         for (i in 1..subjectView.subjects.size){
-            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "easiness" to subjectView.subjects[i - 1].easiness.toString())
+            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "difficulty" to (100 - subjectView.subjects[i - 1].easiness).toString(), "easiness" to subjectView.subjects[i - 1].easiness.toString())
             subjectList.add(sub)
         }
 
-        val from = arrayOf("name", "easiness")
-        val to = intArrayOf(android.R.id.text1, android.R.id.text2)
-        var adapter = SimpleAdapter(view.context, subjectList, android.R.layout.simple_list_item_2, from, to)
+        val from = arrayOf("name", "difficulty", "easiness")
+        val to = intArrayOf(R.id.lv_subject_name, R.id.lv_difficulty, R.id.lv_easiness)
+        var adapter = SimpleAdapter(view.context, subjectList, R.layout.lv_subject, from, to)
         adapter.viewBinder = CustomViewBinder()
         val lvSubjects = view.findViewById<ListView>(R.id.lvSubjects)
         lvSubjects.adapter = adapter
@@ -56,10 +57,11 @@ class SubjectFragment : Fragment() {
             override fun onQueryTextChange(newText: String): Boolean {
                 // text changed
                 Log.d("change",newText)
+                //検索欄に入力があるとき
                 if(!newText.isEmpty()) {
                     val regex = Regex(newText)
                     result = searchList.filter { regex.containsMatchIn(it) }.toMutableList()
-                    // 検索結果に文字が格納されているとき
+                    // 検索に科目が引っ掛かったとき
                     if (!result.isEmpty()) {
                         val resultMap = mutableListOf<MutableMap<String, Any>>()
 
@@ -74,11 +76,11 @@ class SubjectFragment : Fragment() {
                                 }
                             }
 
-                            var res : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[index].name, "easiness" to subjectView.subjects[index].easiness.toString())
+                            var res : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[index].name, "difficulty" to (100 - subjectView.subjects[index].easiness).toString(), "easiness" to subjectView.subjects[index].easiness.toString())
                             resultMap.add(res)
                         }
 
-                        adapter = SimpleAdapter(view.context, resultMap, android.R.layout.simple_list_item_2, from, to)
+                        adapter = SimpleAdapter(view.context, resultMap, R.layout.lv_subject, from, to)
                         adapter.viewBinder = CustomViewBinder()
                         lvSubjects.adapter = adapter
                         lvSubjects.onItemClickListener = SearchListItemClickListener()
@@ -86,13 +88,13 @@ class SubjectFragment : Fragment() {
                     // 一致する検索結果が存在しないとき
                     else {
                         var resultEmpty = mutableListOf<MutableMap<String, Any>>()
-                        adapter = SimpleAdapter(view.context, resultEmpty, android.R.layout.simple_list_item_2, from, to)
+                        adapter = SimpleAdapter(view.context, resultEmpty, R.layout.lv_subject, from, to)
                         lvSubjects.adapter = adapter
                     }
                 }
                 // 検索欄に入力がないとき
                 else {
-                    adapter = SimpleAdapter(view.context, subjectList, android.R.layout.simple_list_item_2, from, to)
+                    adapter = SimpleAdapter(view.context, subjectList, R.layout.lv_subject, from, to)
                     adapter.viewBinder = CustomViewBinder()
                     lvSubjects.adapter = adapter
                     lvSubjects.onItemClickListener = ListItemClickListener()
@@ -109,23 +111,43 @@ class SubjectFragment : Fragment() {
     }
 
     private inner class CustomViewBinder : SimpleAdapter.ViewBinder {
+        @SuppressLint("SetTextI18n")
         override fun setViewValue(view: View, data: Any, textRepresentation: String): Boolean {
             when(view.id) {
-                android.R.id.text1 ->
-                    Log.d("dataa", data as String)
+                R.id.lv_subject_name -> {
+                    Log.d("data1", data as String)
+                    val textView = view as TextView
+                    textView.text = textRepresentation
 
-                android.R.id.text2 -> {
-                    Log.d("data", data as String)
-                    val easiness = data.toInt()
-                    if (easiness >= 50)
-                        //view.setBackgroundColor(Color.parseColor("##00acFF"))
-                    view.setBackgroundResource(R.drawable.frame_style_finalraku)
+                    return true//これがないと.textにdataの値を上書きされる(ここ↑で書き込んでいることを知らせている)
+                }
+
+                R.id.lv_difficulty -> {
+                    val difficulty = (data as String).toInt()
+                    val difficultyFloat = difficulty.toFloat()
+                    Log.d("data2", "$difficulty/$difficultyFloat")
+                    val textView = view as TextView
+                    (textView.layoutParams as LinearLayout.LayoutParams).weight = difficultyFloat
+                    if (difficulty < 20)
+                        textView.text = ""
                     else
-                        //view.setBackgroundColor(Color.parseColor("#f28a2f"))
-                    view.setBackgroundResource(R.drawable.frame_style_finalpien)
+                        textView.text = "落$textRepresentation%"
 
-                    // val r2: TextView = TextView(context)
-                    // r2.text = "楽単率 " + subjectView.subjects[i-1].easiness.toString() + "%"
+                    return true
+                }
+
+                R.id.lv_easiness -> {
+                    val easiness = (data as String).toInt()
+                    val easinessFloat = easiness.toFloat()
+                    Log.d("data3", "$easiness/$easinessFloat")
+                    val textView = view as TextView
+                    (textView.layoutParams as LinearLayout.LayoutParams).weight = easinessFloat
+                    if (easiness < 20)
+                        textView.text = ""
+                    else
+                        textView.text = "楽$textRepresentation%"
+
+                    return true
                 }
             }
             return false
