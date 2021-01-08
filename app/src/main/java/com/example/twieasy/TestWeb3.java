@@ -36,7 +36,7 @@ public class TestWeb3 {
     // このアドレスを無効（空文字）にした場合、[HelloWorld]コントラクトがデプロイされます
     // デプロイが成功すると[LogCat]にアドレスが表示されるので、その値を下記に設定することで再アクセスが可能です
     //（※コメントアウトされているアドレスは実際にRinkeby上にデプロイされたものなので、テストにお使いいただけます）
-    final private String DEFAULT_HELLO_WORLD_ADDRESS = "0xd21ce6f369f8281b7d39b47372c8f4a8a77841fc";//"0xd2a5bC10698FD955D1Fe6cb468a17809A08fd005"; //"0xd21ce6f369f8281b7d39b47372c8f4a8a77841fc";
+    final private String DEFAULT_HELLO_WORLD_ADDRESS = "0x96a7577c6814f6AF0545C6782ddea14bF2Bf74B4";//"0xd2a5bC10698FD955D1Fe6cb468a17809A08fd005"; //"0xd21ce6f369f8281b7d39b47372c8f4a8a77841fc";
 
     //-------------------------------------
     // メンバー
@@ -211,7 +211,7 @@ public class TestWeb3 {
             ContractGasProvider gasProvider = new DefaultGasProvider();
 
             // コントラクトが読み込めたら有効とみなす
-            HelloWorld contract = HelloWorld.load(
+            Main contract = Main.load(
                     contractAddress,
                     web3,
                     credentials,
@@ -309,7 +309,7 @@ public class TestWeb3 {
 
 
             // コントラクトの読み込み
-            HelloWorld contract = HelloWorld.load(
+            Main contract = Main.load(
                     contractAddress,
                     web3,
                     credentials,
@@ -317,17 +317,17 @@ public class TestWeb3 {
             );
 
             // [getWord]メソッドのコール（※これは[view]メソッドなので手数料は０）
-            log("@ BEFORE: HelloWorld.getWord()=" + contract.getWord().send());
+            log("@ BEFORE: HelloWorld.getWord()=" + contract.getReviews("0").send());
 
             // [setWord]メソッドのコール（※これはブロックチェーンに書き込むのでヘルパーのアカウントに十分な残高がないと例外が発生する）
             Date d = new Date();
             String sendWord = "Greeting from web3j at " + d.toString();
             log( "@ HelloWorld.setWord( " + sendWord + " )" );
-            TransactionReceipt transactionReceipt = contract.setWord( sendWord ).send();
+            TransactionReceipt transactionReceipt = contract._review("1","123456").send();
             //contract.setWord( sendWord ).send();
 
             // 再度[getWord]を呼ぶ（※[setWord]で設定した文字列が返ってくることの確認）
-            log( "@ AFTER: HelloWorld.getWorld()=" + contract.getWord().send() );
+            log( "@ AFTER: HelloWorld.getWorld()=" + contract.getReviews("0").send() );
         } catch ( Exception e ){
             log( "@ execInteractHelloWorld: EXCEPTION e=" + e.getMessage() );
             return( false );
