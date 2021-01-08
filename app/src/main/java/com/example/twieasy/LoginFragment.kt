@@ -23,7 +23,6 @@ class LoginFragment : Fragment() {
 
         view.login_login.setOnClickListener{
             findNavController().navigate(R.id.action_loginFragment_to_subjectFragment)
-
         }
         // Inflate the layout for this fragment
         return view

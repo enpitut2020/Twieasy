@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -54,6 +55,8 @@ class FlickFragment : Fragment() {
         subject_View.text =  subjectView.subjects[0]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty();
 
         jmpToFlick()
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {/*戻るボタンが押されても遷移しない*/}
 
         return vii
     }

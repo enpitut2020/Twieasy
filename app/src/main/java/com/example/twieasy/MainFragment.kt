@@ -19,6 +19,7 @@ import org.jsoup.Jsoup
 import java.io.*
 import java.util.*
 
+var times = 0
 class MainFragment : Fragment(),MailSender.OnMailSendListener {
     var res :String = ""
     //lateinit var binding:FragmentMainBinding
@@ -40,10 +41,12 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
             } as MutableList<String>
 
-            // KDBの情報を整形したもの
-            subjectView.subjects = subjectView.kdbRawData.map {
-                getTextFromWeb(it)
-            } as MutableList<Subject>
+            if(times++ == 0) {//戻るボタンで遷移してきた際は再度科目情報を読み取らない
+                // KDBの情報を整形したもの
+                subjectView.subjects = subjectView.kdbRawData.map {
+                    getTextFromWeb(it)
+                } as MutableList<Subject>
+            }
 
             subjectView.loaded = true
         }

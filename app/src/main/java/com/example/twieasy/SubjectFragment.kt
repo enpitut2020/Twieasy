@@ -24,6 +24,7 @@ class SubjectFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        times = 0//※これがないと戻るボタンでアプリを落とした後講義を読み込まない(表示されない)
         // Inflate the layout for this fragment
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
 
