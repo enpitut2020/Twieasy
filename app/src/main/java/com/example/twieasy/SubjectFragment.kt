@@ -31,7 +31,7 @@ class SubjectFragment : Fragment() {
 
         subjectList = mutableListOf<MutableMap<String, Any>>()
         for (i in 1..subjectView.subjects.size){
-            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "easiness" to subjectView.subjects[i - 1].easiness.toString())
+            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "easiness" to "楽単率" + subjectView.subjects[i - 1].easiness.toString() + "%")
             subjectList.add(sub)
         }
 
@@ -74,7 +74,7 @@ class SubjectFragment : Fragment() {
                                 }
                             }
 
-                            var res : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[index].name, "easiness" to subjectView.subjects[index].easiness.toString())
+                            var res : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[index].name, "easiness" to "楽単率" + subjectView.subjects[index].easiness.toString() + "%")
                             resultMap.add(res)
                         }
 
@@ -116,6 +116,8 @@ class SubjectFragment : Fragment() {
 
                 android.R.id.text2 -> {
                     Log.d("data", data as String)
+
+                    /*
                     val easiness = data.toInt()
                     if (easiness >= 50)
                         //view.setBackgroundColor(Color.parseColor("##00acFF"))
@@ -123,6 +125,7 @@ class SubjectFragment : Fragment() {
                     else
                         //view.setBackgroundColor(Color.parseColor("#f28a2f"))
                     view.setBackgroundResource(R.drawable.frame_style_finalpien)
+                    */
 
                     // val r2: TextView = TextView(context)
                     // r2.text = "楽単率 " + subjectView.subjects[i-1].easiness.toString() + "%"
