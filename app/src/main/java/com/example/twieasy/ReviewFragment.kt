@@ -76,13 +76,11 @@ class ReviewFragment : Fragment() {
         }
     }
 
-
-
     @SuppressLint("ResourceAsColor")
     private fun createReview(subname: String, subinfo: String, easiness: Int) {//easiness[%] : 楽単度合い
         //"落%"部分生成
         val textView1 = vii.findViewById<TextView>(R.id.difficulty)
-        (textView1.getLayoutParams() as LinearLayout.LayoutParams).weight = (100 - easiness).toFloat()
+        (textView1.getLayoutParams() as LinearLayout.LayoutParams).weight = (100 - easiness.toFloat())
         if (70 < easiness)//文字がはみ出る
             textView1.text = ""
         else//はみ出ない
