@@ -15,17 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.beardedhen.androidbootstrap.BootstrapButton
 import kotlinx.android.synthetic.main.fragment_review.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ReviewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ReviewFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var ID: Int? = null
 
 
