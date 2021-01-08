@@ -21,6 +21,7 @@ import java.io.*
 import java.util.*
 import android.content.SharedPreferences
 import android.content.Context
+import android.graphics.Color
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
@@ -65,25 +66,40 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             // ログインIDとログインパスワードのビューオブジェクトを取得
             val loginAccount = view.findViewById<EditText>(R.id.mailAddress)
             val loginPass = view.findViewById<EditText>(R.id.passWord)
+            val loginPass2 = view.findViewById<EditText>(R.id.passWord2)
 
-            // 「pref_data」という設定データファイルを読み込み
-            val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
-            val editor = prefData?.edit()
+            // 1回目のパスワードと2回目のパスワードが同じ
+            if(loginPass.text.toString() == loginPass2.text.toString()) {
+                // 「pref_data」という設定データファイルを読み込み
+                val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
+                val editor = prefData?.edit()
 
-            // パスワードを暗号化
-            val encryption: String = Base64.getEncoder().encodeToString(loginPass.text.toString().toByteArray())
+                // パスワードを暗号化
+                val encryption: String = Base64.getEncoder().encodeToString(loginPass.text.toString().toByteArray())
 
-            // 入力されたログインIDとログインパスワード
-            editor?.putString("account", loginAccount.text.toString())
-            editor?.putString("pass", encryption)
+                // 入力されたログインIDとログインパスワード
+                editor?.putString("account", loginAccount.text.toString())
+                editor?.putString("pass", encryption)
 
-            // 保存
-            editor?.commit()
+                // 保存
+                editor?.commit()
 
-            Log.i("TextView Input", loginAccount.text.toString())
-            Log.i("pass-enc",encryption)
+                Log.i("TextView Input", loginAccount.text.toString())
+                Log.i("pass-enc",encryption)
 
-            findNavController().navigate(R.id.action_mainFragment_to_departmentFragment,bundle)
+                findNavController().navigate(R.id.action_mainFragment_to_departmentFragment,bundle)
+            }
+            // パスワードが違う
+            else {
+                Log.i("pass1", loginPass.text.toString())
+                Log.i("pass2", loginPass2.text.toString())
+                Log.i("error", "diffPassword")
+
+                loginPass2.hint = "パスワードが違います"
+                loginPass2.setText("")
+                loginPass2.setBackgroundColor(R.color.warn)
+            }
+
         }
 
         view.button.setOnClickListener{

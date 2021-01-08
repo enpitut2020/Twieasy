@@ -8,9 +8,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login.view.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import java.security.InvalidKeyException
 import java.security.NoSuchAlgorithmException
@@ -49,9 +51,11 @@ class LoginFragment : Fragment() {
         Log.i("account", account)
         Log.i("pass-en", encryption)
 
+        var decryption: String? = null
+
         // パスワード複合化処理
         try {
-            val decryption = Base64.getDecoder().decode(encryption?.toByteArray()).toString(Charsets.UTF_8)
+            decryption = Base64.getDecoder().decode(encryption?.toByteArray()).toString(Charsets.UTF_8)
             Log.i("pass-dec", decryption)
         } catch (e: NoSuchAlgorithmException) {
             e.printStackTrace()
@@ -65,10 +69,27 @@ class LoginFragment : Fragment() {
             e.printStackTrace()
         }
 
+        val pass = decryption
 
         view.login_login.setOnClickListener{
-            findNavController().navigate(R.id.action_loginFragment_to_subjectFragment)
+            val inputAccount = view.findViewById<TextView>(R.id.mailAddress_login)
+            val inputPassword = view.findViewById<TextView>(R.id.passWord_login)
 
+            if(account == inputAccount.text.toString()) {
+                if(pass != null && pass == inputPassword.text.toString()) {
+                    findNavController().navigate(R.id.action_loginFragment_to_subjectFragment)
+                }
+                else {
+                    inputPassword.hint =  "パスワードが違います"
+                    inputPassword.setText("")
+                    inputPassword.setBackgroundColor(R.color.warn)
+                }
+            }
+            else {
+                inputAccount.hint =  "アカウントが違います"
+                inputAccount.setText("")
+                inputAccount.setBackgroundColor(R.color.warn)
+            }
         }
         // Inflate the layout for this fragment
         return view

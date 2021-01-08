@@ -12,4 +12,5 @@
     <color name="raku">#98cf50</color>
     <color name="finalpien">#f28a2f</color>
     <color name="finalraku">#00acFF</color>
+    <color name="warn">#cc572c</color>
 </resources>
