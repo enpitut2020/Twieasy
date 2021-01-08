@@ -75,4 +75,7 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:2.5.5'
     implementation 'com.beardedhen:androidbootstrap:2.3.2'
+
+    implementation 'org.web3j:core:4.2.1-android'
+    implementation('org.web3j:core:4.5.6')
 }
