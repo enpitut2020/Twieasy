@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +19,11 @@ import kotlinx.android.synthetic.main.fragment_main.view.*
 import org.jsoup.Jsoup
 import java.io.*
 import java.util.*
+import android.content.SharedPreferences
+import android.content.Context
+import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
+
 
 class MainFragment : Fragment(),MailSender.OnMailSendListener {
     var res :String = ""
@@ -50,9 +56,33 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         load.start()
 
+
+
         view.makeAccount.setOnClickListener{
             val bundle:Bundle = Bundle()
             bundle.putInt("buttonNum",0)
+
+            // ログインIDとログインパスワードのビューオブジェクトを取得
+            val loginAccount = view.findViewById<EditText>(R.id.mailAddress)
+            val loginPass = view.findViewById<EditText>(R.id.passWord)
+
+            // 「pref_data」という設定データファイルを読み込み
+            val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
+            val editor = prefData?.edit()
+
+            // パスワードを暗号化
+            val encryption: String = Base64.getEncoder().encodeToString(loginPass.text.toString().toByteArray())
+
+            // 入力されたログインIDとログインパスワード
+            editor?.putString("account", loginAccount.text.toString())
+            editor?.putString("pass", encryption)
+
+            // 保存
+            editor?.commit()
+
+            Log.i("TextView Input", loginAccount.text.toString())
+            Log.i("pass-enc",encryption)
+
             findNavController().navigate(R.id.action_mainFragment_to_departmentFragment,bundle)
         }
 
