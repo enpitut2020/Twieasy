@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -69,6 +70,13 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             bundle.putInt("buttonNum",1)
             findNavController().navigate(R.id.action_mainFragment_to_loadFragment,bundle)
         }
+
+        val callBack= requireActivity().onBackPressedDispatcher.addCallback(this) {
+            times = 0
+            isEnabled = false
+            Log.i("backButton", "Pushed")
+        }
+
 
         return view
     }
