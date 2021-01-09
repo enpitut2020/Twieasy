@@ -98,7 +98,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 subject = Subject(
                     title,
-                    "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n" + eval + "\n単位数　" + credit,
+                    "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n単位数　　" + credit + "\n" + eval,
                     (r.nextInt() % 100 + 100) % 100,
                     subjectView.reviewList[counter++]
                 );
