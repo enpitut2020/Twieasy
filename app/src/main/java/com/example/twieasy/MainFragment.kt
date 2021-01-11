@@ -30,7 +30,6 @@ import javax.crypto.spec.SecretKeySpec
 import com.toridge.kotlintest.EncryptionUtils
 import kotlin.math.log
 
-
 var times = 0
 class MainFragment : Fragment(),MailSender.OnMailSendListener {
     var res :String = ""
@@ -85,30 +84,33 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 // AES128で暗号化
                 val key: String = "toridge"
-                val encryption: String? = EncryptionUtils.encryptAES128(key, loginPass.text.toString())
-                val encryption2: String? = EncryptionUtils.encryptAES128(key, loginAccount.text.toString())
+                val encryptionAccount: String? = EncryptionUtils.encryptAES128(key, loginPass.text.toString())
+                val encryptionPassword: String? = EncryptionUtils.encryptAES128(key, loginAccount.text.toString())
 
                 // AES128で複合化
-                val decryption: String? =
-                    encryption?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
-                val decryption2: String? =
-                    encryption2?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
+                val decryptionAccount: String? =
+                    encryptionAccount?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
+                val decryptionPassword: String? =
+                    encryptionPassword?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
 
                 // デバッグ用Log
-                Log.i("enc", encryption)
-                Log.i("dec",decryption)
-                Log.i("enc2", encryption2)
-                Log.i("dec2",decryption2)
+                Log.i("enc", encryptionAccount)
+                Log.i("dec",decryptionAccount)
+                Log.i("enc2", encryptionPassword)
+                Log.i("dec2",decryptionPassword)
 
                 // 入力されたログインIDとログインパスワード
-                editor?.putString("account", encryption2)
-                editor?.putString("pass", encryption)
+                editor?.putString("account", encryptionAccount)
+                editor?.putString("pass", encryptionPassword)
+
+                // 暗号化したアカウント名とパスワードを送信
+
+
+
+
 
                 // 保存
                 editor?.commit()
-
-                Log.i("TextView Input", loginAccount.text.toString())
-                Log.i("pass-enc",encryption)
 
                 findNavController().navigate(R.id.action_mainFragment_to_departmentFragment,bundle)
             }
