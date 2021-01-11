@@ -117,17 +117,11 @@ class FlickFragment : Fragment() {
 
                 subject_View.text =
                     subjectView.subjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty();
-                //if (swipedCount < subjectInfo.size-1){
                 swipedCount += 1
 
-                // ------------
-
                 // 3.全部終わったら履修科目一覧に遷移
-                if (swipedCount >= 10) {
-
+                if (swipedCount >= subjectView.subjects.size) {
                     findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
-                    //setContentView(R.layout.activity_main_copy)
-                    //jumpToLoginPage()
                 }
             }
         }
