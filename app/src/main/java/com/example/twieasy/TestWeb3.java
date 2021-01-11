@@ -309,8 +309,6 @@ public class TestWeb3 {
             return( false );
         }*/
 
-
-
             // コントラクトの読み込み
             Main contract = Main.load(
                     contractAddress,
