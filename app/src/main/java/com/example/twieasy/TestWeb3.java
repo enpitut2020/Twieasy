@@ -3,6 +3,8 @@ package com.example.twieasy;
 import android.content.Context;
 import android.util.Log;
 
+import com.kenai.jffi.Function;
+
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
@@ -16,6 +18,7 @@ import org.web3j.utils.Convert;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.concurrent.Future;
 
 public class TestWeb3 {
     //-------------------------------------
@@ -324,10 +327,11 @@ public class TestWeb3 {
             String sendWord = "Greeting from web3j at " + d.toString();
             log( "@ HelloWorld.setWord( " + sendWord + " )" );
             TransactionReceipt transactionReceipt = contract._review("1","123456").send();
-            //contract.setWord( sendWord ).send();
 
             // 再度[getWord]を呼ぶ（※[setWord]で設定した文字列が返ってくることの確認）
-            log( "@ AFTER: HelloWorld.getWorld()=" + contract.getReviews("0").send() );
+            log( "@ AFTER: HelloWorld.getWorld()=" + contract.getReviews("0").send());
+
+
         } catch ( Exception e ){
             log( "@ execInteractHelloWorld: EXCEPTION e=" + e.getMessage() );
             return( false );
