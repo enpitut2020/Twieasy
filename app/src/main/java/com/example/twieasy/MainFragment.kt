@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -26,6 +27,7 @@ import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
 
+var times = 0
 class MainFragment : Fragment(),MailSender.OnMailSendListener {
     var res :String = ""
     //lateinit var binding:FragmentMainBinding
@@ -47,10 +49,12 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
             } as MutableList<String>
 
-            // KDBの情報を整形したもの
-            subjectView.subjects = subjectView.kdbRawData.map {
-                getTextFromWeb(it)
-            } as MutableList<Subject>
+            if(times++ == 0) {//戻るボタンで遷移してきた際は再度科目情報を読み取らない
+                // KDBの情報を整形したもの
+                subjectView.subjects = subjectView.kdbRawData.map {
+                    getTextFromWeb(it)
+                } as MutableList<Subject>
+            }
 
             subjectView.loaded = true
         }
@@ -113,6 +117,13 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             findNavController().navigate(R.id.action_mainFragment_to_loadFragment,bundle)
         }
 
+        val callBack= requireActivity().onBackPressedDispatcher.addCallback(this) {
+            times = 0
+            isEnabled = false
+            Log.i("backButton", "Pushed")
+        }
+
+
         return view
     }
 
@@ -141,7 +152,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 subject = Subject(
                     title,
-                    "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n" + eval + "\n単位数　" + credit,
+                    "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n単位数　　" + credit + "\n" + eval,
                     (r.nextInt() % 100 + 100) % 100,
                     subjectView.reviewList[counter++]
                 );

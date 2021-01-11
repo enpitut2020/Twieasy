@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.fragment_select_department.view.*
@@ -20,6 +21,8 @@ class DepartmentFragment : Fragment() {
         arguments?.let {
             button = it.getInt("buttonNum")
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {/*戻るボタンが押されても遷移しない*/}
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

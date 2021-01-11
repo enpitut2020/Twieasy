@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.beardedhen.androidbootstrap.BootstrapButton
@@ -31,6 +32,9 @@ class TutorialFragment : Fragment() {
         okButton.setOnClickListener{
             findNavController().navigate(R.id.action_tutorialFragment_to_flickFragment2)
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {/*戻るボタンが押されても遷移しない*/}
+
         return vii
     }
 
