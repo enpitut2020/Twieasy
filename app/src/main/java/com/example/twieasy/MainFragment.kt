@@ -66,9 +66,9 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             val loginAccount = view.findViewById<EditText>(R.id.mailAddress)
             val loginPass = view.findViewById<EditText>(R.id.passWord)
             val loginPass2 = view.findViewById<EditText>(R.id.passWord2)
-
+            val ver = view.findViewById<EditText>(R.id.verify)
             // 1回目のパスワードと2回目のパスワードが同じ
-            if(loginPass.text.toString() == loginPass2.text.toString()) {
+            if(loginPass.text.toString() == loginPass2.text.toString() && ver.text.toString() == res && res != "") {
                 // 「pref_data」という設定データファイルを読み込み
                 val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
                 val editor = prefData?.edit()
@@ -103,10 +103,6 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 if(tb?.loginState == true){
                     Log.i("login: ", tb?.loginState.toString())
                 }
-
-
-
-
                 // 保存
                 editor?.commit()
 
@@ -121,6 +117,11 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 loginPass2.hint = "パスワードが違います"
                 loginPass2.setText("")
                 loginPass2.setBackgroundColor(R.color.warn)
+            }
+            if(ver.text.toString() != res || ver.text.toString().length == 0){
+                ver.hint = "認証コードが違います"
+                ver.setText("")
+                ver.setBackgroundColor(R.color.warn)
             }
 
         }
