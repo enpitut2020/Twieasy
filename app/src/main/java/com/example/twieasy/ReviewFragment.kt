@@ -55,8 +55,9 @@ class ReviewFragment : Fragment() {
             val review = i
             val decryptionReview: String? = EncryptionUtils.decryptAES128(key, review)
 
-            Log.i("review", decryptionReview)
-            r.text = if(decryptionReview != null) decryptionReview else ""
+            //Log.i("review", decryptionReview)
+            //r.text = if(decryptionReview != null) decryptionReview else ""
+            r.text = review
             r.height = 200
             r.setPaddingRelative(30, 30, 30, 30)
             r.setBackgroundColor(Color.parseColor("#f5f5f5"))

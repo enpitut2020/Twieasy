@@ -32,13 +32,13 @@ class SubjectFragment : Fragment() {
 
         subjectList = mutableListOf<MutableMap<String, Any>>()
         for (i in 1..subjectView.subjects.size){
-            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "easiness" to "楽単率" + subjectView.subjects[i - 1].easiness.toString() + "%")
+            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "easiness" to subjectView.subjects[i - 1].easiness.toString())
             subjectList.add(sub)
         }
 
         val from = arrayOf("name", "easiness")
-        val to = intArrayOf(android.R.id.text1, android.R.id.text2)
-        var adapter = SimpleAdapter(view.context, subjectList, android.R.layout.simple_list_item_2, from, to)
+        val to = intArrayOf(R.id.lv_subject_name, R.id.lv_easiness)
+        var adapter = SimpleAdapter(view.context, subjectList, R.layout.lv_subject, from, to)
         adapter.viewBinder = CustomViewBinder()
         val lvSubjects = view.findViewById<ListView>(R.id.lvSubjects)
         lvSubjects.adapter = adapter
@@ -79,7 +79,7 @@ class SubjectFragment : Fragment() {
                             resultMap.add(res)
                         }
 
-                        adapter = SimpleAdapter(view.context, resultMap, android.R.layout.simple_list_item_2, from, to)
+                        adapter = SimpleAdapter(view.context, resultMap, R.layout.lv_subject, from, to)
                         adapter.viewBinder = CustomViewBinder()
                         lvSubjects.adapter = adapter
                         lvSubjects.onItemClickListener = SearchListItemClickListener()
@@ -87,13 +87,13 @@ class SubjectFragment : Fragment() {
                     // 一致する検索結果が存在しないとき
                     else {
                         var resultEmpty = mutableListOf<MutableMap<String, Any>>()
-                        adapter = SimpleAdapter(view.context, resultEmpty, android.R.layout.simple_list_item_2, from, to)
+                        adapter = SimpleAdapter(view.context, resultEmpty, R.layout.lv_subject, from, to)
                         lvSubjects.adapter = adapter
                     }
                 }
                 // 検索欄に入力がないとき
                 else {
-                    adapter = SimpleAdapter(view.context, subjectList, android.R.layout.simple_list_item_2, from, to)
+                    adapter = SimpleAdapter(view.context, subjectList, R.layout.lv_subject, from, to)
                     adapter.viewBinder = CustomViewBinder()
                     lvSubjects.adapter = adapter
                     lvSubjects.onItemClickListener = ListItemClickListener()
@@ -112,24 +112,18 @@ class SubjectFragment : Fragment() {
     private inner class CustomViewBinder : SimpleAdapter.ViewBinder {
         override fun setViewValue(view: View, data: Any, textRepresentation: String): Boolean {
             when(view.id) {
-                android.R.id.text1 ->
-                    Log.d("dataa", data as String)
-
-                android.R.id.text2 -> {
-                    Log.d("data", data as String)
-
-                    /*
-                    val easiness = data.toInt()
-                    if (easiness >= 50)
-                        //view.setBackgroundColor(Color.parseColor("##00acFF"))
-                    view.setBackgroundResource(R.drawable.frame_style_finalraku)
-                    else
-                        //view.setBackgroundColor(Color.parseColor("#f28a2f"))
-                    view.setBackgroundResource(R.drawable.frame_style_finalpien)
-                    */
-
-                    // val r2: TextView = TextView(context)
-                    // r2.text = "楽単率 " + subjectView.subjects[i-1].easiness.toString() + "%"
+                R.id.lv_easiness -> {
+                    val easiness = (data as String).toInt()
+                    val textView = view as TextView
+                    textView.text = "楽単率" + data.toString() + "%"
+                    if (easiness >= 50) {
+                        textView.setBackgroundColor(Color.parseColor("#00acFF"))
+                        textView.setBackgroundResource(R.drawable.frame_style_finalraku)
+                    } else {
+                        textView.setBackgroundColor(Color.parseColor("#f28a2f"))
+                        textView.setBackgroundResource(R.drawable.frame_style_finalpien)
+                    }
+                    return true
                 }
             }
             return false

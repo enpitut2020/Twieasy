@@ -6,11 +6,12 @@
     <solid android:color="@color/finalpien" />
 
     <!-- 角の丸み -->
-    <corners android:radius="6dp" />
+    <corners android:radius="30dp" />
 
     <!-- 枠線 width:線の幅、color:線の色 -->
     <stroke
         android:width="2dp"
-        android:color="#000000" />
+        android:color="@color/finalpien"
+    />
 
 </shape>
