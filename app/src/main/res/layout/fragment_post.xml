@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:gravity="top|left"
         android:inputType="textMultiLine"
-        android:maxLength="185"
+        android:maxLength="144"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"

@@ -3,6 +3,7 @@ package com.example.twieasy
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -57,10 +58,13 @@ class ReviewFragment : Fragment() {
 
             //Log.i("review", decryptionReview)
             //r.text = if(decryptionReview != null) decryptionReview else ""
+            r.ellipsize = TextUtils.TruncateAt.END
             r.text = review
-            r.height = 200
+            //r.height = 250
+            r.height = ViewGroup.LayoutParams.WRAP_CONTENT
             r.setPaddingRelative(30, 30, 30, 30)
             r.setBackgroundColor(Color.parseColor("#f5f5f5"))
+            r.maxLines = 6
 
             val layout = vii.findViewById<LinearLayout>(R.id.linearLayout)
             layout.addView(r)

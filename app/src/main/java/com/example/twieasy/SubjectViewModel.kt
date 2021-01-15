@@ -15,9 +15,9 @@ enum class Department {
 
 private var reviews0: MutableCollection<String> = mutableListOf(
     "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!",
-    "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!"
+    "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!","fdsafkdsjjkljkl;jkljgkdfl;fjkdlsjfakldsjfjkdsfjkdjkfjdslkajfkdlsjafljdlfkjafdlsajfkldsjaflsdjkfdjsafldsjfkldsajfkldsjfdsjalfj;afkdlsajkl;jkljkl;jfklds;jfkld;sajfkl;dsjafkl;sdjafkld;sajfklsjfkdl;ajfdsl;kaf;jfdklsafjks;l;lasjdkl;sajfkld;sajfkdls;fjkdls;ajfkdls;jafkldsjafkld;sajfkdls;jafkdls;ajfdkl;sajfkdls;ajfkdsla;fjdskl;fjdskal;fjdksl;afjdskal;fjds"
 )
-private var reviews1: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
+private var reviews1: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!", "ｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊｓｊ")
 private var reviews2: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
 private var reviews3: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
 private var reviews4: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
