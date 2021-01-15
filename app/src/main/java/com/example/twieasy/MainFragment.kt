@@ -48,6 +48,8 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         val view =  inflater.inflate(R.layout.fragment_main, container, false)
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
 
+
+
         val load = Thread {
             subjectView.kdbRawData = subjectView.subjectNumber.map {
                 "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
@@ -65,6 +67,14 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         load.start()
 
+        val k = "hoge"
+        val hoge = "漢字！"
+        Log.i("kanji", hoge)
+
+        val enc: String? = EncryptionUtils.encryptAES128(k, hoge)
+        Log.i("enc", enc)
+        val dec: String? = enc?.let { EncryptionUtils.decryptAES128(k, it) }
+        Log.i("dec", dec)
 
 
         view.makeAccount.setOnClickListener{

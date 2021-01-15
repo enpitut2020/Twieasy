@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.toridge.kotlintest.EncryptionUtils
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
@@ -35,31 +36,22 @@ class LoginFragment : Fragment() {
         // 「pref_data」という設定データファイルを読み込み
         val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
         val account = prefData?.getString("account", "")
-        val encryption = prefData?.getString("pass", "")
+        val password = prefData?.getString("pass", "")
 
         // Log
         Log.i("account", account)
-        Log.i("pass-en", encryption)
+        Log.i("password", password)
 
-        var decryption: String? = null
+        val key: String = "toridge"
+        val decryptionAccount: String? =
+            account?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
+        val decryptionPassword: String? =
+            password?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
 
-        // パスワード複合化処理
-        try {
-            decryption = Base64.getDecoder().decode(encryption?.toByteArray()).toString(Charsets.UTF_8)
-            Log.i("pass-dec", decryption)
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
-        } catch (e: NoSuchPaddingException) {
-            e.printStackTrace()
-        } catch (e: InvalidKeyException) {
-            e.printStackTrace()
-        } catch (e: BadPaddingException) {
-            e.printStackTrace()
-        } catch (e: IllegalBlockSizeException) {
-            e.printStackTrace()
-        }
+        Log.i("dec",decryptionAccount)
+        Log.i("dec2",decryptionPassword)
 
-        val pass = decryption
+        val pass = decryptionPassword
 
         view.login_login.setOnClickListener{
             val inputAccount = view.findViewById<TextView>(R.id.mailAddress_login)

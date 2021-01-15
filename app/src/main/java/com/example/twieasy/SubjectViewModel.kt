@@ -13,15 +13,12 @@ enum class Department {
     COINS, MAST, KLIS
 }
 
-private var reviews0: MutableCollection<String> = mutableListOf(
-    "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!",
-    "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!"
-)
-private var reviews1: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews2: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews3: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews4: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews5: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
+private var reviews0: MutableCollection<String> = mutableListOf()
+private var reviews1: MutableCollection<String> = mutableListOf()
+private var reviews2: MutableCollection<String> = mutableListOf()
+private var reviews3: MutableCollection<String> = mutableListOf()
+private var reviews4: MutableCollection<String> = mutableListOf()
+private var reviews5: MutableCollection<String> = mutableListOf()
 private var reviews6: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
 private var reviews7: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
 private var reviews8: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")

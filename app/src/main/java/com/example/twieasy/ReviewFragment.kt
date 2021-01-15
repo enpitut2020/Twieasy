@@ -57,6 +57,7 @@ class ReviewFragment : Fragment() {
 
             Log.i("review", decryptionReview)
             r.text = if(decryptionReview != null) decryptionReview else ""
+            r.text = decryptionReview
             r.height = 200
             r.setPaddingRelative(30, 30, 30, 30)
             r.setBackgroundColor(Color.parseColor("#f5f5f5"))
