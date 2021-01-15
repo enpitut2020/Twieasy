@@ -13,57 +13,53 @@ enum class Department {
     COINS, MAST, KLIS
 }
 
-private var reviews0: MutableCollection<String> = mutableListOf(
-    "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!",
-    "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!", "楽単!", "落単!", "普通!", "Easy!", "楽単!", "落単!"
-)
-private var reviews1: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews2: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews3: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews4: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews5: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews6: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews7: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews8: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews9: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews10: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews11: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews12: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews13: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews14: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews15: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews16: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews17: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews18: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews19: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews20: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews21: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews22: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews23: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews24: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews25: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews26: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews27: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews28: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews29: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews30: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews31: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews32: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews33: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews34: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews35: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews36: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews37: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews38: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews39: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews40: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews41: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews42: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews43: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews44: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews45: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-private var reviews46: MutableCollection<String> = mutableListOf("楽単!", "落単!", "普通!", "Easy!")
-
+private var reviews0: MutableCollection<String> = mutableListOf()
+private var reviews1: MutableCollection<String> = mutableListOf()
+private var reviews2: MutableCollection<String> = mutableListOf()
+private var reviews3: MutableCollection<String> = mutableListOf()
+private var reviews4: MutableCollection<String> = mutableListOf()
+private var reviews5: MutableCollection<String> = mutableListOf()
+private var reviews6: MutableCollection<String> = mutableListOf()
+private var reviews7: MutableCollection<String> = mutableListOf()
+private var reviews8: MutableCollection<String> = mutableListOf()
+private var reviews9: MutableCollection<String> = mutableListOf()
+private var reviews10: MutableCollection<String> = mutableListOf()
+private var reviews11: MutableCollection<String> = mutableListOf()
+private var reviews12: MutableCollection<String> = mutableListOf()
+private var reviews13: MutableCollection<String> = mutableListOf()
+private var reviews14: MutableCollection<String> = mutableListOf()
+private var reviews15: MutableCollection<String> = mutableListOf()
+private var reviews16: MutableCollection<String> = mutableListOf()
+private var reviews17: MutableCollection<String> = mutableListOf()
+private var reviews18: MutableCollection<String> = mutableListOf()
+private var reviews19: MutableCollection<String> = mutableListOf()
+private var reviews20: MutableCollection<String> = mutableListOf()
+private var reviews21: MutableCollection<String> = mutableListOf()
+private var reviews22: MutableCollection<String> = mutableListOf()
+private var reviews23: MutableCollection<String> = mutableListOf()
+private var reviews24: MutableCollection<String> = mutableListOf()
+private var reviews25: MutableCollection<String> = mutableListOf()
+private var reviews26: MutableCollection<String> = mutableListOf()
+private var reviews27: MutableCollection<String> = mutableListOf()
+private var reviews28: MutableCollection<String> = mutableListOf()
+private var reviews29: MutableCollection<String> = mutableListOf()
+private var reviews30: MutableCollection<String> = mutableListOf()
+private var reviews31: MutableCollection<String> = mutableListOf()
+private var reviews32: MutableCollection<String> = mutableListOf()
+private var reviews33: MutableCollection<String> = mutableListOf()
+private var reviews34: MutableCollection<String> = mutableListOf()
+private var reviews35: MutableCollection<String> = mutableListOf()
+private var reviews36: MutableCollection<String> = mutableListOf()
+private var reviews37: MutableCollection<String> = mutableListOf()
+private var reviews38: MutableCollection<String> = mutableListOf()
+private var reviews39: MutableCollection<String> = mutableListOf()
+private var reviews40: MutableCollection<String> = mutableListOf()
+private var reviews41: MutableCollection<String> = mutableListOf()
+private var reviews42: MutableCollection<String> = mutableListOf()
+private var reviews43: MutableCollection<String> = mutableListOf()
+private var reviews44: MutableCollection<String> = mutableListOf()
+private var reviews45: MutableCollection<String> = mutableListOf()
+private var reviews46: MutableCollection<String> = mutableListOf()
 
 class SubjectViewModel: ViewModel() {
 
@@ -75,57 +71,6 @@ class SubjectViewModel: ViewModel() {
         reviews20, reviews21, reviews22, reviews23, reviews24, reviews25, reviews26, reviews27, reviews28, reviews29,
         reviews30, reviews31, reviews32, reviews33, reviews34, reviews35, reviews36, reviews37, reviews38, reviews39,
         reviews40, reviews41, reviews42, reviews43, reviews44, reviews45, reviews46
-    )
-
-    var subjectsInfo =  mutableListOf(
-        Subject(
-            "知能情報メディア実験B",
-            "開講日時　秋ABC 水3,4 金5,6\n授業形態 オンライン オンデマンド 同時双方向 対面\n評価方法　レポートn割 出席m割\n単位数 3",
-            40,
-            reviewList[0]
-        ),
-        Subject(
-            "人工知能",
-            "開講日時　秋AB 火3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
-            20,
-            reviewList[1]
-        ),
-        Subject(
-            "分散システム",
-            "開講日時　秋AB 月3\n授業形態 対面 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 1",
-            20,
-            reviewList[2]
-        ),
-        Subject(
-            "画像メディア工学",
-            "開講日時　秋AB 火5,6\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
-            20,
-            reviewList[3]
-        ),
-        Subject(
-            "視覚情報科学",
-            "開講日時　秋AB 木1,2\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
-            60,
-            reviewList[4]
-        ),
-        Subject(
-            "パターン認識",
-            "開講日時　秋AB 木3,4\n授業形態 オンライン オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
-            40,
-            reviewList[5]
-        ),
-        Subject(
-            "数理アルゴリズムとシミュレーション",
-            "開講日時　秋AB 金1,2\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
-            30,
-            reviewList[6]
-        ),
-        Subject(
-            "データベース概論",
-            "開講日時　秋AB 金3,4\n授業形態 オンデマンド\n評価方法　レポートn割 出席m割\n単位数 2",
-            40,
-            reviewList[7]
-        )
     )
 
     var subjectNumber = mutableListOf<String>(
@@ -182,16 +127,5 @@ class SubjectViewModel: ViewModel() {
     // KDBからとってきた生データ
     var kdbRawData = mutableListOf<String>()
 
-
     var subjects = mutableListOf<Subject>()
-
-    fun clear(){
-        subjectsInfo.clear()
-    }
-
-
-
-    fun size(): Int{
-        return subjectsInfo.size
-    }
 }
