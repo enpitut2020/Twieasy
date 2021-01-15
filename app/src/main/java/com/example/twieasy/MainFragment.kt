@@ -67,6 +67,8 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             val loginPass = view.findViewById<EditText>(R.id.passWord)
             val loginPass2 = view.findViewById<EditText>(R.id.passWord2)
             val ver = view.findViewById<EditText>(R.id.verify)
+            val len1 = loginPass.text.toString().length
+            val len2 = loginPass.text.toString().length
             // 1回目のパスワードと2回目のパスワードが同じ
             if(loginPass.text.toString() == loginPass2.text.toString() && ver.text.toString() == res && res != "") {
                 // 「pref_data」という設定データファイルを読み込み
