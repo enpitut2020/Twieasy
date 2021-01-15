@@ -1,5 +1,6 @@
 package com.example.twieasy
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,26 +10,15 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.twieasy.databinding.FragmentMainBinding
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import org.jsoup.Jsoup
-import java.io.*
 import java.util.*
-import android.content.SharedPreferences
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
-import com.toridge.kotlintest.EncryptionUtils
-import kotlin.math.log
 
 var times = 0
 class MainFragment : Fragment(),MailSender.OnMailSendListener {
@@ -37,6 +27,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
     lateinit var subjectView : SubjectViewModel
 
     var counter: Int = 0
+    @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,14 +75,16 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 // AES128で暗号化
                 val key: String = "toridge"
-                val encryptionAccount: String? = EncryptionUtils.encryptAES128(key, loginPass.text.toString())
-                val encryptionPassword: String? = EncryptionUtils.encryptAES128(key, loginAccount.text.toString())
+                val encryptionAccount: String? = EncryptionWrapper.encryptAES128(key, loginPass.text.toString())
+                val encryptionPassword: String? = EncryptionWrapper.encryptAES128(key, loginAccount.text.toString())
+
+
 
                 // AES128で複合化
                 val decryptionAccount: String? =
-                    encryptionAccount?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
+                    encryptionAccount?.let { it1 -> EncryptionWrapper.decryptAES128(key, it1) }
                 val decryptionPassword: String? =
-                    encryptionPassword?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
+                    encryptionPassword?.let { it1 -> EncryptionWrapper.decryptAES128(key, it1) }
 
                 // デバッグ用Log
                 Log.i("enc", encryptionAccount)
@@ -105,6 +98,11 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 // 暗号化したアカウント名とパスワードを送信
 
+                val tb : TestWeb3? = TestWeb3(requireActivity())
+                tb?.register(encryptionAccount, encryptionPassword)
+                if(tb?.loginState == true){
+                    Log.i("login: ", tb?.loginState.toString())
+                }
 
 
 
@@ -209,8 +207,8 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         return Mail().apply {
             mailServerHost = "smtp.qq.com"
             mailServerPort = "587"
-            fromAddress = "****"
-            password = "****"
+            fromAddress = "549908110@qq.com"
+            password = "kyhrhsjoxhxcbfij"
             toAddress = arrayListOf(mailAddress.text.toString())
             subject = "Twieasy messageSender Test"
             if(flag) {

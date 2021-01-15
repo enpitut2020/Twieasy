@@ -3,13 +3,9 @@ package com.example.twieasy;
 import android.content.Context;
 import android.util.Log;
 
-import com.kenai.jffi.Function;
-
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
-import org.web3j.tx.Contract;
-import org.web3j.tx.ManagedTransaction;
 import org.web3j.tx.Transfer;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
@@ -18,7 +14,6 @@ import org.web3j.utils.Convert;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
-import java.util.concurrent.Future;
 
 public class TestWeb3 {
     //-------------------------------------
@@ -47,6 +42,9 @@ public class TestWeb3 {
     private Web3Helper helper;
     private boolean isBusy = false;
     private String curHelloWorldAddress = DEFAULT_HELLO_WORLD_ADDRESS;
+
+    public Boolean registerState = false;
+    public Boolean loginState = false;
 
     //----------------------------------------------------------------------------
     // コンストラクタ
@@ -77,17 +75,101 @@ public class TestWeb3 {
         }).start();
     }
 
-    @FunctionalInterface
-    public interface Function<T>{
-        public void apply(T t);
-    }
 
-    public void send(String review, Function<String> op){
+    public void register(String mail, String pass){
         if( isBusy ){
             log( "@ TestWeb3: BUSY!" );
             return;
         }
+        isBusy = true;
 
+        // メインスレッドを止めないように別スレッドでテスト
+        new Thread( new Runnable() {
+            @Override
+            public void run(){
+                log( "@ TestWeb3: START(register)..." );
+
+                // ネットワークへ接続
+                if( setTarget() ){
+                    // アカウント設定
+                    if( setAccount() ) {
+                        // 残高の確認
+                        checkBalance();
+
+                        // メモ：ここから下の処理にはイーサリアム上で手数料が発生するためテスト中のアカウントに十分な残高がないと、
+                        // 　　　例外[Error processing transaction request: insufficient funds for gas * price + value]が発生します
+                        // 　　　送信やデプロイのテストをする際は、[MetaMask]等で対象アカウントに十分なイーサを送信しておいてください
+
+                        // イーサの送信
+                        //checkSend();
+
+                        // [HelloWorld]コントラクトの確認
+                        if( ! execCheckHelloWorld( curHelloWorldAddress ) ) {
+                            // コントラクトが無効であれば[HelloWorld]をデプロイ
+                            //curHelloWorldAddress = execDeployHelloWorld();
+                        }
+
+                        // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
+                        if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
+                            registerState = _register(mail,pass);
+                        }else{
+                            // コントラクトのアドレスが無効
+                            log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
+                        }
+                    }else{
+                        // アカウントの設定に失敗
+                        log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
+                    }
+                }else{
+                    // 接続に失敗
+                    log( "@ TestWeb3: FAILED TO CONNECT TARGET NET" );
+                }
+
+                log( "@ TestWeb3: FINISHED" );
+                isBusy = false;
+            }
+        }).start();
+    }
+
+    private boolean _register(String mail, String pass){
+        log( "@ [_register]" );
+        String contractAddress = curHelloWorldAddress;
+        try {
+            Web3j web3 = helper.getWeb3();
+            Credentials credentials = helper.getCurAccount();
+            ContractGasProvider gasProvider = new DefaultGasProvider();
+
+            // コントラクトが読み込めたら有効とみなす
+            Main contract = Main.load(
+                    contractAddress,
+                    web3,
+                    credentials,
+                    gasProvider
+            );
+
+            Boolean checkRegistered = contract.checkRegistered(mail).send();
+            if(!checkRegistered)
+                return false;
+
+            contract.register(mail,pass);
+            checkRegistered = contract.checkRegistered(mail).send();
+            if(checkRegistered)
+                return true;
+            else
+                return false;
+
+
+        } catch ( Exception e ){
+            log( "@ EXCEPTION e=" + e.getMessage() );
+            return( false );
+        }
+    }
+
+    public void sendReview(String subjectID, String review){
+        if( isBusy ){
+            log( "@ TestWeb3: BUSY!" );
+            return;
+        }
         isBusy = true;
 
         // メインスレッドを止めないように別スレッドでテスト
@@ -118,7 +200,7 @@ public class TestWeb3 {
 
                         // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
                         if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
-                            op.apply(curHelloWorldAddress);
+                            _review(subjectID,review);
                         }else{
                             // コントラクトのアドレスが無効
                             log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
@@ -137,6 +219,126 @@ public class TestWeb3 {
             }
         }).start();
     }
+
+    private boolean _review(String subjectID, String review){
+        log( "@ [_review]" );
+        String contractAddress = curHelloWorldAddress;
+        try {
+            Web3j web3 = helper.getWeb3();
+            Credentials credentials = helper.getCurAccount();
+            ContractGasProvider gasProvider = new DefaultGasProvider();
+
+            // コントラクトが読み込めたら有効とみなす
+            Main contract = Main.load(
+                    contractAddress,
+                    web3,
+                    credentials,
+                    gasProvider
+            );
+
+            contract.setReview(subjectID,review);
+            return true;
+
+        } catch ( Exception e ){
+            log( "@ EXCEPTION e=" + e.getMessage() );
+            return( false );
+        }
+
+    }
+
+
+
+
+    public void login(String mail, String pass){
+        if( isBusy ){
+            log( "@ TestWeb3: BUSY!" );
+            return;
+        }
+        isBusy = true;
+
+        // メインスレッドを止めないように別スレッドでテスト
+        new Thread( new Runnable() {
+            @Override
+            public void run(){
+                log( "@ TestWeb3: START..." );
+
+                // ネットワークへ接続
+                if( setTarget() ){
+                    // アカウント設定
+                    if( setAccount() ) {
+                        // 残高の確認
+                        checkBalance();
+
+                        // メモ：ここから下の処理にはイーサリアム上で手数料が発生するためテスト中のアカウントに十分な残高がないと、
+                        // 　　　例外[Error processing transaction request: insufficient funds for gas * price + value]が発生します
+                        // 　　　送信やデプロイのテストをする際は、[MetaMask]等で対象アカウントに十分なイーサを送信しておいてください
+
+                        // イーサの送信
+                        //checkSend();
+
+                        // [HelloWorld]コントラクトの確認
+                        if( ! execCheckHelloWorld( curHelloWorldAddress ) ) {
+                            // コントラクトが無効であれば[HelloWorld]をデプロイ
+                            //curHelloWorldAddress = execDeployHelloWorld();
+                        }
+
+                        // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
+                        if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
+                            loginState = _login(mail,pass);
+                        }else{
+                            // コントラクトのアドレスが無効
+                            log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
+                        }
+                    }else{
+                        // アカウントの設定に失敗
+                        log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
+                    }
+                }else{
+                    // 接続に失敗
+                    log( "@ TestWeb3: FAILED TO CONNECT TARGET NET" );
+                }
+
+                log( "@ TestWeb3: FINISHED" );
+                isBusy = false;
+            }
+        }).start();
+    }
+
+    private boolean _login(String mail, String pass){
+        log( "@ [_login]" );
+        String contractAddress = curHelloWorldAddress;
+        try {
+            Web3j web3 = helper.getWeb3();
+            Credentials credentials = helper.getCurAccount();
+            ContractGasProvider gasProvider = new DefaultGasProvider();
+
+            // コントラクトが読み込めたら有効とみなす
+            Main contract = Main.load(
+                    contractAddress,
+                    web3,
+                    credentials,
+                    gasProvider
+            );
+
+            Boolean checkRegistered = contract.checkRegistered(mail).send();
+            if(!checkRegistered)
+                return false;
+
+            String truePass = contract.getPass(mail).send();
+            if(pass == truePass)
+                return true;
+            else
+                return false;
+
+
+        } catch ( Exception e ){
+            log( "@ EXCEPTION e=" + e.getMessage() );
+            return( false );
+        }
+    }
+
+
+
 
     //----------------------------------------
     // テスト本体
@@ -360,7 +562,7 @@ public class TestWeb3 {
             Date d = new Date();
             String sendWord = "Greeting from web3j at " + d.toString();
             log( "@ HelloWorld.setWord( " + sendWord + " )" );
-            TransactionReceipt transactionReceipt = contract._review("1","123456").send();
+            //TransactionReceipt transactionReceipt = contract._review("1","123456").send();
 
             // 再度[getWord]を呼ぶ（※[setWord]で設定した文字列が返ってくることの確認）
             log( "@ AFTER: HelloWorld.getWorld()=" + contract.getReviews("0").send());

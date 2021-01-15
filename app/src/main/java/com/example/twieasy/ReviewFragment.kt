@@ -8,14 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.beardedhen.androidbootstrap.BootstrapButton
-import com.toridge.kotlintest.EncryptionUtils
-import kotlinx.android.synthetic.main.fragment_review.view.*
 
 class ReviewFragment : Fragment() {
     private var ID: Int? = null
@@ -53,7 +50,7 @@ class ReviewFragment : Fragment() {
 
             val key: String = "toridge"
             val review = i
-            val decryptionReview: String? = EncryptionUtils.decryptAES128(key, review)
+            val decryptionReview: String? = EncryptionWrapper.decryptAES128(key, review)
 
             Log.i("review", decryptionReview)
             r.text = if(decryptionReview != null) decryptionReview else ""
