@@ -156,8 +156,6 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             isEnabled = false
             Log.i("backButton", "Pushed")
         }
-
-
         return view
     }
 

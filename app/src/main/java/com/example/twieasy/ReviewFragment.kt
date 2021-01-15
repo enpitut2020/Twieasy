@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.marginBottom
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.beardedhen.androidbootstrap.BootstrapButton
@@ -35,8 +36,6 @@ class ReviewFragment : Fragment() {
 
         vii = inflater.inflate(R.layout.fragment_review, container, false)
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
-
-
         jumpToReview()
         return vii
     }
@@ -65,6 +64,7 @@ class ReviewFragment : Fragment() {
             r.setPaddingRelative(30, 30, 30, 30)
             r.setBackgroundColor(Color.parseColor("#f5f5f5"))
             r.maxLines = 6
+            r.setBackgroundResource(R.drawable.review_space)
 
             val layout = vii.findViewById<LinearLayout>(R.id.linearLayout)
             layout.addView(r)
