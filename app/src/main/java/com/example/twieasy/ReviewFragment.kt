@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.marginBottom
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.beardedhen.androidbootstrap.BootstrapButton
@@ -54,13 +55,14 @@ class ReviewFragment : Fragment() {
             val decryptionReview: String? = EncryptionWrapper.decryptAES128(key, review)
 
             //Log.i("review", decryptionReview)
+            //r.setBackgroundColor(Color.parseColor("#00acFF"))
             r.text = if(decryptionReview != null) decryptionReview else ""
             r.ellipsize = TextUtils.TruncateAt.END
             r.height = ViewGroup.LayoutParams.WRAP_CONTENT
 
             r.setPaddingRelative(30, 30, 30, 30)
-            r.setBackgroundColor(Color.parseColor("#f5f5f5"))
             r.maxLines = 6
+            r.setBackgroundResource(R.drawable.review_space)
 
             val layout = vii.findViewById<LinearLayout>(R.id.linearLayout)
             layout.addView(r)

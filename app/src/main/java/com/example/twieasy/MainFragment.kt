@@ -154,7 +154,9 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         val skip = view.findViewById<Button>(R.id.skip)
 
         skip.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_loadFragment)
+            val bundle:Bundle = Bundle()
+            bundle.putInt("buttonNum",0)
+            findNavController().navigate(R.id.action_mainFragment_to_loadFragment, bundle)
         }
 
 
