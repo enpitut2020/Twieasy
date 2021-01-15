@@ -11,47 +11,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="88dp"
-        tools:layout_editor_absoluteY="49dp">
+        app:layout_constraintBottom_toTopOf="@id/textView"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
-        <LinearLayout
+
+        <EditText
+            android:id="@+id/mailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
-            android:orientation="horizontal">
+            android:digits="abcdefghijklmnopqrstuvwxyz1234567890.@"
+            android:hint="メールアドレス"
+            android:inputType="textEmailAddress"
+            android:maxLength="24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/mailAddress"
-                android:layout_width="232dp"
-                android:layout_height="wrap_content"
-                android:hint="メールアドレス"
-                android:digits="abcdefghijklmnopqrstuvwxyz1234567890.@"
-                android:inputType="textEmailAddress"
-                android:maxLength="24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/button"
-                android:layout_width="164dp"
-                android:layout_height="36dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:bootstrapBrand="info"
-                app:buttonMode="regular"
-                app:showOutline="true"
-                app:roundedCorners="true"
-                app:bootstrapText="認証コードを取得" />
-        </LinearLayout>
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/button"
+            android:layout_width="164dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="30dp"
+            app:bootstrapBrand="info"
+            app:bootstrapText="認証コードを取得"
+            app:buttonMode="regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:roundedCorners="true"
+            app:showOutline="true" />
 
 
         <EditText
             android:id="@+id/passWord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="パスワード(半角英数8文字)"
             android:digits="abcdefghijklmnopqrstuvwxyz1234567890"
+            android:hint="パスワード(半角英数8文字)"
             android:inputType="textPassword"
             android:maxLength="8"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +56,8 @@
             android:id="@+id/passWord2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="パスワード確認"
             android:digits="abcdefghijklmnopqrstuvwxyz1234567890"
+            android:hint="パスワード確認"
             android:inputType="textPassword"
             android:maxLength="8"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,13 +78,13 @@
             android:id="@+id/makeAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             app:bootstrapBrand="info"
             app:bootstrapSize="lg"
+            app:bootstrapText="アカウント作成"
             app:buttonMode="regular"
-            app:showOutline="false"
+            app:layout_constraintEnd_toEndOf="parent"
             app:roundedCorners="true"
-            app:bootstrapText="アカウント作成"/>
+            app:showOutline="false" />
 
     </LinearLayout>
 
