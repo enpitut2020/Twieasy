@@ -77,6 +77,67 @@ public class TestWeb3 {
         }).start();
     }
 
+    @FunctionalInterface
+    public interface Function<T>{
+        public void apply(T t);
+    }
+
+    public void send(String review, Function<String> op){
+        if( isBusy ){
+            log( "@ TestWeb3: BUSY!" );
+            return;
+        }
+
+        isBusy = true;
+
+        // メインスレッドを止めないように別スレッドでテスト
+        new Thread( new Runnable() {
+            @Override
+            public void run(){
+                log( "@ TestWeb3: START..." );
+
+                // ネットワークへ接続
+                if( setTarget() ){
+                    // アカウント設定
+                    if( setAccount() ) {
+                        // 残高の確認
+                        checkBalance();
+
+                        // メモ：ここから下の処理にはイーサリアム上で手数料が発生するためテスト中のアカウントに十分な残高がないと、
+                        // 　　　例外[Error processing transaction request: insufficient funds for gas * price + value]が発生します
+                        // 　　　送信やデプロイのテストをする際は、[MetaMask]等で対象アカウントに十分なイーサを送信しておいてください
+
+                        // イーサの送信
+                        //checkSend();
+
+                        // [HelloWorld]コントラクトの確認
+                        if( ! execCheckHelloWorld( curHelloWorldAddress ) ) {
+                            // コントラクトが無効であれば[HelloWorld]をデプロイ
+                            //curHelloWorldAddress = execDeployHelloWorld();
+                        }
+
+                        // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
+                        if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
+                            op.apply(curHelloWorldAddress);
+                        }else{
+                            // コントラクトのアドレスが無効
+                            log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
+                        }
+                    }else{
+                        // アカウントの設定に失敗
+                        log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
+                    }
+                }else{
+                    // 接続に失敗
+                    log( "@ TestWeb3: FAILED TO CONNECT TARGET NET" );
+                }
+
+                log( "@ TestWeb3: FINISHED" );
+                isBusy = false;
+            }
+        }).start();
+    }
+
     //----------------------------------------
     // テスト本体
     //----------------------------------------
@@ -281,33 +342,6 @@ public class TestWeb3 {
             Web3j web3 = helper.getWeb3();
             Credentials credentials = helper.getCurAccount();
             ContractGasProvider gasProvider = new DefaultGasProvider();
-
-
-            /*// コントラクトの読み込み
-            Sample contract = Sample.load(
-                    contractAddress,
-                    web3,
-                    credentials,
-                    gasProvider
-            );
-
-            // [getWord]メソッドのコール（※これは[view]メソッドなので手数料は０）
-            log("@ BEFORE: HelloWorld.getWord()=" + contract.retreive().send());
-
-            // [setWord]メソッドのコール（※これはブロックチェーンに書き込むのでヘルパーのアカウントに十分な残高がないと例外が発生する）
-            Date d = new Date();
-            BigInteger sendWord = BigInteger.TEN;
-            //String sendWord = "Greeting from web3j at " + d.toString();
-            log( "@ HelloWorld.setWord( " + sendWord + " )" );
-            //TransactionReceipt transactionReceipt = contract.store( sendWord ).send();
-            contract.store( sendWord ).send();
-
-            // 再度[getWord]を呼ぶ（※[setWord]で設定した文字列が返ってくることの確認）
-            log( "@ AFTER: HelloWorld.getWorld()=" + contract.retreive().send() );
-        } catch ( Exception e ){
-            log( "@ execInteractHelloWorld: EXCEPTION e=" + e.getMessage() );
-            return( false );
-        }*/
 
 
 

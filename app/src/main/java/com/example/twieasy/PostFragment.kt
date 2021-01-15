@@ -45,6 +45,7 @@ class PostFragment : Fragment() {
         val postContent: TextView = vii.findViewById(R.id.reviewContent)
         val postStr: String = postContent.text.toString()
         subjectView.reviewList[ID!! - 1].add(postStr)
+
         findNavController().navigateUp()
     }
 
