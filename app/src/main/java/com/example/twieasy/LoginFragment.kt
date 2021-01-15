@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
@@ -67,24 +68,39 @@ class LoginFragment : Fragment() {
         val pass = decryption
 
         view.login_login.setOnClickListener{
-            val inputAccount = view.findViewById<TextView>(R.id.mailAddress_login)
-            val inputPassword = view.findViewById<TextView>(R.id.passWord_login)
+//            val inputAccount = view.findViewById<TextView>(R.id.mailAddress_login)
+//            val inputPassword = view.findViewById<TextView>(R.id.passWord_login)
+//
+//            if(account == inputAccount.text.toString()) {
+//                if(pass != null && pass == inputPassword.text.toString()) {
+//                    findNavController().navigate(R.id.action_loginFragment_to_subjectFragment)
+//                }
+//                else {
+//                    inputPassword.hint =  "パスワードが違います"
+//                    inputPassword.setText("")
+//                    inputPassword.setBackgroundColor(R.color.warn)
+//                }
+//            }
+//            else {
+//                inputAccount.hint =  "アカウントが違います"
+//                inputAccount.setText("")
+//                inputAccount.setBackgroundColor(R.color.warn)
+//            }
+            val mail = mailAddress_login.text.toString()
+            val pass = passWord_login.text.toString()
+            val key: String = "toridge"
+            val encryptionAccount: String? = EncryptionWrapper.encryptAES128(key, mail)
+            val encryptionPassword: String? = EncryptionWrapper.encryptAES128(key, pass)
+            val tb : TestWeb3? = TestWeb3(requireActivity())
+            tb?.login(encryptionAccount,encryptionPassword)
+            if(tb?.loginState == true)
+                findNavController().navigate(R.id.action_loginFragment_to_subjectFragment)
+            else{
+                val inputPassword = view.findViewById<TextView>(R.id.passWord_login)
+                inputPassword.hint =  "パスワードが違います"
+            }
 
-            if(account == inputAccount.text.toString()) {
-                if(pass != null && pass == inputPassword.text.toString()) {
-                    findNavController().navigate(R.id.action_loginFragment_to_subjectFragment)
-                }
-                else {
-                    inputPassword.hint =  "パスワードが違います"
-                    inputPassword.setText("")
-                    inputPassword.setBackgroundColor(R.color.warn)
-                }
-            }
-            else {
-                inputAccount.hint =  "アカウントが違います"
-                inputAccount.setText("")
-                inputAccount.setBackgroundColor(R.color.warn)
-            }
+
         }
         // Inflate the layout for this fragment
         return view

@@ -34,7 +34,7 @@ public class TestWeb3 {
     // このアドレスを無効（空文字）にした場合、[HelloWorld]コントラクトがデプロイされます
     // デプロイが成功すると[LogCat]にアドレスが表示されるので、その値を下記に設定することで再アクセスが可能です
     //（※コメントアウトされているアドレスは実際にRinkeby上にデプロイされたものなので、テストにお使いいただけます）
-    final private String DEFAULT_HELLO_WORLD_ADDRESS = "0x96a7577c6814f6AF0545C6782ddea14bF2Bf74B4";//"0xd2a5bC10698FD955D1Fe6cb468a17809A08fd005"; //"0xd21ce6f369f8281b7d39b47372c8f4a8a77841fc";
+    final private String DEFAULT_HELLO_WORLD_ADDRESS = "0x9ace361510B214E230b7BE362465BBe50F2e47A9";//"0xd2a5bC10698FD955D1Fe6cb468a17809A08fd005"; //"0xd21ce6f369f8281b7d39b47372c8f4a8a77841fc";
 
     //-------------------------------------
     // メンバー
@@ -148,10 +148,10 @@ public class TestWeb3 {
             );
 
             Boolean checkRegistered = contract.checkRegistered(mail).send();
-            if(!checkRegistered)
+            if(checkRegistered)
                 return false;
 
-            contract.register(mail,pass);
+            contract.register(mail,pass).send();
             checkRegistered = contract.checkRegistered(mail).send();
             if(checkRegistered)
                 return true;
