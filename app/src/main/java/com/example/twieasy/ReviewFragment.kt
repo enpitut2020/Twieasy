@@ -53,7 +53,7 @@ class ReviewFragment : Fragment() {
             val review = i
             val decryptionReview: String? = EncryptionWrapper.decryptAES128(key, review)
 
-            Log.i("review", decryptionReview)
+            //Log.i("review", decryptionReview)
             r.text = if(decryptionReview != null) decryptionReview else ""
             r.ellipsize = TextUtils.TruncateAt.END
             r.height = ViewGroup.LayoutParams.WRAP_CONTENT

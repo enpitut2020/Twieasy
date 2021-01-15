@@ -18,6 +18,7 @@ import org.jsoup.Jsoup
 import java.util.*
 import android.content.Context
 import android.os.Build
+import android.widget.Button
 import androidx.annotation.RequiresApi
 
 var times = 0
@@ -148,6 +149,12 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             times = 0
             isEnabled = false
             Log.i("backButton", "Pushed")
+        }
+
+        val skip = view.findViewById<Button>(R.id.skip)
+
+        skip.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_loadFragment)
         }
 
 
