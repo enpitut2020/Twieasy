@@ -53,12 +53,11 @@ class ReviewFragment : Fragment() {
             val review = i
             val decryptionReview: String? = EncryptionWrapper.decryptAES128(key, review)
 
-            //Log.i("review", decryptionReview)
-            //r.text = if(decryptionReview != null) decryptionReview else ""
+            Log.i("review", decryptionReview)
+            r.text = if(decryptionReview != null) decryptionReview else ""
             r.ellipsize = TextUtils.TruncateAt.END
-            r.text = review
-            //r.height = 250
             r.height = ViewGroup.LayoutParams.WRAP_CONTENT
+
             r.setPaddingRelative(30, 30, 30, 30)
             r.setBackgroundColor(Color.parseColor("#f5f5f5"))
             r.maxLines = 6
