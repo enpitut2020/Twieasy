@@ -22,6 +22,7 @@ import androidx.annotation.RequiresApi
 
 var times = 0
 class MainFragment : Fragment(),MailSender.OnMailSendListener {
+
     var res :String = ""
     //lateinit var binding:FragmentMainBinding
     lateinit var subjectView : SubjectViewModel
@@ -38,6 +39,8 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         val view =  inflater.inflate(R.layout.fragment_main, container, false)
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
+
+
 
         val load = Thread {
             subjectView.kdbRawData = subjectView.subjectNumber.map {
@@ -56,6 +59,14 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         load.start()
 
+        val k = "hoge"
+        val hoge = "漢字！"
+        Log.i("kanji", hoge)
+
+        val enc: String? = EncryptionWrapper.encryptAES128(k, hoge)
+        Log.i("enc", enc)
+        val dec: String? = enc?.let { EncryptionWrapper.decryptAES128(k, it) }
+        Log.i("dec", dec)
 
 
         view.makeAccount.setOnClickListener{
@@ -77,8 +88,8 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 // AES128で暗号化
                 val key: String = "toridge"
-                val encryptionAccount: String? = EncryptionWrapper.encryptAES128(key, loginPass.text.toString())
-                val encryptionPassword: String? = EncryptionWrapper.encryptAES128(key, loginAccount.text.toString())
+                val encryptionAccount: String? = EncryptionWrapper.encryptAES128(key, loginAccount.text.toString())
+                val encryptionPassword: String? = EncryptionWrapper.encryptAES128(key, loginPass.text.toString())
 
 
 
@@ -102,8 +113,13 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 val tb : TestWeb3? = TestWeb3(requireActivity())
                 tb?.register(encryptionAccount, encryptionPassword)
-                if(tb?.loginState == true){
-                    Log.i("login: ", tb?.loginState.toString())
+                if(tb?.registerState == true){
+                    Log.i("register: ", tb?.registerState.toString())
+                    Log.i("mail: ", encryptionAccount)
+                }
+                else
+                {
+                    Log.i("mail: ", encryptionAccount)
                 }
                 // 保存
                 editor?.commit()
