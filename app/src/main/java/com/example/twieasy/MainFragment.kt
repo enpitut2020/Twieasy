@@ -107,9 +107,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 editor?.commit()
 
                 findNavController().navigate(R.id.action_mainFragment_to_departmentFragment,bundle)
-            }
-            // パスワードが違う
-            else {
+            } else if (loginPass.text.toString() != loginPass2.text.toString()){
                 Log.i("pass1", loginPass.text.toString())
                 Log.i("pass2", loginPass2.text.toString())
                 Log.i("error", "Difference password")
@@ -117,8 +115,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 loginPass2.hint = "パスワードが違います"
                 loginPass2.setText("")
                 loginPass2.setBackgroundColor(R.color.warn)
-            }
-            if(ver.text.toString() != res || ver.text.toString().length == 0){
+            }else if(ver.text.toString() != res || ver.text.toString().length == 0){
                 ver.hint = "認証コードが違います"
                 ver.setText("")
                 ver.setBackgroundColor(R.color.warn)
