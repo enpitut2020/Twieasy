@@ -123,7 +123,8 @@ class FlickFragment : Fragment() {
                 swipedCount += 1
 
                 // 3.全部終わったら履修科目一覧に遷移
-                if (swipedCount >= subjectView.subjects.size) {
+                if (swipedCount >= 1) {
+//                if (swipedCount >= subjectView.subjects.size) {
                     findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
                 }
             }

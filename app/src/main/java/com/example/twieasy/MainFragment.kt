@@ -23,9 +23,12 @@ import java.util.*
 import android.content.SharedPreferences
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
+import androidx.annotation.RequiresApi
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
-
+import com.toridge.kotlintest.EncryptionUtils
+import kotlin.math.log
 
 var times = 0
 class MainFragment : Fragment(),MailSender.OnMailSendListener {
@@ -34,6 +37,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
     lateinit var subjectView : SubjectViewModel
 
     var counter: Int = 0
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,18 +82,35 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
                 val editor = prefData?.edit()
 
-                // パスワードを暗号化
-                val encryption: String = Base64.getEncoder().encodeToString(loginPass.text.toString().toByteArray())
+                // AES128で暗号化
+                val key: String = "toridge"
+                val encryptionAccount: String? = EncryptionUtils.encryptAES128(key, loginPass.text.toString())
+                val encryptionPassword: String? = EncryptionUtils.encryptAES128(key, loginAccount.text.toString())
+
+                // AES128で複合化
+                val decryptionAccount: String? =
+                    encryptionAccount?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
+                val decryptionPassword: String? =
+                    encryptionPassword?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
+
+                // デバッグ用Log
+                Log.i("enc", encryptionAccount)
+                Log.i("dec",decryptionAccount)
+                Log.i("enc2", encryptionPassword)
+                Log.i("dec2",decryptionPassword)
 
                 // 入力されたログインIDとログインパスワード
-                editor?.putString("account", loginAccount.text.toString())
-                editor?.putString("pass", encryption)
+                editor?.putString("account", encryptionAccount)
+                editor?.putString("pass", encryptionPassword)
+
+                // 暗号化したアカウント名とパスワードを送信
+
+
+
+
 
                 // 保存
                 editor?.commit()
-
-                Log.i("TextView Input", loginAccount.text.toString())
-                Log.i("pass-enc",encryption)
 
                 findNavController().navigate(R.id.action_mainFragment_to_departmentFragment,bundle)
             }
@@ -97,7 +118,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             else {
                 Log.i("pass1", loginPass.text.toString())
                 Log.i("pass2", loginPass2.text.toString())
-                Log.i("error", "diffPassword")
+                Log.i("error", "Difference password")
 
                 loginPass2.hint = "パスワードが違います"
                 loginPass2.setText("")

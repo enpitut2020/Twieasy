@@ -3,6 +3,7 @@ package com.example.twieasy
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.beardedhen.androidbootstrap.BootstrapButton
+import com.toridge.kotlintest.EncryptionUtils
 import kotlinx.android.synthetic.main.fragment_review.view.*
 
 class ReviewFragment : Fragment() {
@@ -48,7 +50,13 @@ class ReviewFragment : Fragment() {
         )
         for (i in subjectView.subjects[ID!! - 1].reviews) {
             val r: TextView = TextView(context)
-            r.text = i
+
+            val key: String = "toridge"
+            val review = i
+            val decryptionReview: String? = EncryptionUtils.decryptAES128(key, review)
+
+            Log.i("review", decryptionReview)
+            r.text = if(decryptionReview != null) decryptionReview else ""
             r.height = 200
             r.setPaddingRelative(30, 30, 30, 30)
             r.setBackgroundColor(Color.parseColor("#f5f5f5"))
