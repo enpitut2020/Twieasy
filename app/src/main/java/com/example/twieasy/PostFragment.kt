@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_post.view.*
+import com.toridge.kotlintest.EncryptionUtils
 
 
 class PostFragment : Fragment() {
@@ -66,13 +67,12 @@ class PostFragment : Fragment() {
         subjectView.reviewList[ID!! - 1].add(postStr)
         findNavController().navigateUp()
         // 暗号化
-        /*val key: String = "toridge"
+        val key: String = "toridge"
         val encryptionPostStr: String? = EncryptionUtils.encryptAES128(key, postStr)
         if(encryptionPostStr != null && !encryptionPostStr?.isEmpty()) {
             subjectView.reviewList[ID!! - 1].add(encryptionPostStr)
             findNavController().navigateUp()
-        }*/
-
+        }
     }
 
 }

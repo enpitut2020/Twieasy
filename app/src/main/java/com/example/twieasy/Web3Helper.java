@@ -1,6 +1,7 @@
 package com.example.twieasy;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -17,10 +18,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.security.Provider;
 import java.security.Security;
+
+import kotlin.jvm.Throws;
 
 //---------------------------------------------------------------------------------------
 // Web3Helper
@@ -217,7 +222,7 @@ public class Web3Helper {
         String newAccountFileName;
         try{
             File walletFolder = new File( context.getFilesDir().getAbsolutePath() );
-
+            log(context.getFilesDir().getAbsolutePath());
             // [generateNewWalletFile]を[useFullScrypt:true]で実行するとメモリ不足でアプリが落ちるので[false]を指定
             // 参考：https://github.com/web3j/web3j/issues/915
             String originalFileName = WalletUtils.generateNewWalletFile( password, walletFolder, false );
@@ -236,6 +241,8 @@ public class Web3Helper {
         return( loadAccount( password, newAccountFileName ) );
     }
 
+
+
     //----------------------------------------
     // アカウントの読み込み
     //----------------------------------------
@@ -245,8 +252,14 @@ public class Web3Helper {
 
         Credentials newCredentials;
         try {
-            String filePath = context.getFilesDir().getAbsolutePath() + "/" + fileName;
-            newCredentials = WalletUtils.loadCredentials( password, filePath );
+            //String filePath = context.getFilesDir().getAbsolutePath() + "/" + fileName;
+            //log( filePath);
+            //InputStream abpath = getClass().getResourceAsStream("/assets/key.json");
+            //String filePath = new String(InputStreamToByte(abpath ));
+            //String filePath = "file:///android_asset/key.json";
+
+            //newCredentials = WalletUtils.loadCredentials( password, filePath );
+            newCredentials = WalletUtils.loadJsonCredentials(password,"{\"address\":\"42829f9c5b790812209e5d5808f073960368f4e3\\\",\"id\":\"659739f1-c987-4b59-ba3b-53be65c835b4\",\"version\":3,\"crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"5e8b5b7294be2e6a146988da177f71cc\"},\"ciphertext\":\"755db52192800a3b4f29048ba8b09f0e3d826fd2b74392124d9e6018f140ce91\",\"kdf\":\"scrypt\",\"kdfparams\":{\"dklen\":32,\"n\":4096,\"p\":6,\"r\":8,\"salt\":\"c9924d6e4c55923446c62b09b794a4ab4fcf18f9a4fc5c8a437febf68450b2eb\"},\"mac\":\"cef9b801a66121fc6e74d19db41098afc65bd38d84c1c67deed769b5e4500511\"}}");
         } catch ( Exception e ){
             log( "@ loadAccount EXCEPTION e=" + e.getMessage() );
             return( false );

@@ -1,5 +1,6 @@
 package com.example.twieasy
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,26 +10,15 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.twieasy.databinding.FragmentMainBinding
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import org.jsoup.Jsoup
-import java.io.*
 import java.util.*
-import android.content.SharedPreferences
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
-import com.toridge.kotlintest.EncryptionUtils
-import kotlin.math.log
 
 var times = 0
 class MainFragment : Fragment(),MailSender.OnMailSendListener {
@@ -37,6 +27,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
     lateinit var subjectView : SubjectViewModel
 
     var counter: Int = 0
+    @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,23 +66,25 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             val loginAccount = view.findViewById<EditText>(R.id.mailAddress)
             val loginPass = view.findViewById<EditText>(R.id.passWord)
             val loginPass2 = view.findViewById<EditText>(R.id.passWord2)
-
+            val ver = view.findViewById<EditText>(R.id.verify)
             // 1回目のパスワードと2回目のパスワードが同じ
-            if(loginPass.text.toString() == loginPass2.text.toString()) {
+            if(loginPass.text.toString() == loginPass2.text.toString() && ver.text.toString() == res && res != "") {
                 // 「pref_data」という設定データファイルを読み込み
                 val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
                 val editor = prefData?.edit()
 
                 // AES128で暗号化
                 val key: String = "toridge"
-                val encryptionAccount: String? = EncryptionUtils.encryptAES128(key, loginPass.text.toString())
-                val encryptionPassword: String? = EncryptionUtils.encryptAES128(key, loginAccount.text.toString())
+                val encryptionAccount: String? = EncryptionWrapper.encryptAES128(key, loginPass.text.toString())
+                val encryptionPassword: String? = EncryptionWrapper.encryptAES128(key, loginAccount.text.toString())
+
+
 
                 // AES128で複合化
                 val decryptionAccount: String? =
-                    encryptionAccount?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
+                    encryptionAccount?.let { it1 -> EncryptionWrapper.decryptAES128(key, it1) }
                 val decryptionPassword: String? =
-                    encryptionPassword?.let { it1 -> EncryptionUtils.decryptAES128(key, it1) }
+                    encryptionPassword?.let { it1 -> EncryptionWrapper.decryptAES128(key, it1) }
 
                 // デバッグ用Log
                 Log.i("enc", encryptionAccount)
@@ -105,17 +98,16 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 // 暗号化したアカウント名とパスワードを送信
 
-
-
-
-
+                val tb : TestWeb3? = TestWeb3(requireActivity())
+                tb?.register(encryptionAccount, encryptionPassword)
+                if(tb?.loginState == true){
+                    Log.i("login: ", tb?.loginState.toString())
+                }
                 // 保存
                 editor?.commit()
 
                 findNavController().navigate(R.id.action_mainFragment_to_departmentFragment,bundle)
-            }
-            // パスワードが違う
-            else {
+            } else if (loginPass.text.toString() != loginPass2.text.toString()){
                 Log.i("pass1", loginPass.text.toString())
                 Log.i("pass2", loginPass2.text.toString())
                 Log.i("error", "Difference password")
@@ -123,6 +115,10 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 loginPass2.hint = "パスワードが違います"
                 loginPass2.setText("")
                 loginPass2.setBackgroundColor(R.color.warn)
+            }else if(ver.text.toString() != res || ver.text.toString().length == 0){
+                ver.hint = "認証コードが違います"
+                ver.setText("")
+                ver.setBackgroundColor(R.color.warn)
             }
 
         }
@@ -209,8 +205,8 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         return Mail().apply {
             mailServerHost = "smtp.qq.com"
             mailServerPort = "587"
-            fromAddress = "****"
-            password = "****"
+            fromAddress = "549908110@qq.com"
+            password = "kyhrhsjoxhxcbfij"
             toAddress = arrayListOf(mailAddress.text.toString())
             subject = "Twieasy messageSender Test"
             if(flag) {
