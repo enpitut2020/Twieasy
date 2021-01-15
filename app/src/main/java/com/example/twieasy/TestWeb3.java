@@ -1,7 +1,12 @@
 package com.example.twieasy;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
@@ -11,9 +16,18 @@ import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import kotlin.jvm.internal.markers.KMutableList;
 
 public class TestWeb3 {
     //-------------------------------------
@@ -21,6 +35,8 @@ public class TestWeb3 {
     //-------------------------------------
     // アカウントファイル名（※初回テスト時に作成されたアカウントがこのファイルに保存され、二回目以降のテスト時に利用されます）
     final private String KEY_FILE = "key.json";
+
+    private SubjectViewModel subjectView;
 
     // FIXME パスワード（※ご自身のパスワードで置き換えてください）
     // メモ：このコードはテスト用なのでソース内にパスワードを書いていますが、
@@ -45,13 +61,17 @@ public class TestWeb3 {
 
     public Boolean registerState = false;
     public Boolean loginState = false;
+    private ArrayList<Subject> subjects;
 
     //----------------------------------------------------------------------------
     // コンストラクタ
     //----------------------------------------------------------------------------
-    public TestWeb3( Context context ){
+    public TestWeb3( Context context, ArrayList<Subject> _subjects){
         helper = new Web3Helper( context );
+        subjects = _subjects;
+
     }
+
 
     //----------------------------------------------------------------------------
     // テスト
@@ -165,7 +185,7 @@ public class TestWeb3 {
         }
     }
 
-    public void sendReview(String subjectID, String review){
+    public void sendReview(int subjectID, String review) throws InterruptedException{
         if( isBusy ){
             log( "@ TestWeb3: BUSY!" );
             return;
@@ -173,7 +193,7 @@ public class TestWeb3 {
         isBusy = true;
 
         // メインスレッドを止めないように別スレッドでテスト
-        new Thread( new Runnable() {
+        Thread tr = new Thread( new Runnable() {
             @Override
             public void run(){
                 log( "@ TestWeb3: START..." );
@@ -200,7 +220,7 @@ public class TestWeb3 {
 
                         // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
                         if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
-                            _review(subjectID,review);
+                            _sendReview(subjectID,review);
                         }else{
                             // コントラクトのアドレスが無効
                             log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
@@ -217,11 +237,15 @@ public class TestWeb3 {
                 log( "@ TestWeb3: FINISHED" );
                 isBusy = false;
             }
-        }).start();
+        });
+        tr.start();
+        //tr.join();
     }
 
-    private boolean _review(String subjectID, String review){
-        log( "@ [_review]" );
+
+
+    private boolean _sendReview(int subjectID, String review){
+        log( "@ [_sendReview]" );
         String contractAddress = curHelloWorldAddress;
         try {
             Web3j web3 = helper.getWeb3();
@@ -236,8 +260,97 @@ public class TestWeb3 {
                     gasProvider
             );
 
-            contract.setReview(subjectID,review);
+            contract.setReview(String.valueOf(subjectID),review).send();
             return true;
+
+        } catch ( Exception e ){
+            log( "@ EXCEPTION e=" + e.getMessage() );
+            return( false );
+        }
+
+    }
+    public void getReview(int id) throws InterruptedException{
+        if( isBusy ){
+            log( "@ TestWeb3: BUSY!" );
+            return;
+        }
+        isBusy = true;
+
+        // メインスレッドを止めないように別スレッドでテスト
+        Thread tr = new Thread( new Runnable() {
+            @Override
+            public void run(){
+                log( "@ TestWeb3: START..." );
+
+                // ネットワークへ接続
+                if( setTarget() ){
+                    // アカウント設定
+                    if( setAccount() ) {
+                        // 残高の確認
+                        checkBalance();
+
+                        // メモ：ここから下の処理にはイーサリアム上で手数料が発生するためテスト中のアカウントに十分な残高がないと、
+                        // 　　　例外[Error processing transaction request: insufficient funds for gas * price + value]が発生します
+                        // 　　　送信やデプロイのテストをする際は、[MetaMask]等で対象アカウントに十分なイーサを送信しておいてください
+
+                        // イーサの送信
+                        //checkSend();
+
+                        // [HelloWorld]コントラクトの確認
+                        if( ! execCheckHelloWorld( curHelloWorldAddress ) ) {
+                            // コントラクトが無効であれば[HelloWorld]をデプロイ
+                            //curHelloWorldAddress = execDeployHelloWorld();
+                        }
+
+                        // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
+                        if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
+                            _getReview(id);
+                        }else{
+                            // コントラクトのアドレスが無効
+                            log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
+                        }
+                    }else{
+                        // アカウントの設定に失敗
+                        log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
+                    }
+                }else{
+                    // 接続に失敗
+                    log( "@ TestWeb3: FAILED TO CONNECT TARGET NET" );
+                }
+
+                log( "@ TestWeb3: FINISHED" );
+                isBusy = false;
+            }
+        });
+        tr.start();
+        tr.join();
+
+    }
+
+    private boolean _getReview(int id){
+        log( "@ [_getReview]" );
+        String contractAddress = curHelloWorldAddress;
+        try {
+            Web3j web3 = helper.getWeb3();
+            Credentials credentials = helper.getCurAccount();
+            ContractGasProvider gasProvider = new DefaultGasProvider();
+
+            // コントラクトが読み込めたら有効とみなす
+            Main contract = Main.load(
+                    contractAddress,
+                    web3,
+                    credentials,
+                    gasProvider
+            );
+
+            String reviews = contract.getReviews(String.valueOf(id)).send();
+
+            List<String> arr =  Arrays.asList(reviews.split("\\s+"));
+
+            subjects.get(id).setReviews(arr);
+
+            return true;
+
 
         } catch ( Exception e ){
             log( "@ EXCEPTION e=" + e.getMessage() );
@@ -249,7 +362,8 @@ public class TestWeb3 {
 
 
 
-    public void login(String mail, String pass){
+
+    public void login(String mail, String pass) throws InterruptedException {
         if( isBusy ){
             log( "@ TestWeb3: BUSY!" );
             return;
@@ -257,7 +371,7 @@ public class TestWeb3 {
         isBusy = true;
 
         // メインスレッドを止めないように別スレッドでテスト
-        new Thread( new Runnable() {
+        Thread tr = new Thread( new Runnable() {
             @Override
             public void run(){
                 log( "@ TestWeb3: START..." );
@@ -301,7 +415,9 @@ public class TestWeb3 {
                 log( "@ TestWeb3: FINISHED" );
                 isBusy = false;
             }
-        }).start();
+        });
+        tr.start();
+        tr.join();
     }
 
     private boolean _login(String mail, String pass){
@@ -325,7 +441,7 @@ public class TestWeb3 {
                 return false;
 
             String truePass = contract.getPass(mail).send();
-            if(pass == truePass)
+            if(pass.equals(truePass))
                 return true;
             else
                 return false;

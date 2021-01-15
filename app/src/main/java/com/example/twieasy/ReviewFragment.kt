@@ -35,6 +35,8 @@ class ReviewFragment : Fragment() {
 
         vii = inflater.inflate(R.layout.fragment_review, container, false)
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
+
+
         jumpToReview()
         return vii
     }
@@ -46,6 +48,8 @@ class ReviewFragment : Fragment() {
             subjectView.subjects[ID!! - 1].info,
             subjectView.subjects[ID!! - 1].easiness
         )
+        val tb : TestWeb3? = TestWeb3(requireActivity(), subjectView.subjects)
+        tb?.getReview(ID!!-1);
         for (i in subjectView.subjects[ID!! - 1].reviews) {
             val r: TextView = TextView(context)
 
@@ -53,7 +57,7 @@ class ReviewFragment : Fragment() {
             val review = i
             val decryptionReview: String? = EncryptionWrapper.decryptAES128(key, review)
 
-            Log.i("review", decryptionReview)
+            //Log.i("review", decryptionReview)
             r.text = if(decryptionReview != null) decryptionReview else ""
             r.ellipsize = TextUtils.TruncateAt.END
             r.height = ViewGroup.LayoutParams.WRAP_CONTENT
