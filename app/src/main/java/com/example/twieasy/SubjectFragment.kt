@@ -16,7 +16,7 @@ class SubjectFragment : Fragment() {
 
     lateinit var subjectView : SubjectViewModel
 
-    private val subject: MutableCollection<Button> = mutableListOf()//講義ボタンのリスト
+    private lateinit var subjects : ArrayList<Subject>//3つの学類すべての講義番号の配列
     lateinit var subjectList : MutableList<MutableMap<String, Any>>
     lateinit var result : MutableList<String>
 
@@ -27,12 +27,13 @@ class SubjectFragment : Fragment() {
         times = 0//※これがないと戻るボタンでアプリを落とした後講義を読み込まない(表示されない)
         // Inflate the layout for this fragment
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
+        subjects = (subjectView.coinsSubjects + subjectView.mastSubjects + subjectView.klisSubjects) as ArrayList<Subject>
 
         val view =  inflater.inflate(R.layout.fragment_subject, container, false)
 
         subjectList = mutableListOf<MutableMap<String, Any>>()
-        for (i in 1..subjectView.subjects.size){
-            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[i - 1].name, "easiness" to subjectView.subjects[i - 1].easiness.toString())
+        for (i in 1..subjects.size){
+            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjects[i - 1].name, "easiness" to subjects[i - 1].easiness.toString())
             subjectList.add(sub)
         }
 
@@ -47,7 +48,7 @@ class SubjectFragment : Fragment() {
 
         // 検索予測処理
         // 科目名のList
-        var searchList: MutableList<String> = subjectView.subjects.map{
+        var searchList: MutableList<String> = subjects.map{
             it.name
         }.toMutableList()
 
@@ -68,14 +69,14 @@ class SubjectFragment : Fragment() {
                             val subjectName = result[i - 1]
                             var index = 0
 
-                            for(i in 1..subjectView.subjects.size) {
-                                if (subjectView.subjects[i-1].name == subjectName) {
+                            for(i in 1..subjects.size) {
+                                if (subjects[i-1].name == subjectName) {
                                     index = i - 1
                                     break
                                 }
                             }
 
-                            var res : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[index].name, "easiness" to "楽単率" + subjectView.subjects[index].easiness.toString() + "%")
+                            var res : MutableMap<String, Any> = mutableMapOf("name" to subjects[index].name, "easiness" to subjects[index].easiness.toString())
                             resultMap.add(res)
                         }
 
@@ -142,8 +143,8 @@ class SubjectFragment : Fragment() {
         override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
             val subjectName = result[position]
             var index = 0
-            for(i in 1..subjectView.subjects.size) {
-                if (subjectView.subjects[i-1].name == subjectName) {
+            for(i in 1..subjects.size) {
+                if (subjects[i-1].name == subjectName) {
                     index = i
                     break
                 }

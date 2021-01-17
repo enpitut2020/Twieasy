@@ -16,8 +16,15 @@ import kotlinx.android.synthetic.main.tutorial.view.*
 class TutorialFragment : Fragment() {
 
     lateinit var subjectView : SubjectViewModel
-
     lateinit var vii: View
+    private var department: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            department = it.getString("department")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +37,9 @@ class TutorialFragment : Fragment() {
         val okButton: BootstrapButton = vii.findViewById(R.id.okButton)
 
         okButton.setOnClickListener{
-            findNavController().navigate(R.id.action_tutorialFragment_to_flickFragment2)
+            val bundle = Bundle()
+            bundle.putString("department", department)
+            findNavController().navigate(R.id.action_tutorialFragment_to_flickFragment2, bundle)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {/*戻るボタンが押されても遷移しない*/}

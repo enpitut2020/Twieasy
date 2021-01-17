@@ -44,13 +44,25 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
 
         val load = Thread {
-            subjectView.kdbRawData = subjectView.subjectNumber.map {
+            subjectView.coinsKdbRawData = subjectView.coinsSubjectNumber.map {
+                "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
+            } as MutableList<String>
+            subjectView.mastKdbRawData = subjectView.mastSubjectNumber.map {
+                "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
+            } as MutableList<String>
+            subjectView.klisKdbRawData = subjectView.klisSubjectNumber.map {
                 "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
             } as MutableList<String>
 
             if(times++ == 0) {//戻るボタンで遷移してきた際は再度科目情報を読み取らない
                 // KDBの情報を整形したもの
-                subjectView.subjects = subjectView.kdbRawData.map {
+                subjectView.mastSubjects = subjectView.mastKdbRawData.map {
+                    getTextFromWeb(it)
+                } as ArrayList<Subject>
+                subjectView.coinsSubjects = subjectView.coinsKdbRawData.map {
+                    getTextFromWeb(it)
+                } as ArrayList<Subject>
+                subjectView.klisSubjects = subjectView.klisKdbRawData.map {
                     getTextFromWeb(it)
                 } as ArrayList<Subject>
             }
@@ -169,7 +181,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         val tr = Thread(Runnable {
             try {
-                val doc = Jsoup.connect(urlString).get();
+                val doc = Jsoup.connect(urlString).get()
                 val title = doc.select("#course-title #title").first().text() //科目名
                 val assignments = doc.select("#credit-grade-assignments #assignments").first().text()
                 val credit = doc.select("#credit-grade-assignments #credit").first().text() //単位数
@@ -187,7 +199,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                     "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n単位数　　" + credit + "\n" + eval,
                     (r.nextInt() % 100 + 100) % 100,
                     subjectView.reviewList[counter++]
-                );
+                )
             } catch (ex: Exception) {
                 Log.d("Exception", ex.toString())
             }
@@ -213,7 +225,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
 
     override fun getMail(): Mail{
-        val regex = "[s]{1}[0-9]{7}@[s,u].tsukuba.ac.jp".toRegex();
+        val regex = "[s]{1}[0-9]{7}@[s,u].tsukuba.ac.jp".toRegex()
         val message :String = Ver(1000, 9999).toString()
         res = message
         val flag:Boolean = mailAddress.text.toString().matches(regex)
