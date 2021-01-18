@@ -19,6 +19,7 @@ import java.util.*
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.security.MessageDigest
 import kotlin.collections.ArrayList
 
 var times = 0
@@ -40,8 +41,6 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         val view =  inflater.inflate(R.layout.fragment_main, container, false)
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
-
-
 
         val load = Thread {
             subjectView.coinsKdbRawData = subjectView.coinsSubjectNumber.map {
@@ -72,16 +71,6 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         load.start()
 
-        val k = "hoge"
-        val hoge = "漢字！"
-        Log.i("kanji", hoge)
-
-        val enc: String? = EncryptionWrapper.encryptAES128(k, hoge)
-        Log.i("enc", enc)
-        val dec: String? = enc?.let { EncryptionWrapper.decryptAES128(k, it) }
-        Log.i("dec", dec)
-
-
         view.makeAccount.setOnClickListener{
             val bundle:Bundle = Bundle()
             bundle.putInt("buttonNum",0)
@@ -97,24 +86,19 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
                 val editor = prefData?.edit()
 
-                // AES128で暗号化
-                val key: String = "toridge"
-                val encryptionAccount: String? = EncryptionWrapper.encryptAES128(key, loginAccount.text.toString())
-                val encryptionPassword: String? = EncryptionWrapper.encryptAES128(key, loginPass.text.toString())
-
-
-
-                // AES128で複合化
-                val decryptionAccount: String? =
-                    encryptionAccount?.let { it1 -> EncryptionWrapper.decryptAES128(key, it1) }
-                val decryptionPassword: String? =
-                    encryptionPassword?.let { it1 -> EncryptionWrapper.decryptAES128(key, it1) }
+                // SHA-256
+                val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+                val hexChars = (1..16)
+                    .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
+                    .map(charPool::get)
+                    .joinToString("");
+                editor?.putString("key", hexChars)
+                val encryptionAccount: String = hashSHA256String(loginAccount.text.toString(), hexChars)
+                val encryptionPassword: String = hashSHA256String(loginPass.text.toString(), hexChars)
 
                 // デバッグ用Log
                 Log.i("enc", encryptionAccount)
-                Log.i("dec",decryptionAccount)
                 Log.i("enc2", encryptionPassword)
-                Log.i("dec2",decryptionPassword)
 
                 // 入力されたログインIDとログインパスワード
                 editor?.putString("account", encryptionAccount)

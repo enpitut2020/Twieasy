@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import java.security.InvalidKeyException
+import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
 import javax.crypto.BadPaddingException
@@ -42,26 +43,6 @@ class LoginFragment : Fragment() {
         subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
         val view =  inflater.inflate(R.layout.fragment_login, container, false)
 
-        // 「pref_data」という設定データファイルを読み込み
-        val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
-        val account = prefData?.getString("account", "")
-        val password = prefData?.getString("pass", "")
-
-        // Log
-        Log.i("account", account)
-        Log.i("password", password)
-
-        val key: String = "toridge"
-        val decryptionAccount: String? =
-            account?.let { it1 -> EncryptionWrapper.decryptAES128(key, it1) }
-        val decryptionPassword: String? =
-            password?.let { it1 -> EncryptionWrapper.decryptAES128(key, it1) }
-
-        Log.i("dec",decryptionAccount)
-        Log.i("dec2",decryptionPassword)
-
-        val pass = decryptionPassword
-
         view.login_login.setOnClickListener{
 //            val inputAccount = view.findViewById<TextView>(R.id.mailAddress_login)
 //            val inputPassword = view.findViewById<TextView>(R.id.passWord_login)
@@ -83,9 +64,13 @@ class LoginFragment : Fragment() {
 //            }
             val mail = mailAddress_login.text.toString()
             val pass = passWord_login.text.toString()
-            val key: String = "toridge"
-            val encryptionAccount: String? = EncryptionWrapper.encryptAES128(key, mail)
-            val encryptionPassword: String? = EncryptionWrapper.encryptAES128(key, pass)
+
+            // 「pref_data」という設定データファイルを読み込み
+            val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
+            val hexChars = prefData?.getString("key", "")
+            val encryptionAccount = hexChars?.let { it1 -> hashSHA256String(mail, it1) }
+            val encryptionPassword = hexChars?.let { it1 -> hashSHA256String(pass, it1) }
+
             val tb : TestWeb3? = TestWeb3(requireActivity(),null)
             tb?.login(encryptionAccount,encryptionPassword)
             if(tb?.loginState == true) {

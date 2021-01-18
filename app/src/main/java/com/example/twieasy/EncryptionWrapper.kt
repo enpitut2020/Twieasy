@@ -1,5 +1,6 @@
 package com.example.twieasy
 
+import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
@@ -110,4 +111,16 @@ class EncryptionWrapper{
         }
     }
 }
+
+fun hashSHA256String(target: String, hexChars: String): String {
+    val hashBytes = MessageDigest.getInstance("SHA-256").digest(target.toByteArray())
+    val result = StringBuilder(hashBytes.size * 2)
+    hashBytes.forEach {
+        val i = it.toInt()
+        result.append(hexChars[i shr 4 and 0x0f])
+        result.append(hexChars[i and 0x0f])
+    }
+    return result.toString()
+}
+
 

@@ -62,17 +62,17 @@ class PostFragment : Fragment() {
     private fun post() {
         val postContent: TextView = vii.findViewById(R.id.reviewContent)
         val postStr: String = postContent.text.toString()
-
-        subjectView.reviewList[ID!! - 1].add(postStr)
-        // 暗号化
-        val key: String = "toridge"
-        val encryptionPostStr: String? = EncryptionWrapper.encryptAES128(key, postStr)
-        if(encryptionPostStr != null && !encryptionPostStr?.isEmpty()) {
-            subjectView.reviewList[ID!! - 1].add(encryptionPostStr)
-            val tb : TestWeb3? = TestWeb3(requireActivity(), null)
-            tb?.sendReview(ID!!-1,encryptionPostStr)
-            findNavController().navigateUp()
+        if(!postStr.isEmpty()) {
+            subjectView.reviewList[ID!! - 1].add(postStr)
+            // 暗号化
+            val key: String = "toridge"
+            val encryptionPostStr: String? = EncryptionWrapper.encryptAES128(key, postStr)
+            if(encryptionPostStr != null && !encryptionPostStr?.isEmpty()) {
+                subjectView.reviewList[ID!! - 1].add(encryptionPostStr)
+                val tb: TestWeb3? = TestWeb3(requireActivity(), null)
+                tb?.sendReview(ID!! - 1, encryptionPostStr)
+                findNavController().navigateUp()
+            }
         }
     }
-
 }
