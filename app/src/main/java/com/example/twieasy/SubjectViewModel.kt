@@ -404,13 +404,8 @@ class SubjectViewModel: ViewModel() {
     )
 
     // KDBからとってきた生データ
-    var coinsKdbRawData = mutableListOf<String>()
     var coinsSubjects = ArrayList<Subject>()
-
-    var mastKdbRawData = mutableListOf<String>()
     var mastSubjects = ArrayList<Subject>()
-
-    var klisKdbRawData = mutableListOf<String>()
     var klisSubjects = ArrayList<Subject>()
 
     //@JvmField var subjects = ArrayList<Subject>()

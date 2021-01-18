@@ -159,6 +159,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
     )
     private fun getTextFromWeb(classNum: String, command: Int): Subject? {
         var subject: Subject? = null
+        val tb : TestWeb3? = TestWeb3(requireActivity(), null)
         val tr = Thread(Runnable {
             try{
                 val doc = Jsoup.connect("https://kdb.tsukuba.ac.jp/syllabi/2020/$classNum/jpn/").get()
@@ -180,13 +181,21 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 }
                 Log.i("title:", title.toString())
                 Log.i("assignments:", assignments.toString())
-                Log.i("credit:", title.toString())
-                Log.i("eval:", eval.toString())
+                Log.i("credit:", credit.toString())
+                Log.i("eval:", eval)
+
+                val easiness = tb?.getEasy(classNum) as Float
+                val difficulty = tb?.getDifficult(classNum) as Float
+                var ratio = 50
+                if (easiness != 0.0F || difficulty != 0.0F) {
+                    ratio = (easiness * 100 / (easiness + difficulty)) as Int
+                    Log.i("ratio", ratio.toString())
+                }
 
                 subject = Subject(
                     title,
                     "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n単位数　　" + credit + "\n" + eval,
-                    (r.nextInt() % 100 + 100) % 100,
+                    ratio, //(r.nextInt() % 100 + 100) % 100,
                     subjectView.reviewList[counter++],
                     classNum
                 )

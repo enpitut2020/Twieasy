@@ -454,7 +454,111 @@ public class TestWeb3 {
         }
     }
 
+    public boolean voteEasy(String classNum){
+        log( "@ [voteEasy]" );
+        String contractAddress = curHelloWorldAddress;
+        try {
+            Web3j web3 = helper.getWeb3();
+            Credentials credentials = helper.getCurAccount();
+            ContractGasProvider gasProvider = new DefaultGasProvider();
 
+            // コントラクトが読み込めたら有効とみなす
+            Main contract = Main.load(
+                    contractAddress,
+                    web3,
+                    credentials,
+                    gasProvider
+            );
+
+            contract.voteEasy(classNum).send();
+            return true;
+
+        } catch ( Exception e ){
+            log( "@ EXCEPTION e=" + e.getMessage() );
+            return( false );
+        }
+
+    }
+
+    public boolean voteDifficult(String classNum){
+        log( "@ [voteDifficult]" );
+        String contractAddress = curHelloWorldAddress;
+        try {
+            Web3j web3 = helper.getWeb3();
+            Credentials credentials = helper.getCurAccount();
+            ContractGasProvider gasProvider = new DefaultGasProvider();
+
+            // コントラクトが読み込めたら有効とみなす
+            Main contract = Main.load(
+                    contractAddress,
+                    web3,
+                    credentials,
+                    gasProvider
+            );
+
+            contract.voteDifficult(classNum).send();
+            return true;
+
+        } catch ( Exception e ){
+            log( "@ EXCEPTION e=" + e.getMessage() );
+            return( false );
+        }
+
+    }
+
+    public String getEasy(String classNum){
+        log( "@ [getEasy]" );
+        String contractAddress = curHelloWorldAddress;
+        try {
+            Web3j web3 = helper.getWeb3();
+            Credentials credentials = helper.getCurAccount();
+            ContractGasProvider gasProvider = new DefaultGasProvider();
+
+            // コントラクトが読み込めたら有効とみなす
+            Main contract = Main.load(
+                    contractAddress,
+                    web3,
+                    credentials,
+                    gasProvider
+            );
+
+            String easiness = contract.getEasy(classNum).send();
+            //subjects.get(id).setReviews(easiness);
+            return easiness;
+
+        } catch ( Exception e ){
+            log( "@ EXCEPTION e=" + e.getMessage() );
+            return( "0" );
+        }
+
+    }
+
+    public String getDifficult(String classNum){
+        log( "@ [getDifficult]" );
+        String contractAddress = curHelloWorldAddress;
+        try {
+            Web3j web3 = helper.getWeb3();
+            Credentials credentials = helper.getCurAccount();
+            ContractGasProvider gasProvider = new DefaultGasProvider();
+
+            // コントラクトが読み込めたら有効とみなす
+            Main contract = Main.load(
+                    contractAddress,
+                    web3,
+                    credentials,
+                    gasProvider
+            );
+
+            String difficulty = contract.getDifficult(classNum).send();
+            //subjects.get(id).setReviews(difficulty);
+            return difficulty;
+
+        } catch ( Exception e ){
+            log( "@ EXCEPTION e=" + e.getMessage() );
+            return( "0" );
+        }
+
+    }
 
 
     //----------------------------------------
