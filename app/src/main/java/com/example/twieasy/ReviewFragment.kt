@@ -45,10 +45,11 @@ class ReviewFragment : Fragment() {
 
     private fun jumpToReview() {
         //getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/") //??????
+        var ratio = subjects[ID!!-1].eVotes.toFloat() * 100.0F / (subjects[ID!!-1].dVotes.toFloat() + subjects[ID!!-1].eVotes.toFloat())
         createReview(
             subjects[ID!! - 1].name,
             subjects[ID!! - 1].info,
-            subjects[ID!! - 1].easiness
+            ratio.toInt()
         )
         val tb : TestWeb3? = TestWeb3(requireActivity(), subjects)//val tb : TestWeb3? = TestWeb3(requireActivity(), subjectView.subjects)
         tb?.getReview(ID!! - 1)

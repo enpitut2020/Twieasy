@@ -33,7 +33,8 @@ class SubjectFragment : Fragment() {
 
         subjectList = mutableListOf<MutableMap<String, Any>>()
         for (i in 1..subjects.size){
-            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjects[i - 1].name, "easiness" to subjects[i - 1].easiness.toString())
+            var ratio = subjects[i-1].eVotes.toFloat() * 100.0F / (subjects[i-1].dVotes.toFloat() + subjects[i-1].eVotes.toFloat())
+            var sub : MutableMap<String, Any> = mutableMapOf("name" to subjects[i - 1].name, "easiness" to ratio.toInt().toString())
             subjectList.add(sub)
         }
 
@@ -75,7 +76,8 @@ class SubjectFragment : Fragment() {
                                     break
                                 }
                             }
-                            var res : MutableMap<String, Any> = mutableMapOf("name" to subjects[index].name, "easiness" to subjects[index].easiness.toString())
+                            var ratio = subjects[i-1].eVotes.toFloat() * 100.0F / (subjects[i-1].dVotes.toFloat() + subjects[i-1].eVotes.toFloat())
+                            var res : MutableMap<String, Any> = mutableMapOf("name" to subjects[index].name, "easiness" to ratio.toInt().toString())
                             resultMap.add(res)
                         }
 

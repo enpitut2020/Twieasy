@@ -535,7 +535,6 @@ public class TestWeb3 {
             log( "@ EXCEPTION e=" + e.getMessage() );
             return( false );
         }
-
     }
 
     public void voteDifficult(String classNum) throws InterruptedException{
@@ -622,7 +621,7 @@ public class TestWeb3 {
 
     }
 
-    public void getEasy(String classNum) throws InterruptedException{
+    public void getEasy(int id, String classNum) throws InterruptedException{
         if( isBusy ){
             log( "@ TestWeb3: BUSY!" );
             return;
@@ -657,7 +656,7 @@ public class TestWeb3 {
 
                         // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
                         if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
-                            _getEasy(classNum);
+                            _getEasy(id, classNum);
                         }else{
                             // コントラクトのアドレスが無効
                             log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
@@ -680,7 +679,7 @@ public class TestWeb3 {
 
     }
 
-    public String _getEasy(String classNum){
+    public boolean _getEasy(int id, String classNum){
         log( "@ [getEasy]" );
         String contractAddress = curHelloWorldAddress;
         try {
@@ -697,17 +696,17 @@ public class TestWeb3 {
             );
 
             String easiness = contract.getEasy(classNum).send();
-            //subjects.get(id).setReviews(easiness);
-            return easiness;
+            subjects.get(id).setEVotes(Integer.parseInt(easiness));
+            return true;
 
         } catch ( Exception e ){
             log( "@ EXCEPTION e=" + e.getMessage() );
-            return( "0" );
+            return false;
         }
 
     }
 
-    public void getDifficult(String classNum) throws InterruptedException{
+    public void getDifficult(int id, String classNum) throws InterruptedException{
         if( isBusy ){
             log( "@ TestWeb3: BUSY!" );
             return;
@@ -742,7 +741,7 @@ public class TestWeb3 {
 
                         // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
                         if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
-                            _getDifficult(classNum);
+                            _getDifficult(id, classNum);
                         }else{
                             // コントラクトのアドレスが無効
                             log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
@@ -765,7 +764,7 @@ public class TestWeb3 {
 
     }
 
-    public String _getDifficult(String classNum){
+    public boolean _getDifficult(int id, String classNum){
         log( "@ [getDifficult]" );
         String contractAddress = curHelloWorldAddress;
         try {
@@ -782,12 +781,12 @@ public class TestWeb3 {
             );
 
             String difficulty = contract.getDifficult(classNum).send();
-            //subjects.get(id).setReviews(difficulty);
-            return difficulty;
+            subjects.get(id).setDVotes(Integer.parseInt(difficulty));
+            return true;
 
         } catch ( Exception e ){
             log( "@ EXCEPTION e=" + e.getMessage() );
-            return( "0" );
+            return( false );
         }
 
     }
