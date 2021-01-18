@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
@@ -29,13 +30,16 @@ import javax.crypto.spec.SecretKeySpec
 
 
 class LoginFragment : Fragment() {
+
+    lateinit var subjectView : SubjectViewModel
+
     @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
         val view =  inflater.inflate(R.layout.fragment_login, container, false)
 
         // 「pref_data」という設定データファイルを読み込み
@@ -82,13 +86,17 @@ class LoginFragment : Fragment() {
             val key: String = "toridge"
             val encryptionAccount: String? = EncryptionWrapper.encryptAES128(key, mail)
             val encryptionPassword: String? = EncryptionWrapper.encryptAES128(key, pass)
-            val tb : TestWeb3? = TestWeb3(requireActivity())
+            val tb : TestWeb3? = TestWeb3(requireActivity(),null)
             tb?.login(encryptionAccount,encryptionPassword)
-            if(tb?.loginState == true)
+            if(tb?.loginState == true) {
+                subjectView.currentAccount = encryptionAccount.toString()
                 findNavController().navigate(R.id.action_loginFragment_to_subjectFragment)
+            }
             else{
                 val inputPassword = view.findViewById<TextView>(R.id.passWord_login)
-                inputPassword.hint =  "パスワードが違います"
+                inputPassword.hint =  "メールアドレスまたはパスワードが違います"
+                inputPassword.setText("")
+                inputPassword.setBackgroundColor(R.color.warn)
             }
 
 
