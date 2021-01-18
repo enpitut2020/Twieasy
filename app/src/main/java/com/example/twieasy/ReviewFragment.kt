@@ -51,12 +51,13 @@ class ReviewFragment : Fragment() {
             subjects[ID!! - 1].easiness
         )
         val tb : TestWeb3? = TestWeb3(requireActivity(), subjects)//val tb : TestWeb3? = TestWeb3(requireActivity(), subjectView.subjects)
-        tb?.getReview(ID!!-1)
-        for (i in subjects[ID!! - 1].reviews) {
+        tb?.getReview(ID!! - 1)
+        for (i in 1 until subjects[ID!! - 1].reviews.size) {
             val r: TextView = TextView(context)
 
             val key: String = "toridge"
-            val review = i
+            val liReview = subjects[ID!! - 1].reviews as MutableList
+            val review = liReview[i]
             val decryptionReview: String? = EncryptionWrapper.decryptAES128(key, review)
 
             //Log.i("review", decryptionReview)
