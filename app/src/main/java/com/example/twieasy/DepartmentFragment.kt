@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Spinner
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login.view.*
@@ -34,6 +35,10 @@ class DepartmentFragment : Fragment() {
         okButton.setOnClickListener{
             val bundle:Bundle = Bundle()
             bundle.putInt("buttonNum", button!!)
+
+            val spinner = view.findViewById<Spinner>(R.id.spDepartment)
+            bundle.putString("department", spinner.selectedItem as String)
+
             findNavController().navigate(R.id.action_departmentFragment_to_loadFragment,bundle)
         }
         // Inflate the layout for this fragment

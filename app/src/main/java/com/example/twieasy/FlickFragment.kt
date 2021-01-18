@@ -35,8 +35,16 @@ class FlickFragment : Fragment() {
     //lateinit var binding:FragmentFlickBinding
     lateinit var vii : View
     lateinit var subjectView : SubjectViewModel
+    private lateinit var department: String
     val regex = Regex(pattern = "開講日時(.*)\n")
     lateinit var t : Toast
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            department = it.getString("department")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,11 +56,21 @@ class FlickFragment : Fragment() {
 
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
 
-        val matchResult = regex.find(subjectView.subjects[0]?.info)
-
-        val subject_View : TextView = vii.subject_info
-
-        subject_View.text =  subjectView.subjects[0]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty();
+        val tvSubjectInfo : TextView = vii.subject_info
+        when(department){
+            "coins" -> {
+                val matchResult = regex.find(subjectView.coinsSubjects[0]?.info)
+                tvSubjectInfo.text =  subjectView.coinsSubjects[0]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+            }
+            "mast" -> {
+                val matchResult = regex.find(subjectView.mastSubjects[0]?.info)
+                tvSubjectInfo.text =  subjectView.mastSubjects[0]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+            }
+            "klis" -> {
+                val matchResult = regex.find(subjectView.klisSubjects[0]?.info)
+                tvSubjectInfo.text =  subjectView.klisSubjects[0]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+            }
+        }
 
         jmpToFlick()
 
@@ -114,12 +132,23 @@ class FlickFragment : Fragment() {
                 print(flickAttribute)
 
                 // 2.科目情報を変更
-                val subject_View: TextView = vii.subject_info
+                val tvSubjectInfo: TextView = vii.subject_info
 
-                val matchResult = regex.find(subjectView.subjects[swipedCount]?.info)
+                when(department){
+                    "coins" -> {
+                        val matchResult = regex.find(subjectView.coinsSubjects[swipedCount]?.info)
+                        tvSubjectInfo.text = subjectView.coinsSubjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                    }
+                    "mast" -> {
+                        val matchResult = regex.find(subjectView.mastSubjects[swipedCount]?.info)
+                        tvSubjectInfo.text = subjectView.mastSubjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                    }
+                    "klis" -> {
+                        val matchResult = regex.find(subjectView.klisSubjects[swipedCount]?.info)
+                        tvSubjectInfo.text = subjectView.klisSubjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                    }
+                }
 
-                subject_View.text =
-                    subjectView.subjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty();
                 swipedCount += 1
 
                 // 3.全部終わったら履修科目一覧に遷移
