@@ -184,11 +184,11 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 Log.i("credit:", credit.toString())
                 Log.i("eval:", eval)
 
-                val easiness = tb?.getEasy(classNum) as Float
-                val difficulty = tb?.getDifficult(classNum) as Float
+                val easiness = tb?.getEasy(classNum)?.toFloat()
+                val difficulty = tb?.getDifficult(classNum)?.toFloat()
                 var ratio = 50
                 if (easiness != 0.0F || difficulty != 0.0F) {
-                    ratio = (easiness * 100 / (easiness + difficulty)) as Int
+                    ratio = (easiness!! * 100 / (easiness + difficulty!!)) as Int
                     Log.i("ratio", ratio.toString())
                 }
 

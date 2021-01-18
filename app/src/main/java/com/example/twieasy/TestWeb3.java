@@ -454,7 +454,65 @@ public class TestWeb3 {
         }
     }
 
-    public boolean voteEasy(String classNum){
+    public void voteEasy(String classNum) throws InterruptedException{
+        if( isBusy ){
+            log( "@ TestWeb3: BUSY!" );
+            return;
+        }
+        isBusy = true;
+
+        // メインスレッドを止めないように別スレッドでテスト
+        Thread tr = new Thread( new Runnable() {
+            @Override
+            public void run(){
+                log( "@ TestWeb3: START..." );
+
+                // ネットワークへ接続
+                if( setTarget() ){
+                    // アカウント設定
+                    if( setAccount() ) {
+                        // 残高の確認
+                        checkBalance();
+
+                        // メモ：ここから下の処理にはイーサリアム上で手数料が発生するためテスト中のアカウントに十分な残高がないと、
+                        // 　　　例外[Error processing transaction request: insufficient funds for gas * price + value]が発生します
+                        // 　　　送信やデプロイのテストをする際は、[MetaMask]等で対象アカウントに十分なイーサを送信しておいてください
+
+                        // イーサの送信
+                        //checkSend();
+
+                        // [HelloWorld]コントラクトの確認
+                        if( ! execCheckHelloWorld( curHelloWorldAddress ) ) {
+                            // コントラクトが無効であれば[HelloWorld]をデプロイ
+                            //curHelloWorldAddress = execDeployHelloWorld();
+                        }
+
+                        // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
+                        if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
+                            _voteEasy(classNum);
+                        }else{
+                            // コントラクトのアドレスが無効
+                            log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
+                        }
+                    }else{
+                        // アカウントの設定に失敗
+                        log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
+                    }
+                }else{
+                    // 接続に失敗
+                    log( "@ TestWeb3: FAILED TO CONNECT TARGET NET" );
+                }
+
+                log( "@ TestWeb3: FINISHED" );
+                isBusy = false;
+            }
+        });
+        tr.start();
+        tr.join();
+
+    }
+
+    public boolean _voteEasy(String classNum){
         log( "@ [voteEasy]" );
         String contractAddress = curHelloWorldAddress;
         try {
@@ -480,7 +538,65 @@ public class TestWeb3 {
 
     }
 
-    public boolean voteDifficult(String classNum){
+    public void voteDifficult(String classNum) throws InterruptedException{
+        if( isBusy ){
+            log( "@ TestWeb3: BUSY!" );
+            return;
+        }
+        isBusy = true;
+
+        // メインスレッドを止めないように別スレッドでテスト
+        Thread tr = new Thread( new Runnable() {
+            @Override
+            public void run(){
+                log( "@ TestWeb3: START..." );
+
+                // ネットワークへ接続
+                if( setTarget() ){
+                    // アカウント設定
+                    if( setAccount() ) {
+                        // 残高の確認
+                        checkBalance();
+
+                        // メモ：ここから下の処理にはイーサリアム上で手数料が発生するためテスト中のアカウントに十分な残高がないと、
+                        // 　　　例外[Error processing transaction request: insufficient funds for gas * price + value]が発生します
+                        // 　　　送信やデプロイのテストをする際は、[MetaMask]等で対象アカウントに十分なイーサを送信しておいてください
+
+                        // イーサの送信
+                        //checkSend();
+
+                        // [HelloWorld]コントラクトの確認
+                        if( ! execCheckHelloWorld( curHelloWorldAddress ) ) {
+                            // コントラクトが無効であれば[HelloWorld]をデプロイ
+                            //curHelloWorldAddress = execDeployHelloWorld();
+                        }
+
+                        // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
+                        if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
+                            _voteDifficult(classNum);
+                        }else{
+                            // コントラクトのアドレスが無効
+                            log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
+                        }
+                    }else{
+                        // アカウントの設定に失敗
+                        log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
+                    }
+                }else{
+                    // 接続に失敗
+                    log( "@ TestWeb3: FAILED TO CONNECT TARGET NET" );
+                }
+
+                log( "@ TestWeb3: FINISHED" );
+                isBusy = false;
+            }
+        });
+        tr.start();
+        tr.join();
+
+    }
+
+    public boolean _voteDifficult(String classNum){
         log( "@ [voteDifficult]" );
         String contractAddress = curHelloWorldAddress;
         try {
@@ -506,7 +622,65 @@ public class TestWeb3 {
 
     }
 
-    public String getEasy(String classNum){
+    public void getEasy(String classNum) throws InterruptedException{
+        if( isBusy ){
+            log( "@ TestWeb3: BUSY!" );
+            return;
+        }
+        isBusy = true;
+
+        // メインスレッドを止めないように別スレッドでテスト
+        Thread tr = new Thread( new Runnable() {
+            @Override
+            public void run(){
+                log( "@ TestWeb3: START..." );
+
+                // ネットワークへ接続
+                if( setTarget() ){
+                    // アカウント設定
+                    if( setAccount() ) {
+                        // 残高の確認
+                        checkBalance();
+
+                        // メモ：ここから下の処理にはイーサリアム上で手数料が発生するためテスト中のアカウントに十分な残高がないと、
+                        // 　　　例外[Error processing transaction request: insufficient funds for gas * price + value]が発生します
+                        // 　　　送信やデプロイのテストをする際は、[MetaMask]等で対象アカウントに十分なイーサを送信しておいてください
+
+                        // イーサの送信
+                        //checkSend();
+
+                        // [HelloWorld]コントラクトの確認
+                        if( ! execCheckHelloWorld( curHelloWorldAddress ) ) {
+                            // コントラクトが無効であれば[HelloWorld]をデプロイ
+                            //curHelloWorldAddress = execDeployHelloWorld();
+                        }
+
+                        // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
+                        if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
+                            _getEasy(classNum);
+                        }else{
+                            // コントラクトのアドレスが無効
+                            log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
+                        }
+                    }else{
+                        // アカウントの設定に失敗
+                        log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
+                    }
+                }else{
+                    // 接続に失敗
+                    log( "@ TestWeb3: FAILED TO CONNECT TARGET NET" );
+                }
+
+                log( "@ TestWeb3: FINISHED" );
+                isBusy = false;
+            }
+        });
+        tr.start();
+        tr.join();
+
+    }
+
+    public String _getEasy(String classNum){
         log( "@ [getEasy]" );
         String contractAddress = curHelloWorldAddress;
         try {
@@ -533,7 +707,65 @@ public class TestWeb3 {
 
     }
 
-    public String getDifficult(String classNum){
+    public void getDifficult(String classNum) throws InterruptedException{
+        if( isBusy ){
+            log( "@ TestWeb3: BUSY!" );
+            return;
+        }
+        isBusy = true;
+
+        // メインスレッドを止めないように別スレッドでテスト
+        Thread tr = new Thread( new Runnable() {
+            @Override
+            public void run(){
+                log( "@ TestWeb3: START..." );
+
+                // ネットワークへ接続
+                if( setTarget() ){
+                    // アカウント設定
+                    if( setAccount() ) {
+                        // 残高の確認
+                        checkBalance();
+
+                        // メモ：ここから下の処理にはイーサリアム上で手数料が発生するためテスト中のアカウントに十分な残高がないと、
+                        // 　　　例外[Error processing transaction request: insufficient funds for gas * price + value]が発生します
+                        // 　　　送信やデプロイのテストをする際は、[MetaMask]等で対象アカウントに十分なイーサを送信しておいてください
+
+                        // イーサの送信
+                        //checkSend();
+
+                        // [HelloWorld]コントラクトの確認
+                        if( ! execCheckHelloWorld( curHelloWorldAddress ) ) {
+                            // コントラクトが無効であれば[HelloWorld]をデプロイ
+                            //curHelloWorldAddress = execDeployHelloWorld();
+                        }
+
+                        // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
+                        if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
+                            _getDifficult(classNum);
+                        }else{
+                            // コントラクトのアドレスが無効
+                            log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
+                        }
+                    }else{
+                        // アカウントの設定に失敗
+                        log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
+                    }
+                }else{
+                    // 接続に失敗
+                    log( "@ TestWeb3: FAILED TO CONNECT TARGET NET" );
+                }
+
+                log( "@ TestWeb3: FINISHED" );
+                isBusy = false;
+            }
+        });
+        tr.start();
+        tr.join();
+
+    }
+
+    public String _getDifficult(String classNum){
         log( "@ [getDifficult]" );
         String contractAddress = curHelloWorldAddress;
         try {
