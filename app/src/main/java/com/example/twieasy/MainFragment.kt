@@ -43,25 +43,15 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
 
         val load = Thread {
-            subjectView.coinsKdbRawData = subjectView.coinsSubjectNumber.map {
-                "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
-            } as MutableList<String>
-            subjectView.mastKdbRawData = subjectView.mastSubjectNumber.map {
-                "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
-            } as MutableList<String>
-            subjectView.klisKdbRawData = subjectView.klisSubjectNumber.map {
-                "https://kdb.tsukuba.ac.jp/syllabi/2020/$it/jpn/"
-            } as MutableList<String>
-
             if(times++ == 0) {//戻るボタンで遷移してきた際は再度科目情報を読み取らない
                 // KDBの情報を整形したもの
-                subjectView.coinsSubjects = subjectView.coinsKdbRawData.map {
+                subjectView.coinsSubjects = subjectView.coinsSubjectNumber.map {
                     getTextFromWeb(it, 0)
                 } as ArrayList<Subject>
-                subjectView.mastSubjects = subjectView.mastKdbRawData.map {
+                subjectView.mastSubjects = subjectView.mastSubjectNumber.map {
                     getTextFromWeb(it, 1)
                 } as ArrayList<Subject>
-                subjectView.klisSubjects = subjectView.klisKdbRawData.map {
+                subjectView.klisSubjects = subjectView.klisSubjectNumber.map {
                     getTextFromWeb(it, 0)
                 } as ArrayList<Subject>
             }
@@ -136,6 +126,13 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         }
 
+        /*view.skip.setOnClickListener{
+            val bundle:Bundle = Bundle()
+            bundle.putInt("buttonNum",0)
+            findNavController().navigate(R.id.action_mainFragment_to_loadFragment,bundle)
+        }*/
+
+
         view.button.setOnClickListener{
             val mail = getMail()
             MailSender.getInstance().sendMail(mail, this)
@@ -160,16 +157,15 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
     val r: Random = Random(
         123
     )
-    private fun getTextFromWeb(urlString: String, command: Int): Subject? {
+    private fun getTextFromWeb(classNum: String, command: Int): Subject? {
         var subject: Subject? = null
-
         val tr = Thread(Runnable {
             try{
-                val doc = Jsoup.connect(urlString).get()
+                val doc = Jsoup.connect("https://kdb.tsukuba.ac.jp/syllabi/2020/$classNum/jpn/").get()
                 val title = doc.select("#course-title #title").first().text() //科目名
                 val assignments = doc.select("#credit-grade-assignments #assignments").first().text()
                 val credit = doc.select("#credit-grade-assignments #credit").first().text() //単位数
-                val timetable = doc.select("#credit-grade-assignments #timetable").first().text() //開講日時
+                val timetable = doc.select("#credit-grade-assignments #timetable").first().text() //開講日
                 lateinit var styleHeading: String //授業形態
                 lateinit var eval: String //評価方法
                 when(command){
@@ -191,7 +187,8 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                     title,
                     "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n単位数　　" + credit + "\n" + eval,
                     (r.nextInt() % 100 + 100) % 100,
-                    subjectView.reviewList[counter++]
+                    subjectView.reviewList[counter++],
+                    classNum
                 )
             } catch (ex: Exception) {
                 Log.d("Exception", ex.toString())

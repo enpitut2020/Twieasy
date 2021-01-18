@@ -81,7 +81,7 @@ class FlickFragment : Fragment() {
 
 
     val flickAttribute = mutableMapOf<Int, String>()
-    var swipedCount = 1
+    var swipedCount = 0
     var res :String = ""
 
     private fun jmpToFlick(){
@@ -96,19 +96,23 @@ class FlickFragment : Fragment() {
             toggleVisible()
         }
 
-        /*override fun onSwipingOutside() {
-        }*/
+        /// override fun onSwipingOnCenter() = vii.center.settingSwipe()
+        override fun onSwipingOutside() {
+        }
 
         override fun onSwipingOnLeft() = left.settingSwipe()
         override fun onSwipingOnRight() = right.settingSwipe()
         override fun onSwipingOnUp() = top.settingSwipe()
+        //override fun onSwipingOnDown() = bottom.settingSwipe()
 
-        // override fun onButtonReleased() = settingFlick("")
+        override fun onButtonReleased() = settingFlick("中")
         override fun onFlickToLeft() = settingFlick("落単")
         override fun onFlickToRight() = settingFlick("楽単")
         override fun onFlickToUp() = settingFlick("未履修")
-    //     override fun onFlickOutside() = settingFlick("")
-
+        // override fun onFlickToDown() = settingFlick("下")
+        override fun onFlickOutside() {
+            settingFlick("")
+        }
 
 
         private fun settingFlick(label: String) {
@@ -132,23 +136,26 @@ class FlickFragment : Fragment() {
 
                 when(department){
                     "coins" -> {
-                        val matchResult = regex.find(subjectView.coinsSubjects[swipedCount]?.info)
-                        tvSubjectInfo.text = subjectView.coinsSubjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                        val matchResult = regex.find(subjectView.coinsSubjects[swipedCount + 1]?.info)
+                        tvSubjectInfo.text = subjectView.coinsSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                        Log.i("{}",subjectView.coinsSubjects[swipedCount]?.classNum)
                     }
                     "mast" -> {
-                        val matchResult = regex.find(subjectView.mastSubjects[swipedCount]?.info)
-                        tvSubjectInfo.text = subjectView.mastSubjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                        val matchResult = regex.find(subjectView.mastSubjects[swipedCount + 1]?.info)
+                        tvSubjectInfo.text = subjectView.mastSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                        Log.i("{}",subjectView.mastSubjects[swipedCount]?.classNum)
                     }
                     "klis" -> {
-                        val matchResult = regex.find(subjectView.klisSubjects[swipedCount]?.info)
-                        tvSubjectInfo.text = subjectView.klisSubjects[swipedCount]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                        val matchResult = regex.find(subjectView.klisSubjects[swipedCount + 1]?.info)
+                        tvSubjectInfo.text = subjectView.klisSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                        Log.i("{}",subjectView.klisSubjects[swipedCount]?.classNum)
                     }
                 }
 
                 swipedCount += 1
 
                 // 3.全部終わったら履修科目一覧に遷移
-                if (swipedCount >= 10) {
+                if (swipedCount >= 3) {
 //                if (swipedCount >= subjectView.subjects.size) {
                     findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
                 }
