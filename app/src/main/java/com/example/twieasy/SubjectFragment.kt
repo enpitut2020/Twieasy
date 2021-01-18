@@ -75,7 +75,7 @@ class SubjectFragment : Fragment() {
                                 }
                             }
 
-                            var res : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[index].name, "easiness" to subjectView.subjects[index].easiness.toString())
+                            var res : MutableMap<String, Any> = mutableMapOf("name" to subjectView.subjects[index].name, "easiness" to "楽単率" + subjectView.subjects[index].easiness.toString() + "%")
                             resultMap.add(res)
                         }
 

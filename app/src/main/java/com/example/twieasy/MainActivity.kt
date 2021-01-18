@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         //setContentView(R.layout.fragment_select_department)
 
         Web3Helper.SetupBouncyCastle()
-        testWeb3 = TestWeb3(this,null);
+        testWeb3 = TestWeb3(this);
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

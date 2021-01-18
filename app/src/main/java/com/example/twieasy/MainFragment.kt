@@ -19,7 +19,6 @@ import java.util.*
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
-import kotlin.collections.ArrayList
 
 var times = 0
 class MainFragment : Fragment(),MailSender.OnMailSendListener {
@@ -52,7 +51,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 // KDBの情報を整形したもの
                 subjectView.subjects = subjectView.kdbRawData.map {
                     getTextFromWeb(it)
-                } as ArrayList<Subject>
+                } as MutableList<Subject>
             }
 
             subjectView.loaded = true
@@ -110,7 +109,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 // 暗号化したアカウント名とパスワードを送信
 
-                val tb : TestWeb3? = TestWeb3(requireActivity(), null)
+                val tb : TestWeb3? = TestWeb3(requireActivity())
                 tb?.register(encryptionAccount, encryptionPassword)
                 if(tb?.registerState == true){
                     Log.i("register: ", tb?.registerState.toString())
@@ -156,6 +155,8 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             isEnabled = false
             Log.i("backButton", "Pushed")
         }
+
+
         return view
     }
 

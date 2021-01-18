@@ -48,7 +48,7 @@
             android:digits="abcdefghijklmnopqrstuvwxyz1234567890"
             android:hint="パスワード(半角英数8文字)"
             android:inputType="textPassword"
-            android:maxLength="8"
+            android:maxLength="16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/mailAddress" />
 
@@ -59,7 +59,7 @@
             android:digits="abcdefghijklmnopqrstuvwxyz1234567890"
             android:hint="パスワード確認"
             android:inputType="textPassword"
-            android:maxLength="8"
+            android:maxLength="16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/mailAddress" />
 
