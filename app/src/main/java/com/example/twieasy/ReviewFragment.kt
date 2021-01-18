@@ -18,6 +18,9 @@ import com.beardedhen.androidbootstrap.BootstrapButton
 
 class ReviewFragment : Fragment() {
     private var ID: Int? = null
+    lateinit var vii : View
+    lateinit var subjectView : SubjectViewModel
+    private lateinit var subjects : ArrayList<Subject>//3つの学類すべての講義番号の配列
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,8 +29,7 @@ class ReviewFragment : Fragment() {
             ID = it.getInt("ID")
         }
     }
-    lateinit var vii : View
-    lateinit var subjectView : SubjectViewModel
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +38,7 @@ class ReviewFragment : Fragment() {
 
         vii = inflater.inflate(R.layout.fragment_review, container, false)
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
+        subjects = (subjectView.coinsSubjects + subjectView.mastSubjects + subjectView.klisSubjects) as ArrayList<Subject>//3つの学類すべての講義番号の配列
         jumpToReview()
         return vii
     }
@@ -43,13 +46,13 @@ class ReviewFragment : Fragment() {
     private fun jumpToReview() {
         //getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/") //??????
         createReview(
-            subjectView.subjects[ID!! - 1].name,
-            subjectView.subjects[ID!! - 1].info,
-            subjectView.subjects[ID!! - 1].easiness
+            subjects[ID!! - 1].name,
+            subjects[ID!! - 1].info,
+            subjects[ID!! - 1].easiness
         )
-        val tb : TestWeb3? = TestWeb3(requireActivity(), subjectView.subjects)
-        tb?.getReview(ID!!-1);
-        for (i in subjectView.subjects[ID!! - 1].reviews) {
+        val tb : TestWeb3? = TestWeb3(requireActivity(), subjects)//val tb : TestWeb3? = TestWeb3(requireActivity(), subjectView.subjects)
+        tb?.getReview(ID!!-1)
+        for (i in subjects[ID!! - 1].reviews) {
             val r: TextView = TextView(context)
 
             val key: String = "toridge"
