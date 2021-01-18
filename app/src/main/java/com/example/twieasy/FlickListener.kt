@@ -14,11 +14,9 @@ class FlickListener(
         fun onFlickToLeft()
         fun onFlickToRight()
         fun onFlickToUp()
-//        fun onFlickOutside()
         fun onSwipingOnLeft()
         fun onSwipingOnRight()
         fun onSwipingOnUp()
- //       fun onSwipingOutside()
     }
 
     companion object {
