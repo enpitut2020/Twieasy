@@ -45,6 +45,8 @@ public class TestWeb3 {
 
     public Boolean registerState = false;
     public Boolean loginState = false;
+    public String a = "";
+    String tmp = a.split("n");
 
     //----------------------------------------------------------------------------
     // コンストラクタ
