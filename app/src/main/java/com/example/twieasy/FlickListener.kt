@@ -11,23 +11,19 @@ class FlickListener(
     // フリックイベントのリスナー
     interface Listener {
         fun onButtonPressed()
-        fun onButtonReleased()
         fun onFlickToLeft()
         fun onFlickToRight()
         fun onFlickToUp()
-//        fun onFlickToDown()
-        fun onFlickOutside()
+//        fun onFlickOutside()
         fun onSwipingOnLeft()
         fun onSwipingOnRight()
         fun onSwipingOnUp()
-//        fun onSwipingOnDown()
-//        fun onSwipingOnCenter()
-        fun onSwipingOutside()
+ //       fun onSwipingOutside()
     }
 
     companion object {
         // フリック判定時の遊び。小さいほど判定が敏感になる
-        const val DEFAULT_PLAY = 100f
+        const val DEFAULT_PLAY = 10f
     }
 
     // Android
@@ -57,12 +53,10 @@ class FlickListener(
         endX = event.x
         endY = event.y
         when {
-            outScope()   -> listener.onSwipingOutside()
+            //outScope()   -> listener.onSwipingOutside()
             leftScope()  -> listener.onSwipingOnLeft()
             rightScope() -> listener.onSwipingOnRight()
             upScope()    -> listener.onSwipingOnUp()
-            //downScope()  -> listener.onSwipingOnDown()
-            //else         -> listener.onSwipingOnCenter()
         }
     }
 
@@ -70,20 +64,17 @@ class FlickListener(
         endX = event.x
         endY = event.y
         when {
-            outScope()   -> listener.onFlickOutside()
+            //outScope()   -> listener.onFlickOutside()
             leftScope()  -> listener.onFlickToLeft()
             rightScope() -> listener.onFlickToRight()
             upScope()    -> listener.onFlickToUp()
-            //downScope()  -> listener.onFlickToDown()
-            else         -> listener.onButtonReleased()
         }
     }
 
-    private fun leftScope(): Boolean = endX < startX - play
-    private fun rightScope(): Boolean = startX + play < endX
+    private fun leftScope(): Boolean = (endX < startX - play)  && (endY > startY - play)
+    private fun rightScope(): Boolean = (startX + play < endX) && (endY > startY - play)
     private fun upScope(): Boolean = endY < startY - play
-    private fun downScope(): Boolean = startY + play < endY
     private fun outScope(): Boolean =
-        (leftScope() && upScope()) || (rightScope() && upScope()) ||
-                (leftScope() && downScope()) || (rightScope() && downScope())
+        (leftScope() && upScope()) || (rightScope() && upScope())
+                //|| (leftScope() && downScope()) || (rightScope() && downScope())
 }

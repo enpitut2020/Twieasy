@@ -96,23 +96,19 @@ class FlickFragment : Fragment() {
             toggleVisible()
         }
 
-        /// override fun onSwipingOnCenter() = vii.center.settingSwipe()
-        override fun onSwipingOutside() {
-        }
+        /*override fun onSwipingOutside() {
+        }*/
 
         override fun onSwipingOnLeft() = left.settingSwipe()
         override fun onSwipingOnRight() = right.settingSwipe()
         override fun onSwipingOnUp() = top.settingSwipe()
-        //override fun onSwipingOnDown() = bottom.settingSwipe()
 
-        override fun onButtonReleased() = settingFlick("中")
+        // override fun onButtonReleased() = settingFlick("")
         override fun onFlickToLeft() = settingFlick("落単")
         override fun onFlickToRight() = settingFlick("楽単")
         override fun onFlickToUp() = settingFlick("未履修")
-        // override fun onFlickToDown() = settingFlick("下")
-        override fun onFlickOutside() {
-            settingFlick("")
-        }
+    //     override fun onFlickOutside() = settingFlick("")
+
 
 
         private fun settingFlick(label: String) {
@@ -152,7 +148,7 @@ class FlickFragment : Fragment() {
                 swipedCount += 1
 
                 // 3.全部終わったら履修科目一覧に遷移
-                if (swipedCount >= 1) {
+                if (swipedCount >= 10) {
 //                if (swipedCount >= subjectView.subjects.size) {
                     findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
                 }
