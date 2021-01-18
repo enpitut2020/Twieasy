@@ -96,20 +96,20 @@ class FlickFragment : Fragment() {
             toggleVisible()
         }
 
-        override fun onSwipingOnCenter() = vii.center.settingSwipe()
+        /// override fun onSwipingOnCenter() = vii.center.settingSwipe()
         override fun onSwipingOutside() {
         }
 
         override fun onSwipingOnLeft() = left.settingSwipe()
         override fun onSwipingOnRight() = right.settingSwipe()
         override fun onSwipingOnUp() = top.settingSwipe()
-        override fun onSwipingOnDown() = bottom.settingSwipe()
+        //override fun onSwipingOnDown() = bottom.settingSwipe()
 
         override fun onButtonReleased() = settingFlick("中")
         override fun onFlickToLeft() = settingFlick("落単")
         override fun onFlickToRight() = settingFlick("楽単")
         override fun onFlickToUp() = settingFlick("未履修")
-        override fun onFlickToDown() = settingFlick("下")
+        // override fun onFlickToDown() = settingFlick("下")
         override fun onFlickOutside() {
             settingFlick("")
         }

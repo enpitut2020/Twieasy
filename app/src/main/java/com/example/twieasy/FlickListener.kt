@@ -15,13 +15,13 @@ class FlickListener(
         fun onFlickToLeft()
         fun onFlickToRight()
         fun onFlickToUp()
-        fun onFlickToDown()
+//        fun onFlickToDown()
         fun onFlickOutside()
         fun onSwipingOnLeft()
         fun onSwipingOnRight()
         fun onSwipingOnUp()
-        fun onSwipingOnDown()
-        fun onSwipingOnCenter()
+//        fun onSwipingOnDown()
+//        fun onSwipingOnCenter()
         fun onSwipingOutside()
     }
 
@@ -30,6 +30,8 @@ class FlickListener(
         const val DEFAULT_PLAY = 100f
     }
 
+    // Android
+    // 左下が原点(x = 0, y = 0)
     private val play = DEFAULT_PLAY
     private var startX: Float = 0f
     private var startY: Float = 0f
@@ -59,8 +61,8 @@ class FlickListener(
             leftScope()  -> listener.onSwipingOnLeft()
             rightScope() -> listener.onSwipingOnRight()
             upScope()    -> listener.onSwipingOnUp()
-            downScope()  -> listener.onSwipingOnDown()
-            else         -> listener.onSwipingOnCenter()
+            //downScope()  -> listener.onSwipingOnDown()
+            //else         -> listener.onSwipingOnCenter()
         }
     }
 
@@ -72,7 +74,7 @@ class FlickListener(
             leftScope()  -> listener.onFlickToLeft()
             rightScope() -> listener.onFlickToRight()
             upScope()    -> listener.onFlickToUp()
-            downScope()  -> listener.onFlickToDown()
+            //downScope()  -> listener.onFlickToDown()
             else         -> listener.onButtonReleased()
         }
     }
