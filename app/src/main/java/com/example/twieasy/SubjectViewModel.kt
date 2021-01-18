@@ -6,7 +6,7 @@ data class Subject(
     var name: String,
     var info: String,
     var easiness: Int,
-    var reviews: MutableCollection<String>
+    var reviews: MutableCollection<String>,
 )//構造体みたいなクラス
 
 enum class Department {
@@ -64,6 +64,8 @@ private var reviews46: MutableCollection<String> = mutableListOf()
 class SubjectViewModel: ViewModel() {
 
     var loaded: Boolean = false
+
+    var currentAccount: String = ""
 
     var reviewList = mutableListOf(
         reviews0, reviews1, reviews2, reviews3, reviews4, reviews5, reviews6, reviews7, reviews8, reviews9,
@@ -127,5 +129,5 @@ class SubjectViewModel: ViewModel() {
     // KDBからとってきた生データ
     var kdbRawData = mutableListOf<String>()
 
-    var subjects = mutableListOf<Subject>()
+    @JvmField var subjects = ArrayList<Subject>()
 }
