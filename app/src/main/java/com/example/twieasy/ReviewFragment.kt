@@ -81,6 +81,7 @@ class ReviewFragment : Fragment() {
             bundle.putInt("ID",ID!!)
             findNavController().navigate(R.id.action_reviewFragment_to_postFragment, bundle)
         }
+
     }
 
     @SuppressLint("ResourceAsColor")

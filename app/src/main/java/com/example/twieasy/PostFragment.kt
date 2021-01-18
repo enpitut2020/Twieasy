@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -62,7 +63,10 @@ class PostFragment : Fragment() {
     private fun post() {
         val postContent: TextView = vii.findViewById(R.id.reviewContent)
         val postStr: String = postContent.text.toString()
-        if(!postStr.isEmpty()) {
+
+        if(postStr.isBlank())
+            Toast.makeText(vii.context, "レビューを入力してください", Toast.LENGTH_SHORT).show()
+        else{
             subjectView.reviewList[ID!! - 1].add(postStr)
             // 暗号化
             val key: String = "toridge"
