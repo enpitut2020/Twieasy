@@ -62,7 +62,6 @@ class FlickListener(
         endX = event.x
         endY = event.y
         when {
-            //outScope()   -> listener.onFlickOutside()
             leftScope()  -> listener.onFlickToLeft()
             rightScope() -> listener.onFlickToRight()
             upScope()    -> listener.onFlickToUp()
@@ -74,5 +73,4 @@ class FlickListener(
     private fun upScope(): Boolean = endY < startY - play
     private fun outScope(): Boolean =
         (leftScope() && upScope()) || (rightScope() && upScope())
-                //|| (leftScope() && downScope()) || (rightScope() && downScope())
 }

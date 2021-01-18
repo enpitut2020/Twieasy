@@ -152,14 +152,12 @@ class FlickFragment : Fragment() {
             top.visibility = View.VISIBLE
             left.visibility = View.VISIBLE
             right.visibility = View.VISIBLE
-            bottom.visibility = View.VISIBLE
         }
 
         private fun toggleInvisible() {
             top.visibility = View.INVISIBLE
             left.visibility = View.INVISIBLE
             right.visibility = View.INVISIBLE
-            bottom.visibility = View.INVISIBLE
         }
 
         private fun clearAll() {
@@ -167,7 +165,6 @@ class FlickFragment : Fragment() {
             left.setBackgroundButtonColor(R.color.lightgray)
             right.setBackgroundButtonColor(R.color.lightgray)
             top.setBackgroundButtonColor(R.color.lightgray)
-            bottom.setBackgroundButtonColor(R.color.baseButtonColor)
         }
 
         private fun View.settingSwipe() {
