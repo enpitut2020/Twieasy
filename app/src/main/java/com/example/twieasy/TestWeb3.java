@@ -18,8 +18,7 @@ import org.web3j.utils.Convert;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.math.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,7 +49,7 @@ public class TestWeb3 {
     // このアドレスを無効（空文字）にした場合、[HelloWorld]コントラクトがデプロイされます
     // デプロイが成功すると[LogCat]にアドレスが表示されるので、その値を下記に設定することで再アクセスが可能です
     //（※コメントアウトされているアドレスは実際にRinkeby上にデプロイされたものなので、テストにお使いいただけます）
-    final private String DEFAULT_HELLO_WORLD_ADDRESS = "0x9ace361510B214E230b7BE362465BBe50F2e47A9";//"0xd2a5bC10698FD955D1Fe6cb468a17809A08fd005"; //"0xd21ce6f369f8281b7d39b47372c8f4a8a77841fc";
+    final private String DEFAULT_HELLO_WORLD_ADDRESS = "0x5EeeA7f13620c8336A7FAfD5DB6473A07E9F2388";//"0xd2a5bC10698FD955D1Fe6cb468a17809A08fd005"; //"0xd21ce6f369f8281b7d39b47372c8f4a8a77841fc";
 
     //-------------------------------------
     // メンバー
@@ -186,7 +185,7 @@ public class TestWeb3 {
         }
     }
 
-    public void sendReview(int subjectID, String review) throws InterruptedException{
+    public void sendReview(String subjectNum, String review) throws InterruptedException{
         if( isBusy ){
             log( "@ TestWeb3: BUSY!" );
             return;
@@ -221,7 +220,7 @@ public class TestWeb3 {
 
                         // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
                         if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
-                            _sendReview(subjectID,review);
+                            _sendReview("GB42404",review);
                         }else{
                             // コントラクトのアドレスが無効
                             log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
@@ -230,7 +229,7 @@ public class TestWeb3 {
                         // アカウントの設定に失敗
                         log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
                     }
-                }else{
+                }else{;;
                     // 接続に失敗
                     log( "@ TestWeb3: FAILED TO CONNECT TARGET NET" );
                 }
@@ -245,7 +244,7 @@ public class TestWeb3 {
 
 
 
-    private boolean _sendReview(int subjectID, String review){
+    private boolean _sendReview(String subjectNum, String review){
         log( "@ [_sendReview]" );
         String contractAddress = curHelloWorldAddress;
         try {
@@ -261,7 +260,7 @@ public class TestWeb3 {
                     gasProvider
             );
 
-            contract.setReview(String.valueOf(subjectID),review).send();
+            contract.setReview(subjectNum, review).send();
             return true;
 
         } catch ( Exception e ){
@@ -270,7 +269,7 @@ public class TestWeb3 {
         }
 
     }
-    public void getReview(int id) throws InterruptedException{
+    public void getReview(int id, String subjectNum) throws InterruptedException{
         if( isBusy ){
             log( "@ TestWeb3: BUSY!" );
             return;
@@ -305,7 +304,7 @@ public class TestWeb3 {
 
                         // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
                         if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
-                            _getReview(id);
+                            _getReview(id, subjectNum);
                         }else{
                             // コントラクトのアドレスが無効
                             log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
@@ -328,7 +327,7 @@ public class TestWeb3 {
 
     }
 
-    private boolean _getReview(int id){
+    private boolean _getReview(int id, String subjectNum){
         log( "@ [_getReview]" );
         String contractAddress = curHelloWorldAddress;
         try {
@@ -344,7 +343,7 @@ public class TestWeb3 {
                     gasProvider
             );
 
-            String reviews = contract.getReviews(String.valueOf(id)).send();
+            String reviews = contract.getReviews(subjectNum).send();
 
             List<String> arr =  Arrays.asList(reviews.split("\\s+"));
 
@@ -508,7 +507,7 @@ public class TestWeb3 {
             }
         });
         tr.start();
-        tr.join();
+
 
     }
 
@@ -591,7 +590,6 @@ public class TestWeb3 {
             }
         });
         tr.start();
-        tr.join();
 
     }
 
@@ -695,8 +693,8 @@ public class TestWeb3 {
                     gasProvider
             );
 
-            String easiness = contract.getEasy(classNum).send();
-            subjects.get(id).setEVotes(Integer.parseInt(easiness));
+            BigInteger easiness = contract.getEasy(classNum).send();
+            subjects.get(id).setEVotes(easiness.intValue());
             return true;
 
         } catch ( Exception e ){
@@ -780,8 +778,8 @@ public class TestWeb3 {
                     gasProvider
             );
 
-            String difficulty = contract.getDifficult(classNum).send();
-            subjects.get(id).setDVotes(Integer.parseInt(difficulty));
+            BigInteger difficulty = contract.getDifficult(classNum).send();
+            subjects.get(id).setDVotes(difficulty.intValue());
             return true;
 
         } catch ( Exception e ){

@@ -42,9 +42,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         val view =  inflater.inflate(R.layout.fragment_main, container, false)
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
-
         subjects = (subjectView.coinsSubjects + subjectView.mastSubjects + subjectView.klisSubjects) as ArrayList<Subject>
-
         val load = Thread {
             if(times++ == 0) {//戻るボタンで遷移してきた際は再度科目情報を読み取らない
                 // KDBの情報を整形したもの
@@ -57,7 +55,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                         subjectView.coinsSubjects.add(it)
                     }
                 }
-                /*for(i in 0 until mcnt) {
+                for(i in 0 until mcnt) {
                     getTextFromWeb(i + ccnt, subjectView.mastSubjectNumber[i], 0)?.let {
                         subjectView.mastSubjects.add(it)
                     }
@@ -66,7 +64,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                     getTextFromWeb(i + ccnt + mcnt, subjectView.klisSubjectNumber[i], 0)?.let {
                         subjectView.klisSubjects.add(it)
                     }
-                }*/
+                }
             }
 
             subjectView.loaded = true
@@ -201,14 +199,11 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 subject = Subject(
                     title,
                     "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n単位数　　" + credit + "\n" + eval,
-                    -1,
-                    -1,
+                    1,
+                    1,
                     subjectView.reviewList[counter++],
                     classNum
                 )
-
-                tb?.getEasy(id, classNum)
-                tb?.getDifficult(id, classNum)
 
                 Log.i("eVotes", subjectView.coinsSubjects[id].eVotes.toString())
                 Log.i("dVotes", subjectView.coinsSubjects[id].dVotes.toString())

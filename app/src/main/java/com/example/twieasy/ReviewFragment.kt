@@ -52,7 +52,10 @@ class ReviewFragment : Fragment() {
             ratio.toInt()
         )
         val tb : TestWeb3? = TestWeb3(requireActivity(), subjects)//val tb : TestWeb3? = TestWeb3(requireActivity(), subjectView.subjects)
-        tb?.getReview(ID!! - 1)
+        tb?.getReview(ID!! - 1, subjects[ID!!-1].classNum)
+        tb?.getEasy(ID!!-1, subjects[ID!!-1].classNum)
+        tb?.getDifficult(ID!!-1, subjects[ID!!-1].classNum)
+
         for (i in 1 until subjects[ID!! - 1].reviews.size) {
             val r: TextView = TextView(context)
 

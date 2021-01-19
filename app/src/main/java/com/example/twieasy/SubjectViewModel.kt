@@ -227,7 +227,7 @@ class SubjectViewModel: ViewModel() {
         "GB22031", // システム数理III
         "GB22501", // 情報線形代数
         "GB31901", // 分散システム
-/*        "GB30401", // オペレーティングシステムI
+        "GB30401", // オペレーティングシステムI
         "GB41511", // 音声聴覚情報処理
         "GB30201", // 計算機アーキテクチャ
         "GB21802", // プログラミングチャレンジ
@@ -268,7 +268,7 @@ class SubjectViewModel: ViewModel() {
         "GB46403", // 知能情報メディア実験A
         "GB36503", // 情報システム実験B
         "GB26503", // ソフトウェアサイエンス実験B
-        "GB46503", // 知能情報メディア実験B*/
+        "GB46503", // 知能情報メディア実験B
     )
 
     var mastSubjectNumber = mutableListOf<String>(
