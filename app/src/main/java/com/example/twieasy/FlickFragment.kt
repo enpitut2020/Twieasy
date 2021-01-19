@@ -1,34 +1,28 @@
 package com.example.twieasy
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModel
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.twieasy.databinding.FragmentFlickBinding
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
 import kotlinx.android.synthetic.main.first_boot.*
 import kotlinx.android.synthetic.main.first_boot.view.*
 import kotlinx.android.synthetic.main.first_boot.view.center
 import kotlinx.android.synthetic.main.first_boot.view.subject_info
 import kotlinx.android.synthetic.main.fragment_flick.view.*
-import org.jsoup.Jsoup
 import java.util.*
-import kotlin.random.Random
+
 
 class FlickFragment : Fragment() {
 
@@ -60,39 +54,44 @@ class FlickFragment : Fragment() {
         when(department){
             "coins" -> {
                 val matchResult = regex.find(subjectView.coinsSubjects[0]?.info)
-                tvSubjectInfo.text =  subjectView.coinsSubjects[0]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                tvSubjectInfo.text =
+                    subjectView.coinsSubjects[0]?.name + "\n" + matchResult?.groups?.get(
+                        1
+                    )?.value.orEmpty()
             }
             "mast" -> {
                 val matchResult = regex.find(subjectView.mastSubjects[0]?.info)
-                tvSubjectInfo.text =  subjectView.mastSubjects[0]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                tvSubjectInfo.text =
+                    subjectView.mastSubjects[0]?.name + "\n" + matchResult?.groups?.get(
+                        1
+                    )?.value.orEmpty()
             }
             "klis" -> {
                 val matchResult = regex.find(subjectView.klisSubjects[0]?.info)
-                tvSubjectInfo.text =  subjectView.klisSubjects[0]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                tvSubjectInfo.text =
+                    subjectView.klisSubjects[0]?.name + "\n" + matchResult?.groups?.get(
+                        1
+                    )?.value.orEmpty()
             }
         }
-
         jmpToFlick()
-
         requireActivity().onBackPressedDispatcher.addCallback(this) {/*戻るボタンが押されても遷移しない*/}
-
         return vii
     }
-
 
     val flickAttribute = mutableMapOf<Int, String>()
     var swipedCount = 0
     var res :String = ""
 
     private fun jmpToFlick(){
-        //setContentView(R.layout.first_boot)
-        vii.center.setOnTouchListener(FlickListener(flickListener))
+        //vii.center.setOnTouchListener(FlickListener(flickListener))
+        vii.subject_info.setOnTouchListener(FlickListener(flickListener))
     }
 
     private val flickListener = object : FlickListener.Listener {
 
         override fun onButtonPressed() {
-            vii.center.setBackgroundButtonColor(R.color.pressedButtonColor)
+            //vii.subject_info.setBackgroundButtonColor(R.color.pressedButtonColor)
             toggleVisible()
         }
 
@@ -122,19 +121,31 @@ class FlickFragment : Fragment() {
 
                 when(department){
                     "coins" -> {
-                        val matchResult = regex.find(subjectView.coinsSubjects[swipedCount + 1]?.info)
-                        tvSubjectInfo.text = subjectView.coinsSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
-                        Log.i("{}",subjectView.coinsSubjects[swipedCount]?.classNum)
+                        val matchResult =
+                            regex.find(subjectView.coinsSubjects[swipedCount + 1]?.info)
+                        tvSubjectInfo.text =
+                            subjectView.coinsSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(
+                                1
+                            )?.value.orEmpty()
+                        Log.i("{}", subjectView.coinsSubjects[swipedCount]?.classNum)
                     }
                     "mast" -> {
-                        val matchResult = regex.find(subjectView.mastSubjects[swipedCount + 1]?.info)
-                        tvSubjectInfo.text = subjectView.mastSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
-                        Log.i("{}",subjectView.mastSubjects[swipedCount]?.classNum)
+                        val matchResult =
+                            regex.find(subjectView.mastSubjects[swipedCount + 1]?.info)
+                        tvSubjectInfo.text =
+                            subjectView.mastSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(
+                                1
+                            )?.value.orEmpty()
+                        Log.i("{}", subjectView.mastSubjects[swipedCount]?.classNum)
                     }
                     "klis" -> {
-                        val matchResult = regex.find(subjectView.klisSubjects[swipedCount + 1]?.info)
-                        tvSubjectInfo.text = subjectView.klisSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
-                        Log.i("{}",subjectView.klisSubjects[swipedCount]?.classNum)
+                        val matchResult =
+                            regex.find(subjectView.klisSubjects[swipedCount + 1]?.info)
+                        tvSubjectInfo.text =
+                            subjectView.klisSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(
+                                1
+                            )?.value.orEmpty()
+                        Log.i("{}", subjectView.klisSubjects[swipedCount]?.classNum)
                     }
                 }
 
@@ -161,7 +172,6 @@ class FlickFragment : Fragment() {
         }
 
         private fun clearAll() {
-            center.setBackgroundButtonColor(R.color.baseButtonColor)
             left.setBackgroundButtonColor(R.color.lightgray)
             right.setBackgroundButtonColor(R.color.lightgray)
             top.setBackgroundButtonColor(R.color.lightgray)

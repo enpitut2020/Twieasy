@@ -4,9 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.addCallback
@@ -17,7 +14,10 @@ import kotlinx.android.synthetic.main.fragment_main.view.*
 import org.jsoup.Jsoup
 import java.util.*
 import android.content.Context
+import android.graphics.Point
 import android.os.Build
+import android.util.DisplayMetrics
+import android.view.*
 import androidx.annotation.RequiresApi
 import java.security.MessageDigest
 import kotlin.collections.ArrayList
@@ -41,6 +41,13 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         val view =  inflater.inflate(R.layout.fragment_main, container, false)
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
+
+
+
+
+
+
+
 
         val load = Thread {
             if(times++ == 0) {//戻るボタンで遷移してきた際は再度科目情報を読み取らない
