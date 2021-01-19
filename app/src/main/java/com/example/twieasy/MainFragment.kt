@@ -56,7 +56,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                     }
                 }
                 for(i in 0 until mcnt) {
-                    getTextFromWeb(i + ccnt, subjectView.mastSubjectNumber[i], 0)?.let {
+                    getTextFromWeb(i + ccnt, subjectView.mastSubjectNumber[i], 1)?.let {
                         subjectView.mastSubjects.add(it)
                     }
                 }
@@ -204,9 +204,6 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                     subjectView.reviewList[counter++],
                     classNum
                 )
-
-                Log.i("eVotes", subjectView.coinsSubjects[id].eVotes.toString())
-                Log.i("dVotes", subjectView.coinsSubjects[id].dVotes.toString())
 
             } catch (ex: Exception) {
                 Log.d("Exception", ex.toString())
