@@ -110,6 +110,7 @@ class FlickFragment : Fragment() {
 
             if(label != "中" && label != "下") {
                 showToast(label)
+                val tb : TestWeb3? = TestWeb3(requireActivity(), null)
 
                 // 画面遷移
                 // 1.フリック情報:labelを保持しておく
@@ -121,40 +122,48 @@ class FlickFragment : Fragment() {
 
                 when(department){
                     "coins" -> {
-                        val matchResult =
-                            regex.find(subjectView.coinsSubjects[swipedCount + 1]?.info)
-                        tvSubjectInfo.text =
-                            subjectView.coinsSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(
-                                1
-                            )?.value.orEmpty()
-                        Log.i("{}", subjectView.coinsSubjects[swipedCount]?.classNum)
+                        val matchResult = regex.find(subjectView.coinsSubjects[swipedCount + 1]?.info)
+                        tvSubjectInfo.text = subjectView.coinsSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                        if (label == "楽単")
+                            tb?.voteEasy(subjectView.coinsSubjects[swipedCount]?.classNum)
+                        else if (label == "落単")
+                            tb?.voteDifficult(subjectView.coinsSubjects[swipedCount]?.classNum)
                     }
                     "mast" -> {
-                        val matchResult =
-                            regex.find(subjectView.mastSubjects[swipedCount + 1]?.info)
-                        tvSubjectInfo.text =
-                            subjectView.mastSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(
-                                1
-                            )?.value.orEmpty()
-                        Log.i("{}", subjectView.mastSubjects[swipedCount]?.classNum)
+                        val matchResult = regex.find(subjectView.mastSubjects[swipedCount + 1]?.info)
+                        tvSubjectInfo.text = subjectView.mastSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                        if (label == "楽単")
+                            tb?.voteEasy(subjectView.mastSubjects[swipedCount]?.classNum)
+                        else if (label == "落単")
+                            tb?.voteDifficult(subjectView.mastSubjects[swipedCount]?.classNum)
                     }
                     "klis" -> {
-                        val matchResult =
-                            regex.find(subjectView.klisSubjects[swipedCount + 1]?.info)
-                        tvSubjectInfo.text =
-                            subjectView.klisSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(
-                                1
-                            )?.value.orEmpty()
-                        Log.i("{}", subjectView.klisSubjects[swipedCount]?.classNum)
+                        val matchResult = regex.find(subjectView.klisSubjects[swipedCount + 1]?.info)
+                        tvSubjectInfo.text = subjectView.klisSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
+                        if (label == "楽単")
+                            tb?.voteEasy(subjectView.klisSubjects[swipedCount]?.classNum)
+                        else if (label == "落単")
+                            tb?.voteDifficult(subjectView.klisSubjects[swipedCount]?.classNum)
                     }
                 }
 
                 swipedCount += 1
 
                 // 3.全部終わったら履修科目一覧に遷移
-                if (swipedCount >= 10) {
-//                if (swipedCount >= subjectView.subjects.size) {
-                    findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
+                when(department) {
+                    //if (swipedCount >=) {
+                    "coins" -> {
+                        if (swipedCount >= subjectView.coinsSubjects.size)
+                            findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
+                    }
+                    "mast" -> {
+                        if (swipedCount >= subjectView.mastSubjects.size)
+                            findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
+                    }
+                    "klis" -> {
+                        if (swipedCount >= subjectView.klisSubjects.size)
+                            findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
+                    }
                 }
             }
         }

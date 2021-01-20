@@ -19,6 +19,7 @@ class PostFragment : Fragment() {
 
     lateinit var  vii : View
     lateinit var subjectView : SubjectViewModel
+    private lateinit var subjects : ArrayList<Subject>
 
     private var ID: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,9 +33,10 @@ class PostFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
+        subjects = (subjectView.coinsSubjects + subjectView.mastSubjects + subjectView.klisSubjects) as ArrayList<Subject>
         // Inflate the layout for this fragment
         vii = inflater.inflate(R.layout.fragment_post, container, false)
-        subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
 
         val editText = vii.findViewById<EditText>(R.id.reviewContent)
 
@@ -74,7 +76,7 @@ class PostFragment : Fragment() {
             if(encryptionPostStr != null && !encryptionPostStr?.isEmpty()) {
                 subjectView.reviewList[ID!! - 1].add(encryptionPostStr)
                 val tb: TestWeb3? = TestWeb3(requireActivity(), null)
-                tb?.sendReview(ID!! - 1, encryptionPostStr)
+                tb?.sendReview(subjects[ID!!-1].classNum , encryptionPostStr)
                 findNavController().navigateUp()
             }
         }

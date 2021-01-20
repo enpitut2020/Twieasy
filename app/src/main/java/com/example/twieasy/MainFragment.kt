@@ -28,6 +28,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
     var res :String = ""
     //lateinit var binding:FragmentMainBinding
     lateinit var subjectView : SubjectViewModel
+    private lateinit var subjects : ArrayList<Subject>
 
     var counter: Int = 0
     @SuppressLint("ResourceAsColor")
@@ -41,26 +42,30 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
         val view =  inflater.inflate(R.layout.fragment_main, container, false)
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
-
-
-
-
-
-
-
+        subjects = (subjectView.coinsSubjects + subjectView.mastSubjects + subjectView.klisSubjects) as ArrayList<Subject>
 
         val load = Thread {
             if(times++ == 0) {//戻るボタンで遷移してきた際は再度科目情報を読み取らない
                 // KDBの情報を整形したもの
-                subjectView.coinsSubjects = subjectView.coinsSubjectNumber.map {
-                    getTextFromWeb(it, 0)
-                } as ArrayList<Subject>
-                subjectView.mastSubjects = subjectView.mastSubjectNumber.map {
-                    getTextFromWeb(it, 1)
-                } as ArrayList<Subject>
-                subjectView.klisSubjects = subjectView.klisSubjectNumber.map {
-                    getTextFromWeb(it, 0)
-                } as ArrayList<Subject>
+                val ccnt = subjectView.coinsSubjectNumber.size
+                val mcnt = subjectView.mastSubjectNumber.size
+                val kcnt = subjectView.klisSubjectNumber.size
+
+                for(i in 0 until ccnt) {
+                    getTextFromWeb(i, subjectView.coinsSubjectNumber[i], 0)?.let {
+                        subjectView.coinsSubjects.add(it)
+                    }
+                }
+                for(i in 0 until mcnt) {
+                    getTextFromWeb(i + ccnt, subjectView.mastSubjectNumber[i], 1)?.let {
+                        subjectView.mastSubjects.add(it)
+                    }
+                }
+                for(i in 0 until kcnt) {
+                    getTextFromWeb(i + ccnt + mcnt, subjectView.klisSubjectNumber[i], 0)?.let {
+                        subjectView.klisSubjects.add(it)
+                    }
+                }
             }
 
             subjectView.loaded = true
@@ -164,8 +169,9 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
     val r: Random = Random(
         123
     )
-    private fun getTextFromWeb(classNum: String, command: Int): Subject? {
+    private fun getTextFromWeb(id: Int, classNum: String, command: Int): Subject? {
         var subject: Subject? = null
+        val tb : TestWeb3? = TestWeb3(requireActivity(), subjects)
         val tr = Thread(Runnable {
             try{
                 val doc = Jsoup.connect("https://kdb.tsukuba.ac.jp/syllabi/2020/$classNum/jpn/").get()
@@ -187,16 +193,19 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 }
                 Log.i("title:", title.toString())
                 Log.i("assignments:", assignments.toString())
-                Log.i("credit:", title.toString())
-                Log.i("eval:", eval.toString())
+                Log.i("credit:", credit.toString())
+                Log.i("eval:", eval)
+
 
                 subject = Subject(
                     title,
                     "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n単位数　　" + credit + "\n" + eval,
-                    (r.nextInt() % 100 + 100) % 100,
+                    1,
+                    1,
                     subjectView.reviewList[counter++],
                     classNum
                 )
+
             } catch (ex: Exception) {
                 Log.d("Exception", ex.toString())
             }

@@ -16,11 +16,11 @@ class MainActivity : AppCompatActivity() {
         testWeb3 = TestWeb3(this,null);
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
+    /*override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             // テストの呼び出し
             testWeb3!!.test()
         }
         return super.onTouchEvent(event)
-    }
+    }*/
 }
