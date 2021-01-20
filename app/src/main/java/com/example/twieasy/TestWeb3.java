@@ -619,7 +619,7 @@ public class TestWeb3 {
 
     }
 
-    public void getEasy(int id, String classNum) throws InterruptedException{
+    public void getEasy(int size, String[] classNum) throws InterruptedException{
         if( isBusy ){
             log( "@ TestWeb3: BUSY!" );
             return;
@@ -636,29 +636,7 @@ public class TestWeb3 {
                 if( setTarget() ){
                     // アカウント設定
                     if( setAccount() ) {
-                        // 残高の確認
-                        checkBalance();
-
-                        // メモ：ここから下の処理にはイーサリアム上で手数料が発生するためテスト中のアカウントに十分な残高がないと、
-                        // 　　　例外[Error processing transaction request: insufficient funds for gas * price + value]が発生します
-                        // 　　　送信やデプロイのテストをする際は、[MetaMask]等で対象アカウントに十分なイーサを送信しておいてください
-
-                        // イーサの送信
-                        //checkSend();
-
-                        // [HelloWorld]コントラクトの確認
-                        if( ! execCheckHelloWorld( curHelloWorldAddress ) ) {
-                            // コントラクトが無効であれば[HelloWorld]をデプロイ
-                            //curHelloWorldAddress = execDeployHelloWorld();
-                        }
-
-                        // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
-                        if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
-                            _getEasy(id, classNum);
-                        }else{
-                            // コントラクトのアドレスが無効
-                            log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
-                        }
+                        _getEasy(size, classNum);
                     }else{
                         // アカウントの設定に失敗
                         log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
@@ -677,7 +655,7 @@ public class TestWeb3 {
 
     }
 
-    public boolean _getEasy(int id, String classNum){
+    public boolean _getEasy(int size, String[] classNum){
         log( "@ [getEasy]" );
         String contractAddress = curHelloWorldAddress;
         try {
@@ -693,8 +671,10 @@ public class TestWeb3 {
                     gasProvider
             );
 
-            BigInteger easiness = contract.getEasy(classNum).send();
-            subjects.get(id).setEVotes(easiness.intValue());
+            for(int i = 0; i < size; i++) {
+                BigInteger easiness = contract.getEasy(classNum[i]).send();
+                subjects.get(i).setEVotes(easiness.intValue());
+            }
             return true;
 
         } catch ( Exception e ){
@@ -704,7 +684,7 @@ public class TestWeb3 {
 
     }
 
-    public void getDifficult(int id, String classNum) throws InterruptedException{
+    public void getDifficult(int size, String[] classNum) throws InterruptedException{
         if( isBusy ){
             log( "@ TestWeb3: BUSY!" );
             return;
@@ -721,29 +701,7 @@ public class TestWeb3 {
                 if( setTarget() ){
                     // アカウント設定
                     if( setAccount() ) {
-                        // 残高の確認
-                        checkBalance();
-
-                        // メモ：ここから下の処理にはイーサリアム上で手数料が発生するためテスト中のアカウントに十分な残高がないと、
-                        // 　　　例外[Error processing transaction request: insufficient funds for gas * price + value]が発生します
-                        // 　　　送信やデプロイのテストをする際は、[MetaMask]等で対象アカウントに十分なイーサを送信しておいてください
-
-                        // イーサの送信
-                        //checkSend();
-
-                        // [HelloWorld]コントラクトの確認
-                        if( ! execCheckHelloWorld( curHelloWorldAddress ) ) {
-                            // コントラクトが無効であれば[HelloWorld]をデプロイ
-                            //curHelloWorldAddress = execDeployHelloWorld();
-                        }
-
-                        // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
-                        if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
-                            _getDifficult(id, classNum);
-                        }else{
-                            // コントラクトのアドレスが無効
-                            log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
-                        }
+                        _getDifficult(size, classNum);
                     }else{
                         // アカウントの設定に失敗
                         log( "@ TestWeb3: FAILED TO SET ACCOUNT" );
@@ -762,7 +720,7 @@ public class TestWeb3 {
 
     }
 
-    public boolean _getDifficult(int id, String classNum){
+    public boolean _getDifficult(int size, String[] classNum){
         log( "@ [getDifficult]" );
         String contractAddress = curHelloWorldAddress;
         try {
@@ -778,8 +736,10 @@ public class TestWeb3 {
                     gasProvider
             );
 
-            BigInteger difficulty = contract.getDifficult(classNum).send();
-            subjects.get(id).setDVotes(difficulty.intValue());
+            for(int i = 0; i < size; i++) {
+                BigInteger easiness = contract.getEasy(classNum[i]).send();
+                subjects.get(i).setEVotes(easiness.intValue());
+            }
             return true;
 
         } catch ( Exception e ){

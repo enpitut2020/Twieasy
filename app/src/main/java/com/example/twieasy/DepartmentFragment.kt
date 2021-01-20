@@ -39,7 +39,7 @@ class DepartmentFragment : Fragment() {
             val spinner = view.findViewById<Spinner>(R.id.spDepartment)
             bundle.putString("department", spinner.selectedItem as String)
 
-            findNavController().navigate(R.id.action_departmentFragment_to_loadFragment,bundle)
+            findNavController().navigate(R.id.action_departmentFragment_to_tutorialFragment,bundle)
         }
         // Inflate the layout for this fragment
         return view

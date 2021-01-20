@@ -190,12 +190,13 @@ private var reviews166: MutableCollection<String> = mutableListOf()
 private var reviews167: MutableCollection<String> = mutableListOf()
 private var reviews168: MutableCollection<String> = mutableListOf()
 private var reviews169: MutableCollection<String> = mutableListOf()
-private var reviews170: MutableCollection<String> = mutableListOf()
 
 
 class SubjectViewModel: ViewModel() {
 
     var loaded: Boolean = false
+
+    var votesLoaded: Boolean = false
 
     var currentAccount: String = ""
 
@@ -216,12 +217,11 @@ class SubjectViewModel: ViewModel() {
         reviews130, reviews131, reviews132, reviews133, reviews134, reviews135, reviews136, reviews137, reviews138, reviews139,
         reviews140, reviews141, reviews142, reviews143, reviews144, reviews145, reviews146, reviews147, reviews148, reviews149,
         reviews150, reviews151, reviews152, reviews153, reviews154, reviews155, reviews156, reviews157, reviews158, reviews159,
-        reviews160, reviews161, reviews162, reviews163, reviews164, reviews165, reviews166, reviews167, reviews168, reviews169,
-        reviews170
+        reviews160, reviews161, reviews162, reviews163, reviews164, reviews165, reviews166, reviews167, reviews168, reviews169
     )
 
     var coinsSubjectNumber = mutableListOf<String>(
-        // 情報科学類(47個)
+        // 情報科学類(46個)
         "GB42404", // 機械学習
         "GB22611", // 情報可視化
         "GB22031", // システム数理III

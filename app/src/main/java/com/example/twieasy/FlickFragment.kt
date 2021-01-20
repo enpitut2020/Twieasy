@@ -154,15 +154,15 @@ class FlickFragment : Fragment() {
                     //if (swipedCount >=) {
                     "coins" -> {
                         if (swipedCount >= subjectView.coinsSubjects.size-1)
-                            findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
+                            findNavController().navigate(R.id.action_flickFragment2_to_loadVotesFragment)
                     }
                     "mast" -> {
                         if (swipedCount >= subjectView.mastSubjects.size-1)
-                            findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
+                            findNavController().navigate(R.id.action_flickFragment2_to_loadVotesFragment)
                     }
                     "klis" -> {
                         if (swipedCount >= subjectView.klisSubjects.size-1)
-                            findNavController().navigate(R.id.action_flickFragment2_to_subjectFragment)
+                            findNavController().navigate(R.id.action_flickFragment2_to_loadVotesFragment)
                     }
                 }
             }

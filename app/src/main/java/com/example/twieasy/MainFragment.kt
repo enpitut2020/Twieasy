@@ -27,10 +27,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
     var res :String = ""
     //lateinit var binding:FragmentMainBinding
-    lateinit var subjectView : SubjectViewModel
-    private lateinit var subjects : ArrayList<Subject>
 
-    var counter: Int = 0
     @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -41,37 +38,6 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         //binding = DataBindingUtil.inflate(inflater,R.layout.fragment_main,container,false)
 
         val view =  inflater.inflate(R.layout.fragment_main, container, false)
-        subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
-        subjects = (subjectView.coinsSubjects + subjectView.mastSubjects + subjectView.klisSubjects) as ArrayList<Subject>
-
-        val load = Thread {
-            if(times++ == 0) {//戻るボタンで遷移してきた際は再度科目情報を読み取らない
-                // KDBの情報を整形したもの
-                val ccnt = subjectView.coinsSubjectNumber.size
-                val mcnt = subjectView.mastSubjectNumber.size
-                val kcnt = subjectView.klisSubjectNumber.size
-
-                for(i in 0 until ccnt) {
-                    getTextFromWeb(i, subjectView.coinsSubjectNumber[i], 0)?.let {
-                        subjectView.coinsSubjects.add(it)
-                    }
-                }
-                for(i in 0 until mcnt) {
-                    getTextFromWeb(i + ccnt, subjectView.mastSubjectNumber[i], 1)?.let {
-                        subjectView.mastSubjects.add(it)
-                    }
-                }
-                for(i in 0 until kcnt) {
-                    getTextFromWeb(i + ccnt + mcnt, subjectView.klisSubjectNumber[i], 0)?.let {
-                        subjectView.klisSubjects.add(it)
-                    }
-                }
-            }
-
-            subjectView.loaded = true
-        }
-
-        load.start()
 
         view.makeAccount.setOnClickListener{
             val bundle:Bundle = Bundle()
@@ -153,7 +119,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         view.loginButton.setOnClickListener{
             val bundle:Bundle = Bundle()
             bundle.putInt("buttonNum",1)
-            findNavController().navigate(R.id.action_mainFragment_to_loadFragment,bundle)
+            findNavController().navigate(R.id.action_mainFragment_to_loginFragment,bundle)
         }
 
         val callBack= requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -161,64 +127,8 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             isEnabled = false
             Log.i("backButton", "Pushed")
         }
+
         return view
-    }
-
-
-
-    val r: Random = Random(
-        123
-    )
-    private fun getTextFromWeb(id: Int, classNum: String, command: Int): Subject? {
-        var subject: Subject? = null
-        val tb : TestWeb3? = TestWeb3(requireActivity(), subjects)
-        val tr = Thread(Runnable {
-            try{
-                val doc = Jsoup.connect("https://kdb.tsukuba.ac.jp/syllabi/2020/$classNum/jpn/").get()
-                val title = doc.select("#course-title #title").first().text() //科目名
-                val assignments = doc.select("#credit-grade-assignments #assignments").first().text()
-                val credit = doc.select("#credit-grade-assignments #credit").first().text() //単位数
-                val timetable = doc.select("#credit-grade-assignments #timetable").first().text() //開講日
-                lateinit var styleHeading: String //授業形態
-                lateinit var eval: String //評価方法
-                when(command){
-                    0 -> {
-                        styleHeading = doc.select("#style-heading-style p").first().text() //授業形態
-                        eval = doc.select("#assessment-heading-assessment p").first().text() //評価方法
-                    }
-                    1 -> {
-                        styleHeading = doc.select("#note-heading-note:contains(授業方法) p").first().text() //授業形態
-                        eval = doc.select("#style-heading-style:contains(成績評価) p").first().text() //評価方法
-                    }
-                }
-                Log.i("title:", title.toString())
-                Log.i("assignments:", assignments.toString())
-                Log.i("credit:", credit.toString())
-                Log.i("eval:", eval)
-
-
-                subject = Subject(
-                    title,
-                    "担当教員　" + assignments + "\n開講日時　" + timetable + "\n授業形態　" + styleHeading + "\n単位数　　" + credit + "\n" + eval,
-                    1,
-                    1,
-                    subjectView.reviewList[counter++],
-                    classNum
-                )
-
-            } catch (ex: Exception) {
-                Log.d("Exception", ex.toString())
-            }
-        })
-
-        tr.start()
-
-        tr.join()
-
-
-
-
-        return subject
     }
 
 

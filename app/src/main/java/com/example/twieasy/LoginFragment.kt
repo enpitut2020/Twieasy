@@ -75,7 +75,7 @@ class LoginFragment : Fragment() {
             tb?.login(encryptionAccount,encryptionPassword)
             if(tb?.loginState == true) {
                 subjectView.currentAccount = encryptionAccount.toString()
-                findNavController().navigate(R.id.action_loginFragment_to_subjectFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_loadVotesFragment)
             }
             else{
                 val inputPassword = view.findViewById<TextView>(R.id.passWord_login)

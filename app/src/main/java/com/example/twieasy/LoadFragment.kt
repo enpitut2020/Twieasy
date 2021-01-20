@@ -5,25 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 
 
 class LoadFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var button: Int? = null
-    private lateinit var department: String
-    lateinit var subjectView : SubjectViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            button = it.getInt("buttonNum")
-            if(button == 0) {
-                department = it.getString("department")
-            }
-        }
-    }
+   lateinit var subjectView : SubjectViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +25,15 @@ class LoadFragment : Fragment() {
             continue
         }
 
-        if(button == 0) {
+        findNavController().navigate(R.id.action_loadFragment_to_mainFragment)
+
+        /*if(button == 0) {
             val bundle = Bundle()
             bundle.putString("department", department)
             findNavController().navigate(R.id.action_loadFragment_to_tutorialFragment, bundle)
         }
         else if(button == 1)
-                findNavController().navigate(R.id.action_loadFragment_to_loginFragment)
+                findNavController().navigate(R.id.action_loadFragment_to_loginFragment)*/
 
         return view
     }
