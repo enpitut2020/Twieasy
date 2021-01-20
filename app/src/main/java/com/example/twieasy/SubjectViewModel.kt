@@ -246,7 +246,6 @@ class SubjectViewModel: ViewModel() {
         "GB22101", // 数理メディア情報学
         "GB31121", // 並列処理アーキテクチャII
         "GB13604", // Mathematics for Computer Science
-        "GB31801", // オペレーティングシステムII
         "GB30301", // データベース概論I
         "GB22021", // システム数理II
         "GB42301", // 画像認識工学
