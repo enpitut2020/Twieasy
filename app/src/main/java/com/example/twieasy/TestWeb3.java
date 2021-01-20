@@ -220,7 +220,7 @@ public class TestWeb3 {
 
                         // この時点で[HelloWorld]コントラクトのアドレスが有効であればやりとり開始
                         if( curHelloWorldAddress != null && ! curHelloWorldAddress.equals( "" ) ) {
-                            _sendReview("GB42404",review);
+                            _sendReview(subjectNum,review);
                         }else{
                             // コントラクトのアドレスが無効
                             log( "@ TestWeb3: FAILED TO INTERACT [HellowWorld] CONTRACT" );
