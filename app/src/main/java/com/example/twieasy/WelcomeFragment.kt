@@ -1,5 +1,6 @@
 package com.example.twieasy
 
+import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
@@ -33,6 +34,19 @@ class WelcomeFragment : Fragment() {
         subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
 
         val load = Thread {
+
+            val prefData = activity?.getSharedPreferences("pref_data", Context.MODE_PRIVATE)
+            val editor = prefData?.edit()
+
+            // SHA-256
+            val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+            val hexChars = (1..16)
+                .map { i -> kotlin.random.Random(17+i).nextInt(0, charPool.size) }
+                .map(charPool::get)
+                .joinToString("");
+            editor?.putString("key", hexChars)
+            subjectView.hexChars = hexChars
+
             if(times++ == 0) {//戻るボタンで遷移してきた際は再度科目情報を読み取らない
                 // KDBの情報を整形したもの
                 val ccnt = subjectView.coinsSubjectNumber.size

@@ -109,8 +109,6 @@ class FlickFragment : Fragment() {
             clearAll()
 
             if(label != "中" && label != "下") {
-
-                Log.i("swipedCount", swipedCount.toString())
                 showToast(label)
                 val tb : TestWeb3? = TestWeb3(requireActivity(), null)
 
@@ -124,59 +122,61 @@ class FlickFragment : Fragment() {
 
                 when(department){
                     "coins" -> {
+                        val matchResult = subjectView.coinsSubjects[swipedCount + 1]?.info?.let {
+                            regex.find(
+                                it
+                            )
+                        }
+                        tvSubjectInfo.text = subjectView.coinsSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
                         if (label == "楽単")
                             tb?.voteEasy(subjectView.coinsSubjects[swipedCount]?.classNum)
                         else if (label == "落単")
                             tb?.voteDifficult(subjectView.coinsSubjects[swipedCount]?.classNum)
-                        // スワイプが最後まで行ったら遷移する
-                        if (swipedCount+1 >= subjectView.coinsSubjects.size-1)
-                            findNavController().navigate(R.id.action_flickFragment2_to_loadVotesFragment)
-                        else {
-                            val matchResult = subjectView.coinsSubjects[swipedCount + 1]?.info?.let {
-                                regex.find(
-                                    it
-                                )
-                            }
-                            tvSubjectInfo.text = subjectView.coinsSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
-                        }
                     }
                     "mast" -> {
+                        val matchResult = subjectView.mastSubjects[swipedCount + 1]?.info?.let {
+                            regex.find(
+                                it
+                            )
+                        }
+                        tvSubjectInfo.text = subjectView.mastSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
                         if (label == "楽単")
                             tb?.voteEasy(subjectView.mastSubjects[swipedCount]?.classNum)
                         else if (label == "落単")
                             tb?.voteDifficult(subjectView.mastSubjects[swipedCount]?.classNum)
-                        if (swipedCount+1 >= subjectView.mastSubjects.size-1)
-                            findNavController().navigate(R.id.action_flickFragment2_to_loadVotesFragment)
-                        else {
-                            val matchResult = subjectView.mastSubjects[swipedCount + 1]?.info?.let {
-                                regex.find(
-                                    it
-                                )
-                            }
-                            tvSubjectInfo.text =
-                                subjectView.mastSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(
-                                    1
-                                )?.value.orEmpty()
-                        }
                     }
                     "klis" -> {
+                        val matchResult = subjectView.klisSubjects[swipedCount + 1]?.info?.let {
+                            regex.find(
+                                it
+                            )
+                        }
+                        tvSubjectInfo.text = subjectView.klisSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
                         if (label == "楽単")
                             tb?.voteEasy(subjectView.klisSubjects[swipedCount]?.classNum)
                         else if (label == "落単")
                             tb?.voteDifficult(subjectView.klisSubjects[swipedCount]?.classNum)
-                        if (swipedCount+1 >= subjectView.klisSubjects.size-1)
-                            findNavController().navigate(R.id.action_flickFragment2_to_loadVotesFragment)
-                        else {
-                            val matchResult = subjectView.klisSubjects[swipedCount + 1]?.info?.let {
-                                regex.find(
-                                    it
-                                )
-                            }
-                            tvSubjectInfo.text = subjectView.klisSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
-                        }
                     }
                 }
+
                 swipedCount += 1
+
+                // 3.全部終わったら履修科目一覧に遷移
+                when(department) {
+                    //if (swipedCount >=) {
+                    "coins" -> {
+                        if (swipedCount >= subjectView.coinsSubjects.size-1)
+                            findNavController().navigate(R.id.action_flickFragment2_to_loadVotesFragment)
+                    }
+                    "mast" -> {
+                        if (swipedCount >= subjectView.mastSubjects.size-1)
+                            findNavController().navigate(R.id.action_flickFragment2_to_loadVotesFragment)
+                    }
+                    "klis" -> {
+                        if (swipedCount >= subjectView.klisSubjects.size-1)
+                            findNavController().navigate(R.id.action_flickFragment2_to_loadVotesFragment)
+                    }
+                }
             }
         }
 

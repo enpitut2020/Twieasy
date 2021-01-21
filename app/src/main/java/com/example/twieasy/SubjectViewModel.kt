@@ -64,9 +64,9 @@ private var reviews42: MutableCollection<String> = mutableListOf()
 private var reviews43: MutableCollection<String> = mutableListOf()
 private var reviews44: MutableCollection<String> = mutableListOf()
 private var reviews45: MutableCollection<String> = mutableListOf()
-private var reviews46: MutableCollection<String> = mutableListOf()
 
 //情報メディア創成学類
+private var reviews46: MutableCollection<String> = mutableListOf()
 private var reviews47: MutableCollection<String> = mutableListOf()
 private var reviews48: MutableCollection<String> = mutableListOf()
 private var reviews49: MutableCollection<String> = mutableListOf()
@@ -106,9 +106,9 @@ private var reviews82: MutableCollection<String> = mutableListOf()
 private var reviews83: MutableCollection<String> = mutableListOf()
 private var reviews84: MutableCollection<String> = mutableListOf()
 private var reviews85: MutableCollection<String> = mutableListOf()
-private var reviews86: MutableCollection<String> = mutableListOf()
 
 //知識情報・図書館学類
+private var reviews86: MutableCollection<String> = mutableListOf()
 private var reviews87: MutableCollection<String> = mutableListOf()
 private var reviews88: MutableCollection<String> = mutableListOf()
 private var reviews89: MutableCollection<String> = mutableListOf()
@@ -409,6 +409,8 @@ class SubjectViewModel: ViewModel() {
     @Volatile var coinsSubjects = Collections.synchronizedList(ArrayList<Subject>())
     @Volatile var mastSubjects = Collections.synchronizedList(ArrayList<Subject>())
     @Volatile var klisSubjects = Collections.synchronizedList(ArrayList<Subject>())
+
+    var hexChars = ""
 
     //@JvmField var subjects = ArrayList<Subject>()
 }
