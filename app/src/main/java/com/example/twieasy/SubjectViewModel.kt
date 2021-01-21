@@ -410,5 +410,7 @@ class SubjectViewModel: ViewModel() {
     @Volatile var mastSubjects = Collections.synchronizedList(ArrayList<Subject>())
     @Volatile var klisSubjects = Collections.synchronizedList(ArrayList<Subject>())
 
+    var hexChars = ""
+
     //@JvmField var subjects = ArrayList<Subject>()
 }

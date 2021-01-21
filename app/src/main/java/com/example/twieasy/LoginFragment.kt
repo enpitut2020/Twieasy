@@ -40,7 +40,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        subjectView = ViewModelProvider(this).get(SubjectViewModel::class.java)
+        subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
         val view =  inflater.inflate(R.layout.fragment_login, container, false)
 
         view.login_login.setOnClickListener{
@@ -66,8 +66,7 @@ class LoginFragment : Fragment() {
             val pass = passWord_login.text.toString()
 
             // 「pref_data」という設定データファイルを読み込み
-            val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
-            val hexChars = prefData?.getString("key", "")
+            val hexChars = subjectView.hexChars
             val encryptionAccount = hexChars?.let { it1 -> hashSHA256String(mail, it1) }
             val encryptionPassword = hexChars?.let { it1 -> hashSHA256String(pass, it1) }
 

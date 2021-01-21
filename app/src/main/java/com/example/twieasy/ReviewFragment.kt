@@ -46,6 +46,9 @@ class ReviewFragment : Fragment() {
     private fun jumpToReview() {
         //getTextFromWeb("https://kdb.tsukuba.ac.jp/syllabi/2020/BC12893/jpn/") //??????
         var ratio = subjects[ID!!-1].eVotes.toFloat() * 100.0F / (subjects[ID!!-1].dVotes.toFloat() + subjects[ID!!-1].eVotes.toFloat())
+        if (subjects[ID!!-1].eVotes == 0 && subjects[ID!!-1].dVotes == 0) ratio = 50.0F
+        Log.i("eVotes", subjects[ID!!-1].eVotes.toString())
+        Log.i("dVotes", subjects[ID!!-1].dVotes.toString())
         createReview(
             subjects[ID!! - 1].name,
             subjects[ID!! - 1].info,
