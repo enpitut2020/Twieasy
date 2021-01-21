@@ -129,6 +129,7 @@ class WelcomeFragment : Fragment() {
             while(!subjectView.loaded){
                 continue;
             }
+            Thread.sleep(5000)
             findNavController().navigate(R.id.action_welcomeFragment_to_loadFragment)
         }
 
