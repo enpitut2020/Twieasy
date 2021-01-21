@@ -673,7 +673,7 @@ public class TestWeb3 {
 
             Thread tr1 = new Thread(() -> {
                 try{
-                    for(int i = 0; i < size / 2; i++) {
+                    for(int i = 0; i < size / 4; i++) {
 
                         BigInteger easiness = contract.getEasy(classNum[i]).send();
                         subjects.get(i).setEVotes(easiness.intValue());
@@ -686,7 +686,33 @@ public class TestWeb3 {
 
             Thread tr2 = new Thread(() -> {
                 try{
-                    for(int i = size / 2; i < size; i++) {
+                    for(int i = size / 4; i < size / 2; i++) {
+                        BigInteger easiness = contract.getEasy(classNum[i]).send();
+                        subjects.get(i).setEVotes(easiness.intValue());
+                    }
+                }
+                catch(Exception e){
+                    log("easy th2");
+                }
+
+            });
+
+            Thread tr3 = new Thread(() -> {
+                try{
+                    for(int i = size / 2; i < size * 3 / 4; i++) {
+
+                        BigInteger easiness = contract.getEasy(classNum[i]).send();
+                        subjects.get(i).setEVotes(easiness.intValue());
+                    }
+                }
+                catch (Exception e){
+                    log("easy th1");
+                }
+            });
+
+            Thread tr4 = new Thread(() -> {
+                try{
+                    for(int i = size * 3 / 4; i < size; i++) {
                         BigInteger easiness = contract.getEasy(classNum[i]).send();
                         subjects.get(i).setEVotes(easiness.intValue());
                     }
@@ -699,8 +725,12 @@ public class TestWeb3 {
 
             tr1.start();
             tr2.start();
+            tr3.start();
+            tr4.start();
             tr1.join();
             tr2.join();
+            tr3.join();
+            tr4.join();
 
 
 
@@ -767,7 +797,7 @@ public class TestWeb3 {
 
             Thread tr1 = new Thread(() -> {
                 try{
-                    for(int i = 0; i < size / 2; i++) {
+                    for(int i = 0; i < size / 4; i++) {
                         BigInteger easiness = contract.getEasy(classNum[i]).send();
                         subjects.get(i).setEVotes(easiness.intValue());
                     }
@@ -780,7 +810,33 @@ public class TestWeb3 {
 
             Thread tr2 = new Thread(() -> {
                 try{
-                    for(int i = size / 2; i < size; i++) {
+                    for(int i = size / 4; i < size / 2; i++) {
+                        BigInteger easiness = contract.getEasy(classNum[i]).send();
+                        subjects.get(i).setEVotes(easiness.intValue());
+                    }
+                }
+                catch (Exception e){
+                    log("diff tr2");
+                }
+
+            });
+
+            Thread tr3 = new Thread(() -> {
+                try{
+                    for(int i = size / 2; i < size * 3 / 4; i++) {
+                        BigInteger easiness = contract.getEasy(classNum[i]).send();
+                        subjects.get(i).setEVotes(easiness.intValue());
+                    }
+                }
+                catch (Exception e){
+                    log("diff tr2");
+                }
+
+            });
+
+            Thread tr4 = new Thread(() -> {
+                try{
+                    for(int i = size * 3 / 4; i < size; i++) {
                         BigInteger easiness = contract.getEasy(classNum[i]).send();
                         subjects.get(i).setEVotes(easiness.intValue());
                     }
@@ -793,8 +849,12 @@ public class TestWeb3 {
 
             tr1.start();
             tr2.start();
+            tr3.start();
+            tr4.start();
             tr1.join();
             tr2.join();
+            tr3.join();
+            tr4.join();
 
             return true;
 

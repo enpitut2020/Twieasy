@@ -53,21 +53,21 @@ class FlickFragment : Fragment() {
         val tvSubjectInfo : TextView = vii.subject_info
         when(department){
             "coins" -> {
-                val matchResult = regex.find(subjectView.coinsSubjects[0]?.info)
+                val matchResult = subjectView.coinsSubjects[0]?.info?.let { regex.find(it) }
                 tvSubjectInfo.text =
                     subjectView.coinsSubjects[0]?.name + "\n" + matchResult?.groups?.get(
                         1
                     )?.value.orEmpty()
             }
             "mast" -> {
-                val matchResult = regex.find(subjectView.mastSubjects[0]?.info)
+                val matchResult = subjectView.mastSubjects[0]?.info?.let { regex.find(it) }
                 tvSubjectInfo.text =
                     subjectView.mastSubjects[0]?.name + "\n" + matchResult?.groups?.get(
                         1
                     )?.value.orEmpty()
             }
             "klis" -> {
-                val matchResult = regex.find(subjectView.klisSubjects[0]?.info)
+                val matchResult = subjectView.klisSubjects[0]?.info?.let { regex.find(it) }
                 tvSubjectInfo.text =
                     subjectView.klisSubjects[0]?.name + "\n" + matchResult?.groups?.get(
                         1
@@ -122,7 +122,11 @@ class FlickFragment : Fragment() {
 
                 when(department){
                     "coins" -> {
-                        val matchResult = regex.find(subjectView.coinsSubjects[swipedCount + 1]?.info)
+                        val matchResult = subjectView.coinsSubjects[swipedCount + 1]?.info?.let {
+                            regex.find(
+                                it
+                            )
+                        }
                         tvSubjectInfo.text = subjectView.coinsSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
                         if (label == "楽単")
                             tb?.voteEasy(subjectView.coinsSubjects[swipedCount]?.classNum)
@@ -130,7 +134,11 @@ class FlickFragment : Fragment() {
                             tb?.voteDifficult(subjectView.coinsSubjects[swipedCount]?.classNum)
                     }
                     "mast" -> {
-                        val matchResult = regex.find(subjectView.mastSubjects[swipedCount + 1]?.info)
+                        val matchResult = subjectView.mastSubjects[swipedCount + 1]?.info?.let {
+                            regex.find(
+                                it
+                            )
+                        }
                         tvSubjectInfo.text = subjectView.mastSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
                         if (label == "楽単")
                             tb?.voteEasy(subjectView.mastSubjects[swipedCount]?.classNum)
@@ -138,7 +146,11 @@ class FlickFragment : Fragment() {
                             tb?.voteDifficult(subjectView.mastSubjects[swipedCount]?.classNum)
                     }
                     "klis" -> {
-                        val matchResult = regex.find(subjectView.klisSubjects[swipedCount + 1]?.info)
+                        val matchResult = subjectView.klisSubjects[swipedCount + 1]?.info?.let {
+                            regex.find(
+                                it
+                            )
+                        }
                         tvSubjectInfo.text = subjectView.klisSubjects[swipedCount + 1]?.name + "\n" + matchResult?.groups?.get(1)?.value.orEmpty()
                         if (label == "楽単")
                             tb?.voteEasy(subjectView.klisSubjects[swipedCount]?.classNum)

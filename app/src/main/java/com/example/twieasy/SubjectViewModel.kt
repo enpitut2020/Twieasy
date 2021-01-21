@@ -1,6 +1,8 @@
 package com.example.twieasy
 
 import androidx.lifecycle.ViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 data class Subject(
     var name: String,
@@ -404,9 +406,9 @@ class SubjectViewModel: ViewModel() {
     )
 
     // KDBからとってきた生データ
-    @Volatile var coinsSubjects = ArrayList<Subject>()
-    @Volatile var mastSubjects = ArrayList<Subject>()
-    @Volatile var klisSubjects = ArrayList<Subject>()
+    @Volatile var coinsSubjects = Collections.synchronizedList(ArrayList<Subject>())
+    @Volatile var mastSubjects = Collections.synchronizedList(ArrayList<Subject>())
+    @Volatile var klisSubjects = Collections.synchronizedList(ArrayList<Subject>())
 
     //@JvmField var subjects = ArrayList<Subject>()
 }
