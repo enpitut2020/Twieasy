@@ -193,14 +193,14 @@ class FlickFragment : Fragment() {
         }
 
         private fun clearAll() {
-            left.setBackgroundButtonColor(R.color.lightgray)
-            right.setBackgroundButtonColor(R.color.lightgray)
-            top.setBackgroundButtonColor(R.color.lightgray)
+            left.setBackgroundButtonColor(R.color.baseButtonColor)
+            right.setBackgroundButtonColor(R.color.baseButtonColor)
+            top.setBackgroundButtonColor(R.color.baseButtonColor)
         }
 
         private fun View.settingSwipe() {
             clearAll()
-            setBackgroundButtonColor(R.color.pressedButtonColor)
+            setBackgroundButtonColor(R.color.deepskyblue)
             Log.i("Swiped", "")
         }
 

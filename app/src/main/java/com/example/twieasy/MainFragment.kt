@@ -50,7 +50,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
             val loginPass2 = view.findViewById<EditText>(R.id.passWord2)
             val ver = view.findViewById<EditText>(R.id.verify)
             // 1回目のパスワードと2回目のパスワードが同じ
-            if(loginPass.text.toString() == loginPass2.text.toString() && ver.text.toString() == res && res != "") {
+            if(true/*loginPass.text.toString() == loginPass2.text.toString() && ver.text.toString() == res && res != ""*/) {
                 // 「pref_data」という設定データファイルを読み込み
                 val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
                 val editor = prefData?.edit()
@@ -71,7 +71,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 val tb : TestWeb3? = TestWeb3(requireActivity(), null)
                 tb?.register(encryptionAccount, encryptionPassword)
-                if(tb?.registerState == true){
+                if(/*tb?.registerState == */true){
                     Log.i("register: ", tb?.registerState.toString())
                     Log.i("mail: ", encryptionAccount)
                     // 保存
