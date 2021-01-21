@@ -34,10 +34,14 @@ class SubjectFragment : Fragment() {
 
         subjectList = mutableListOf<MutableMap<String, Any>>()
         for (i in 1..subjects.size){
+            //投票数が0の楽や落に投票して100%または0%を消すコード
+            /*val tb : TestWeb3? = TestWeb3(requireActivity(), null)
+            if (subjects[i-1].eVotes == 0) tb?.voteEasy(subjects[i-1].classNum)
+            if (subjects[i-1].dVotes == 0) tb?.voteDifficult(subjects[i-1].classNum)*/
+                
             var ratio = subjects[i-1].eVotes.toFloat() * 100.0F / (subjects[i-1].dVotes.toFloat() + subjects[i-1].eVotes.toFloat())
             if (subjects[i-1].eVotes == 0 && subjects[i-1].dVotes == 0) ratio = 50.0F
-            Log.i("eVotes", subjects[i-1].eVotes.toString())
-            Log.i("dVotes", subjects[i-1].dVotes.toString())
+            Log.i("科目名/楽単票/落単票", subjects[i-1].name + "/" + subjects[i-1].eVotes.toString() + "/" + subjects[i-1].dVotes.toString() + "/")
             var sub : MutableMap<String, Any> = mutableMapOf("name" to subjects[i - 1].name, "easiness" to ratio.toInt().toString())
             subjectList.add(sub)
         }
@@ -80,10 +84,9 @@ class SubjectFragment : Fragment() {
                                     break
                                 }
                             }
-                            var ratio = subjects[i-1].eVotes.toFloat() * 100.0F / (subjects[i-1].dVotes.toFloat() + subjects[i-1].eVotes.toFloat())
-                            if (subjects[i-1].eVotes == 0 && subjects[i-1].dVotes == 0) ratio = 50.0F
-                            Log.i("eVotes", subjects[i-1].eVotes.toString())
-                            Log.i("dVotes", subjects[i-1].dVotes.toString())
+                            var ratio = subjects[index].eVotes.toFloat() * 100.0F / (subjects[index].dVotes.toFloat() + subjects[index].eVotes.toFloat())
+                            if (subjects[index].eVotes == 0 && subjects[index].dVotes == 0) ratio = 50.0F
+                            Log.i("科目名/楽単票/落単票", subjects[index].name + "/" + subjects[index].eVotes.toString() + "/" + subjects[index].dVotes.toString() + "/")
                             var res : MutableMap<String, Any> = mutableMapOf("name" to subjects[index].name, "easiness" to ratio.toInt().toString())
                             resultMap.add(res)
                         }

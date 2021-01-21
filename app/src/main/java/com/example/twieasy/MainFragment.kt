@@ -81,6 +81,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 }
                 else
                 {
+                    Toast.makeText(activity, "登録済みのアカウントです", Toast.LENGTH_SHORT).show()
                     Log.i("mail: ", encryptionAccount)
                 }
 
