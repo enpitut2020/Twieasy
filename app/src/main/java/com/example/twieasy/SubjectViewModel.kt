@@ -194,13 +194,13 @@ private var reviews169: MutableCollection<String> = mutableListOf()
 
 class SubjectViewModel: ViewModel() {
 
-    var loaded: Boolean = false
+    @Volatile var loaded: Boolean = false
 
-    var votesLoaded: Boolean = false
+    @Volatile var votesLoaded: Boolean = false
 
-    var currentAccount: String = ""
+    @Volatile var currentAccount: String = ""
 
-    var reviewList = mutableListOf(
+    @Volatile var reviewList = mutableListOf(
         reviews0, reviews1, reviews2, reviews3, reviews4, reviews5, reviews6, reviews7, reviews8, reviews9,
         reviews10, reviews11, reviews12, reviews13, reviews14, reviews15, reviews16, reviews17, reviews18, reviews19,
         reviews20, reviews21, reviews22, reviews23, reviews24, reviews25, reviews26, reviews27, reviews28, reviews29,
@@ -220,7 +220,7 @@ class SubjectViewModel: ViewModel() {
         reviews160, reviews161, reviews162, reviews163, reviews164, reviews165, reviews166, reviews167, reviews168, reviews169
     )
 
-    var coinsSubjectNumber = mutableListOf<String>(
+    @Volatile var coinsSubjectNumber = mutableListOf<String>(
         // 情報科学類(46個)
         "GB42404", // 機械学習
         "GB22611", // 情報可視化
@@ -270,7 +270,7 @@ class SubjectViewModel: ViewModel() {
         "GB46503", // 知能情報メディア実験B
     )
 
-    var mastSubjectNumber = mutableListOf<String>(
+    @Volatile var mastSubjectNumber = mutableListOf<String>(
         // 情報メディア創成学類(40個)
         "GC20201",//コンテンツビジネス・マーケティング
         "GC21601",//情報数学 C
@@ -314,7 +314,7 @@ class SubjectViewModel: ViewModel() {
         "GC52201",//情報数学 IV
     )
 
-    var klisSubjectNumber = mutableListOf<String>(
+    @Volatile var klisSubjectNumber = mutableListOf<String>(
         // 知識情報・図書館学類(84個)
         "GE32053", //知的探求の世界II-5
         "GE32063", //知的探求の世界II-6
@@ -404,9 +404,9 @@ class SubjectViewModel: ViewModel() {
     )
 
     // KDBからとってきた生データ
-    var coinsSubjects = ArrayList<Subject>()
-    var mastSubjects = ArrayList<Subject>()
-    var klisSubjects = ArrayList<Subject>()
+    @Volatile var coinsSubjects = ArrayList<Subject>()
+    @Volatile var mastSubjects = ArrayList<Subject>()
+    @Volatile var klisSubjects = ArrayList<Subject>()
 
     //@JvmField var subjects = ArrayList<Subject>()
 }

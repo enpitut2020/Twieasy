@@ -18,8 +18,8 @@ import org.jsoup.Jsoup
 
 
 class WelcomeFragment : Fragment() {
-    lateinit var subjectView : SubjectViewModel
-    private lateinit var subjects : ArrayList<Subject>
+    @Volatile lateinit var subjectView : SubjectViewModel
+    @Volatile private lateinit var subjects : ArrayList<Subject>
     private var counter: Int = 0
 
     override fun onCreateView(
@@ -39,21 +39,71 @@ class WelcomeFragment : Fragment() {
                 val mcnt = subjectView.mastSubjectNumber.size
                 val kcnt = subjectView.klisSubjectNumber.size
 
-                for(i in 0 until ccnt) {
-                    getTextFromWeb(i, subjectView.coinsSubjectNumber[i], 0)?.let {
-                        subjectView.coinsSubjects.add(it)
+                val tr1 = Thread{
+                    for(i in 0 until ccnt / 2) {
+                        getTextFromWeb(i, subjectView.coinsSubjectNumber[i], 0)?.let {
+                            subjectView.coinsSubjects.add(it)
+                        }
                     }
                 }
-                for(i in 0 until mcnt) {
-                    getTextFromWeb(i + ccnt, subjectView.mastSubjectNumber[i], 1)?.let {
-                        subjectView.mastSubjects.add(it)
+
+                val tr2 = Thread{
+                    for(i in 0 until mcnt / 2) {
+                        getTextFromWeb(i + ccnt, subjectView.mastSubjectNumber[i], 1)?.let {
+                            subjectView.mastSubjects.add(it)
+                        }
                     }
                 }
-                for(i in 0 until kcnt) {
-                    getTextFromWeb(i + ccnt + mcnt, subjectView.klisSubjectNumber[i], 0)?.let {
-                        subjectView.klisSubjects.add(it)
+
+                val tr3 = Thread{
+                    for(i in 0 until kcnt / 2) {
+                        getTextFromWeb(i + ccnt + mcnt, subjectView.klisSubjectNumber[i], 0)?.let {
+                            subjectView.klisSubjects.add(it)
+                        }
                     }
                 }
+
+                val tr4 = Thread{
+                    for(i in ccnt / 2 until ccnt) {
+                        getTextFromWeb(i, subjectView.coinsSubjectNumber[i], 0)?.let {
+                            subjectView.coinsSubjects.add(it)
+                        }
+                    }
+                }
+
+                val tr5 = Thread{
+                    for(i in mcnt /2  until mcnt) {
+                        getTextFromWeb(i + ccnt, subjectView.mastSubjectNumber[i], 1)?.let {
+                            subjectView.mastSubjects.add(it)
+                        }
+                    }
+                }
+
+                val tr6 = Thread{
+                    for(i in kcnt / 2 until kcnt) {
+                        getTextFromWeb(i + ccnt + mcnt, subjectView.klisSubjectNumber[i], 0)?.let {
+                            subjectView.klisSubjects.add(it)
+                        }
+                    }
+                }
+
+
+
+                tr1.start()
+                tr2.start()
+                tr3.start()
+                tr4.start()
+                tr5.start()
+                tr6.start()
+                tr1.join()
+                tr2.join()
+                tr3.join()
+                tr4.join()
+                tr5.join()
+                tr6.join()
+
+
+
             }
 
             subjectView.loaded = true
@@ -76,12 +126,14 @@ class WelcomeFragment : Fragment() {
 
         //viewをreturnするためだけのスレッド
         val sleep = Thread{
-            Thread.sleep(1000)
+            while(!subjectView.loaded){
+                continue;
+            }
             findNavController().navigate(R.id.action_welcomeFragment_to_loadFragment)
         }
 
         sleep.start()
-
+        //sleep.join()
         return view
     }
 
@@ -107,9 +159,9 @@ class WelcomeFragment : Fragment() {
                     }
                 }
                 Log.i("title:", title.toString())
-                Log.i("assignments:", assignments.toString())
-                Log.i("credit:", credit.toString())
-                Log.i("eval:", eval)
+                //Log.i("assignments:", assignments.toString())
+                //Log.i("credit:", credit.toString())
+                //Log.i("eval:", eval)
 
 
                 subject = Subject(

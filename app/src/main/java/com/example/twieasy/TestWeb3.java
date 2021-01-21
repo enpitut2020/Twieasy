@@ -671,10 +671,39 @@ public class TestWeb3 {
                     gasProvider
             );
 
-            for(int i = 0; i < size; i++) {
-                BigInteger easiness = contract.getEasy(classNum[i]).send();
-                subjects.get(i).setEVotes(easiness.intValue());
-            }
+            Thread tr1 = new Thread(() -> {
+                try{
+                    for(int i = 0; i < size / 2; i++) {
+
+                        BigInteger easiness = contract.getEasy(classNum[i]).send();
+                        subjects.get(i).setEVotes(easiness.intValue());
+                    }
+                }
+                catch (Exception e){
+                    log("easy th1");
+                }
+            });
+
+            Thread tr2 = new Thread(() -> {
+                try{
+                    for(int i = size / 2; i < size; i++) {
+                        BigInteger easiness = contract.getEasy(classNum[i]).send();
+                        subjects.get(i).setEVotes(easiness.intValue());
+                    }
+                }
+                catch(Exception e){
+                    log("easy th2");
+                }
+
+            });
+
+            tr1.start();
+            tr2.start();
+            tr1.join();
+            tr2.join();
+
+
+
             return true;
 
         } catch ( Exception e ){
@@ -736,10 +765,37 @@ public class TestWeb3 {
                     gasProvider
             );
 
-            for(int i = 0; i < size; i++) {
-                BigInteger easiness = contract.getEasy(classNum[i]).send();
-                subjects.get(i).setEVotes(easiness.intValue());
-            }
+            Thread tr1 = new Thread(() -> {
+                try{
+                    for(int i = 0; i < size / 2; i++) {
+                        BigInteger easiness = contract.getEasy(classNum[i]).send();
+                        subjects.get(i).setEVotes(easiness.intValue());
+                    }
+                }
+                catch(Exception e){
+                    log("diff tr1");
+                }
+
+            });
+
+            Thread tr2 = new Thread(() -> {
+                try{
+                    for(int i = size / 2; i < size; i++) {
+                        BigInteger easiness = contract.getEasy(classNum[i]).send();
+                        subjects.get(i).setEVotes(easiness.intValue());
+                    }
+                }
+                catch (Exception e){
+                    log("diff tr2");
+                }
+
+            });
+
+            tr1.start();
+            tr2.start();
+            tr1.join();
+            tr2.join();
+
             return true;
 
         } catch ( Exception e ){
