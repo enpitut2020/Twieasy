@@ -96,7 +96,7 @@ public class TestWeb3 {
     }
 
 
-    public void register(String mail, String pass){
+    public void register(String mail, String pass) throws InterruptedException{
         if( isBusy ){
             log( "@ TestWeb3: BUSY!" );
             return;
@@ -104,7 +104,7 @@ public class TestWeb3 {
         isBusy = true;
 
         // メインスレッドを止めないように別スレッドでテスト
-        new Thread( new Runnable() {
+        Thread tr = new Thread( new Runnable() {
             @Override
             public void run(){
                 log( "@ TestWeb3: START(register)..." );
@@ -148,7 +148,9 @@ public class TestWeb3 {
                 log( "@ TestWeb3: FINISHED" );
                 isBusy = false;
             }
-        }).start();
+        });
+        tr.start();
+        tr.join();
     }
 
     private boolean _register(String mail, String pass){
@@ -437,8 +439,6 @@ public class TestWeb3 {
             );
 
             Boolean checkRegistered = contract.checkRegistered(mail).send();
-            if(!checkRegistered)
-                return false;
 
             String truePass = contract.getPass(mail).send();
             if(pass.equals(truePass))

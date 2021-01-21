@@ -26,6 +26,7 @@ var times = 0
 class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
     var res :String = ""
+    lateinit var subjectView : SubjectViewModel
     //lateinit var binding:FragmentMainBinding
 
     @SuppressLint("ResourceAsColor")
@@ -38,7 +39,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
         //binding = DataBindingUtil.inflate(inflater,R.layout.fragment_main,container,false)
 
         val view =  inflater.inflate(R.layout.fragment_main, container, false)
-
+        subjectView = ViewModelProvider(requireActivity()).get(SubjectViewModel::class.java)
         view.makeAccount.setOnClickListener{
             val bundle:Bundle = Bundle()
             bundle.putInt("buttonNum",0)
@@ -54,15 +55,9 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 val prefData = activity?.getSharedPreferences("pref_data",Context.MODE_PRIVATE)
                 val editor = prefData?.edit()
 
-                // SHA-256
-                val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-                val hexChars = (1..16)
-                    .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
-                    .map(charPool::get)
-                    .joinToString("");
-                editor?.putString("key", hexChars)
-                val encryptionAccount: String = hashSHA256String(loginAccount.text.toString(), hexChars)
-                val encryptionPassword: String = hashSHA256String(loginPass.text.toString(), hexChars)
+
+                val encryptionAccount: String = hashSHA256String(loginAccount.text.toString(), subjectView.hexChars)
+                val encryptionPassword: String = hashSHA256String(loginPass.text.toString(), subjectView.hexChars)
 
                 // デバッグ用Log
                 Log.i("enc", encryptionAccount)
@@ -79,15 +74,16 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
                 if(tb?.registerState == true){
                     Log.i("register: ", tb?.registerState.toString())
                     Log.i("mail: ", encryptionAccount)
+                    // 保存
+                    editor?.commit()
+
+                    findNavController().navigate(R.id.action_mainFragment_to_departmentFragment,bundle)
                 }
                 else
                 {
                     Log.i("mail: ", encryptionAccount)
                 }
-                // 保存
-                editor?.commit()
 
-                findNavController().navigate(R.id.action_mainFragment_to_departmentFragment,bundle)
             } else if (loginPass.text.toString() != loginPass2.text.toString()){
                 Log.i("pass1", loginPass.text.toString())
                 Log.i("pass2", loginPass2.text.toString())
