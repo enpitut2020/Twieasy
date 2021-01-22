@@ -120,8 +120,6 @@ class WelcomeFragment : Fragment() {
 
             }
 
-            subjectView.loaded = true
-
             subjects = (subjectView.coinsSubjects + subjectView.mastSubjects + subjectView.klisSubjects) as ArrayList<Subject>
             Log.i("subjects.size", subjects.size.toString())
             val tb : TestWeb3? = TestWeb3(activity, subjects)
@@ -130,6 +128,7 @@ class WelcomeFragment : Fragment() {
                 subNames = append(subNames, subjects[i].classNum)
             }
             tb?.getEasy(subjects.size, subNames)
+            subjectView.loaded = true
             tb?.getDifficult(subjects.size, subNames)
             //Log.i("Votes", (i).toString() + subjects[i].name + " " + subjects[i].eVotes.toString() + " / " + subjects[i].dVotes.toString())
 
