@@ -71,7 +71,7 @@ class MainFragment : Fragment(),MailSender.OnMailSendListener {
 
                 val tb : TestWeb3? = TestWeb3(requireActivity(), null)
                 tb?.register(encryptionAccount, encryptionPassword)
-                if(/*tb?.registerState == */true){
+                if(tb?.registerState == true){
                     Log.i("register: ", tb?.registerState.toString())
                     Log.i("mail: ", encryptionAccount)
                     // 保存
